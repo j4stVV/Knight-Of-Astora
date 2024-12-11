@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask groundCheckLayer;
+    [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float jumpForce;
     private int airJumpCounter = 0;
@@ -118,7 +120,18 @@ public class PlayerController : MonoBehaviour
         }
         //Check if player land on ground
         Grounded();
-        
+
+        //if (!PauseMenu.instance.IsPause)
+        //{
+        //    Flip();
+        //    Move();
+        //    Jump();
+        //    Attack();
+        //    Roll();
+        //    StartDash();
+        //    Heal();
+        //}
+
         Flip();
         Move();
         Jump();
@@ -135,15 +148,26 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(SideAttackTransform.position, SideAttackArea);
+        Gizmos.DrawWireCube(groundCheckPoint.position + new Vector3(-0.05f, 0, 0) + Vector3.down * groundCheckDistance / 2, new Vector3(boxSize.x, boxSize.y, 1));
+        //Debug.DrawLine(groundCheckPoint.position, groundCheckPoint.position + Vector3.down * groundCheckDistance, Color.red);
     }
+    //private bool IsOnGround()
+    //{
+    //    if (Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckDistance, groundCheckLayer))
+    //    {
+    //        return true;
+    //    }
+    //    else return false;
+    //}
     private bool IsOnGround()
     {
-        if (Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckDistance, groundCheckLayer))
+        if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, groundCheckLayer))
         {
             return true;
         }
         else return false;
     }
+
     private void Grounded()
     {
         if (IsOnGround())
