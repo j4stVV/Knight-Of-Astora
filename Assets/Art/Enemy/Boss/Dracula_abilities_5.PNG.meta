@@ -1,0 +1,1197 @@
+fileFormatVersion: 2
+guid: 0b5f7fc3e5cdcda4e893b7fcacb01c02
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Dracula_abilities_5_0
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 771
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee00a643547be3c4c9351804ac8a4f13
+      internalID: -2144644251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_1
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 771
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f51ba8fe2982884293ee22caae6618a
+      internalID: -815765226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_2
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 771
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c98f1fd667926b043bed5871d53dad5a
+      internalID: -175246032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_3
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 770
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb0b7fa6108cf9a4091ad267056bf32d
+      internalID: -1740455422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_4
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 773
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3f8864fe2e6a02438e298b5bc0cf5cd
+      internalID: -1635769735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_5
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 776
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10b88bc0be6ab9747841a9f63e8fc9ab
+      internalID: -881436938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 777
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 392161cbdad91fd47a5e51fae4152366
+      internalID: 2109467007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_7
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 778
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b841353b7d994149946d68693e72d05
+      internalID: 519164652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_10
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 638
+        width: 107
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27aeaa37fd7dfe64691ce82badff65b2
+      internalID: -1508076287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_11
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 638
+        width: 104
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72450914dbd5c3744a4e6bac68e136ec
+      internalID: -858820316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_12
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 638
+        width: 106
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bc11e69db8ed8f4fa346dcffa3e25d7
+      internalID: -1046531943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_13
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 638
+        width: 108
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 572111fcf24a49a4bb2cd47bc3f6fc1d
+      internalID: 1593902309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_14
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 638
+        width: 107
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4c0ba6f9b667cd43a25e219db936c8e
+      internalID: -1094759001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_15
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 511
+        width: 104
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38f48e2c908507645bda2e16c4938e1c
+      internalID: 255766859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_16
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 520
+        width: 79
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a5330f10485c0549a6cf099d38194c6
+      internalID: 209173661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_17
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 520
+        width: 74
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f2b61c2d517cd84da8eff50be6d1ba7
+      internalID: -1067721051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_18
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 524
+        width: 68
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b50d6d309db60842b4d1cd4a153cb74
+      internalID: 264112910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_19
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 530
+        width: 59
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9499ba2ef3418148b3d76a0eb46db1d
+      internalID: -2007258439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_20
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 534
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 569e74e8ae30b11469447f7a7d171651
+      internalID: 767521618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_22
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9738fca75b2afb143a8c59da1cd5cb6c
+      internalID: 296574870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_23
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7843f7c364c336499c08b99b936bea9
+      internalID: 372797172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_24
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49613b8f24b63454d93293836bf307d4
+      internalID: 421487681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_26
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59aecea3df6ce447b9eb8368eb38137
+      internalID: -1398921828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_21_
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df35055203d4c2c4190a0a0fa4ce4f20
+      internalID: -424466114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_27
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8df192f784c7d1547acde92696f961b8
+      internalID: -2062071678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_29
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb53ebb3482c8984aa6d5ecde93a8513
+      internalID: -298210226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_30
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f234aa58d70d3664d9500d720c2e2545
+      internalID: -2022433889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_33
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 105
+        width: 134
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc2fcf3f0c29319428c489d199e0e4cc
+      internalID: -257490638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_34
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 105
+        width: 119
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ccc0f8c1b718a249a1ea97918ac3402
+      internalID: -917589677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_35
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 101
+        width: 111
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b05c3eb4a6e70c84db6603dad40852a6
+      internalID: 1248694561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_36
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 98
+        width: 118
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec28f1424683bdc4a9d9ba0763b19035
+      internalID: -1980848762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_37
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 95
+        width: 129
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ba9ba7275d1f846969902729108b34
+      internalID: -1575008910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_38
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 97
+        width: 125
+        height: 117
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b675f5ca9c094a14b9384d2842168517
+      internalID: 628226901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_39
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 100
+        width: 117
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33d3dfdcbe420ef4fa54327bf07854ab
+      internalID: 1834423176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_40
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 102
+        width: 109
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5332b9a0b1cf6ef45891fe4dbffefaeb
+      internalID: 22916608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_41
+      rect:
+        serializedVersion: 2
+        x: 1136
+        y: 100
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbc0c5495a913d43993ac8e0a70857e
+      internalID: 273415709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_43
+      rect:
+        serializedVersion: 2
+        x: 1259
+        y: 100
+        width: 93
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a3f8da126921ad45872e0d11e50062c
+      internalID: 2021429591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_44
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 133
+        width: 63
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 993eb590a70004744953c50a3eeb4a8d
+      internalID: 1662374552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_45
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 134
+        width: 76
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74db164ea798f64495bc2d730443949
+      internalID: 2050006800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_49
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 18
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 873166b9127379048b01b5f5c5a478f9
+      internalID: 259383013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_50
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 18
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5378795a9869a44a9a79164d79e0482
+      internalID: 2084501572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_51
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 18
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10274f17782e6254b8adb6fac3a7ca20
+      internalID: -229570103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_53
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 18
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c390508d1895a5d4fbf98882c441985f
+      internalID: 2026910802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_55
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 18
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bef860ba025f34e469f8c6edec71f162
+      internalID: -1297624993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_57
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 18
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43c12b51dcebd174a9b3c2e13bf6f680
+      internalID: -1557939664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_21
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b7649adcb4fcac47bc7f8598e0bf1d4
+      internalID: 1218726059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_28
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 258
+        width: 50
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c03a73b57ef72a441ac881ac66ddbf6d
+      internalID: 1569493984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_abilities_5_8
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 532
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc231b65353b2af4c9cc38d3c19f74da
+      internalID: -1048121845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Dracula_abilities_5_: 2109467007
+      Dracula_abilities_5_0: -2144644251
+      Dracula_abilities_5_1: -815765226
+      Dracula_abilities_5_10: -1508076287
+      Dracula_abilities_5_11: -858820316
+      Dracula_abilities_5_12: -1046531943
+      Dracula_abilities_5_13: 1593902309
+      Dracula_abilities_5_14: -1094759001
+      Dracula_abilities_5_15: 255766859
+      Dracula_abilities_5_16: 209173661
+      Dracula_abilities_5_17: -1067721051
+      Dracula_abilities_5_18: 264112910
+      Dracula_abilities_5_19: -2007258439
+      Dracula_abilities_5_2: -175246032
+      Dracula_abilities_5_20: 767521618
+      Dracula_abilities_5_21: 1218726059
+      Dracula_abilities_5_21_: -424466114
+      Dracula_abilities_5_22: 296574870
+      Dracula_abilities_5_23: 372797172
+      Dracula_abilities_5_24: 421487681
+      Dracula_abilities_5_26: -1398921828
+      Dracula_abilities_5_27: -2062071678
+      Dracula_abilities_5_28: 1569493984
+      Dracula_abilities_5_29: -298210226
+      Dracula_abilities_5_3: -1740455422
+      Dracula_abilities_5_30: -2022433889
+      Dracula_abilities_5_32: 1890299418
+      Dracula_abilities_5_33: -257490638
+      Dracula_abilities_5_34: -917589677
+      Dracula_abilities_5_35: 1248694561
+      Dracula_abilities_5_36: -1980848762
+      Dracula_abilities_5_37: -1575008910
+      Dracula_abilities_5_38: 628226901
+      Dracula_abilities_5_39: 1834423176
+      Dracula_abilities_5_4: -1635769735
+      Dracula_abilities_5_40: 22916608
+      Dracula_abilities_5_41: 273415709
+      Dracula_abilities_5_42: -1732957013
+      Dracula_abilities_5_43: 2021429591
+      Dracula_abilities_5_44: 1662374552
+      Dracula_abilities_5_45: 2050006800
+      Dracula_abilities_5_46: 190767373
+      Dracula_abilities_5_47: -244157304
+      Dracula_abilities_5_48: -1275515258
+      Dracula_abilities_5_49: 259383013
+      Dracula_abilities_5_5: -881436938
+      Dracula_abilities_5_50: 2084501572
+      Dracula_abilities_5_51: -229570103
+      Dracula_abilities_5_52: 439121495
+      Dracula_abilities_5_53: 2026910802
+      Dracula_abilities_5_54: 2105468613
+      Dracula_abilities_5_55: -1297624993
+      Dracula_abilities_5_56: 1829733136
+      Dracula_abilities_5_57: -1557939664
+      Dracula_abilities_5_58: 1478849589
+      Dracula_abilities_5_59: -414641467
+      Dracula_abilities_5_60: -1918342206
+      Dracula_abilities_5_61: 1193667015
+      Dracula_abilities_5_62: -707398412
+      Dracula_abilities_5_7: 519164652
+      Dracula_abilities_5_8: -1048121845
+      Dracula_abilities_5_9: 615530714
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
