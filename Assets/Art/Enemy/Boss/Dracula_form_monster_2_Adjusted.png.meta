@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 33d3fe3d7f138f7409db7b5316ef41e3
+guid: 17d6e282659a397419d3aa6d4604dcc6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,421 +110,526 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dracula_form_monster_0
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 599
-        width: 248
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0df4862a768396e4d9ba465712f6723a
-      internalID: 1024544959
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_1
-      rect:
-        serializedVersion: 2
-        x: 250
-        y: 599
-        width: 86
-        height: 81
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45be4c96a52c5cd4b98db0ed4c6f24af
-      internalID: -1020243139
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_2
-      rect:
-        serializedVersion: 2
-        x: 332
-        y: 600
-        width: 88
-        height: 79
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba33f173b6033594ab01bde4d0d5bbb7
-      internalID: 718375291
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_3
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 514
-        width: 84
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9a7b1caa869c2949b7371e0556fc3f9
-      internalID: 2084730051
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_4
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 514
-        width: 83
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1983b09fc34c2fd4e927e9f70690e4a0
-      internalID: 1824509239
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_5
-      rect:
-        serializedVersion: 2
-        x: 253
-        y: 515
-        width: 84
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f08bcc4230c1c9b45a22e100493e2dfe
-      internalID: -1073416011
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_6
-      rect:
-        serializedVersion: 2
-        x: 337
-        y: 516
-        width: 85
-        height: 83
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5924d06345fc1a04d8de6b7ddade1470
-      internalID: 517494961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dracula_form_monster_7
+      name: Dracula_form_monster_2_Adjusted_0
       rect:
         serializedVersion: 2
         x: 10
-        y: 427
-        width: 85
-        height: 81
+        y: 799
+        width: 105
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f4ac49902afd9e4ba06c88321be040c
-      internalID: -248798693
+      spriteID: 9bf15df0a38fa0a46aadba1cd9f9cafe
+      internalID: 1122494188
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_8
+      name: Dracula_form_monster_2_Adjusted_1
       rect:
         serializedVersion: 2
-        x: 177
-        y: 429
-        width: 79
-        height: 79
+        x: 120
+        y: 799
+        width: 105
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1965bcdfd601c3249a3799f33df10701
-      internalID: 1654981846
+      spriteID: 10c460cba7cb68949a93219debcac588
+      internalID: 1158799492
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_9
+      name: Dracula_form_monster_2_Adjusted_2
       rect:
         serializedVersion: 2
-        x: 256
-        y: 427
-        width: 83
-        height: 82
+        x: 227
+        y: 799
+        width: 106
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: becbd72c07cdafa49ac8e200a1ff00ab
-      internalID: 242087784
+      spriteID: 490f83593e3649c4bbdb4ac941399bf6
+      internalID: 777007892
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_10
+      name: Dracula_form_monster_2_Adjusted_3
       rect:
         serializedVersion: 2
-        x: 338
-        y: 428
-        width: 85
-        height: 80
+        x: 335
+        y: 799
+        width: 109
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f684fca38768ab4fbccac8305b77de6
-      internalID: -2086695903
+      spriteID: 158d8f86d67b03f4dbcde80c06aa31c7
+      internalID: 748547785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_11
+      name: Dracula_form_monster_2_Adjusted_4
       rect:
         serializedVersion: 2
-        x: 210
-        y: 409
-        width: 25
-        height: 17
+        x: 446
+        y: 799
+        width: 108
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0afa9d82669c31645b37975ef1a0b6bd
-      internalID: 1574844000
+      spriteID: 20dd403faee758d4e9b2fa96b8fc72c4
+      internalID: -893099683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_12
+      name: Dracula_form_monster_2_Adjusted_5
       rect:
         serializedVersion: 2
-        x: 178
-        y: 325
-        width: 86
-        height: 83
+        x: 12
+        y: 686
+        width: 106
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9d117a28d2c0314eb944e2d8ae5973c
-      internalID: -1772735009
+      spriteID: 76499df9fffc6b64fb58f30ad35dd260
+      internalID: -1229369358
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_13
+      name: Dracula_form_monster_2_Adjusted_6
       rect:
         serializedVersion: 2
-        x: 98
-        y: 206
-        width: 258
-        height: 113
+        x: 122
+        y: 686
+        width: 107
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57f50686f3524814f9b8a01838a1fc2d
-      internalID: 2085289558
+      spriteID: 0cba707ba49ce1649b7ae9b6471cfffe
+      internalID: -801512309
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_14
+      name: Dracula_form_monster_2_Adjusted_7
       rect:
         serializedVersion: 2
-        x: 106
-        y: 107
-        width: 81
-        height: 82
+        x: 228
+        y: 686
+        width: 106
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d63e7bec5e327c44a653ef2aaa77dd3
-      internalID: -672402429
+      spriteID: fce15321b0e9e734db5c559b6950a76a
+      internalID: 1831930823
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_15
+      name: Dracula_form_monster_2_Adjusted_8
       rect:
         serializedVersion: 2
-        x: 191
-        y: 108
-        width: 84
-        height: 79
+        x: 339
+        y: 686
+        width: 107
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f92b786a7650454aaac6c857b140cdc
-      internalID: -486142800
+      spriteID: ab53f50a109760646ad77689960c184c
+      internalID: 1377489108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_16
+      name: Dracula_form_monster_2_Adjusted_9
       rect:
         serializedVersion: 2
-        x: 271
-        y: 108
-        width: 84
-        height: 79
+        x: 448
+        y: 686
+        width: 109
+        height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a87cf17cc45f404da278e83c2994fce
-      internalID: -2065502799
+      spriteID: 80b93ed30e9731d4c81d44147a7be109
+      internalID: -15526989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_17
+      name: Dracula_form_monster_2_Adjusted_10
       rect:
         serializedVersion: 2
-        x: 184
+        x: 17
+        y: 569
+        width: 109
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5ed47aeaf6c4ae49bceb886c2347cee
+      internalID: 743191965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_11
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 569
+        width: 106
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 325bd280198c3624494f22b4f99356c3
+      internalID: 1443216733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_12
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 569
+        width: 107
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7358048a99fc4924aa474b1bcaef1646
+      internalID: 701814956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_13
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 569
+        width: 108
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dab8a197557b119418a117871b6772da
+      internalID: 669662776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_14
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 569
+        width: 109
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e36430c5dc3821340b7c727049f1f725
+      internalID: 983202887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_15
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 545
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 112ed400a0a79e24997da64677e6d8f6
+      internalID: -1120890435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_16
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 434
+        width: 108
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 398f64218e09175418e6d26ebee5390e
+      internalID: 1266336129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_17
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 278
+        width: 112
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 855b883dd53a03c41a81f2327b2f28a4
+      internalID: -402173321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_18
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 146
+        width: 100
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c90155b8499ecf74bbad130fbe3f226a
+      internalID: -166869204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_19
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 146
+        width: 102
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f96366f5976f6784ca636a4dcf4004ec
+      internalID: -138361334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_20
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 146
+        width: 101
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41441a891e831d94aac1dedd6823542c
+      internalID: 1203781385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_21
+      rect:
+        serializedVersion: 2
+        x: 250
         y: 1
-        width: 89
-        height: 93
+        width: 110
+        height: 118
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e48a8f99047124849b05ca8ea600cba7
-      internalID: 867885617
+      spriteID: 3ad0669c1b19628439b81c6187c9c64d
+      internalID: -900736399
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_18
+      name: Dracula_form_monster_2_Adjusted_22
       rect:
         serializedVersion: 2
-        x: 96
-        y: 428
-        width: 81
-        height: 80
+        x: 247
+        y: 277
+        width: 112
+        height: 147
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 328265e50c367c84ea420c2ca522d9fc
-      internalID: -463080533
+      spriteID: e35510f76fe9d3742ada37c1601d2f41
+      internalID: 206398604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dracula_form_monster_19
+      name: Dracula_form_monster_2_Adjusted_23
       rect:
         serializedVersion: 2
-        x: 90
-        y: 515
-        width: 79
-        height: 84
+        x: 359
+        y: 277
+        width: 112
+        height: 147
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4048e1ab6566f1e4b81431c4ffff67a2
-      internalID: -765086014
+      spriteID: 7b5f2117d29267f41af6df7138fb68bd
+      internalID: -353433920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dracula_form_monster_2_Adjusted_24
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 545
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6369632fdac0c6408021fa1c5b79136
+      internalID: 1269238809
       vertices: []
       indices: 
       edges: []
@@ -540,26 +645,31 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dracula_form_monster_0: 1024544959
-      Dracula_form_monster_1: -1020243139
-      Dracula_form_monster_10: -2086695903
-      Dracula_form_monster_11: 1574844000
-      Dracula_form_monster_12: -1772735009
-      Dracula_form_monster_13: 2085289558
-      Dracula_form_monster_14: -672402429
-      Dracula_form_monster_15: -486142800
-      Dracula_form_monster_16: -2065502799
-      Dracula_form_monster_17: 867885617
-      Dracula_form_monster_18: -463080533
-      Dracula_form_monster_19: -765086014
-      Dracula_form_monster_2: 718375291
-      Dracula_form_monster_3: 2084730051
-      Dracula_form_monster_4: 1824509239
-      Dracula_form_monster_5: -1073416011
-      Dracula_form_monster_6: 517494961
-      Dracula_form_monster_7: -248798693
-      Dracula_form_monster_8: 1654981846
-      Dracula_form_monster_9: 242087784
+      Dracula_form_monster_2_Adjusted_0: 1122494188
+      Dracula_form_monster_2_Adjusted_1: 1158799492
+      Dracula_form_monster_2_Adjusted_10: 743191965
+      Dracula_form_monster_2_Adjusted_11: 1443216733
+      Dracula_form_monster_2_Adjusted_12: 701814956
+      Dracula_form_monster_2_Adjusted_13: 669662776
+      Dracula_form_monster_2_Adjusted_14: 983202887
+      Dracula_form_monster_2_Adjusted_15: -1120890435
+      Dracula_form_monster_2_Adjusted_16: 1266336129
+      Dracula_form_monster_2_Adjusted_17: -402173321
+      Dracula_form_monster_2_Adjusted_18: -166869204
+      Dracula_form_monster_2_Adjusted_19: -138361334
+      Dracula_form_monster_2_Adjusted_2: 777007892
+      Dracula_form_monster_2_Adjusted_20: 1203781385
+      Dracula_form_monster_2_Adjusted_21: -900736399
+      Dracula_form_monster_2_Adjusted_22: 206398604
+      Dracula_form_monster_2_Adjusted_23: -353433920
+      Dracula_form_monster_2_Adjusted_24: 1269238809
+      Dracula_form_monster_2_Adjusted_3: 748547785
+      Dracula_form_monster_2_Adjusted_4: -893099683
+      Dracula_form_monster_2_Adjusted_5: -1229369358
+      Dracula_form_monster_2_Adjusted_6: -801512309
+      Dracula_form_monster_2_Adjusted_7: 1831930823
+      Dracula_form_monster_2_Adjusted_8: 1377489108
+      Dracula_form_monster_2_Adjusted_9: -15526989
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
