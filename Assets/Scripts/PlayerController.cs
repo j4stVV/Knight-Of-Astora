@@ -7,7 +7,7 @@ using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController Instance;
+    public static PlayerController Instance { get; private set; }
     
     [Header("Player state")]
     public PlayerState playerState;
@@ -102,6 +102,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (playerState.cutscene) return;
+
         horizontalInput = Input.GetAxis("Horizontal");
         // Set speed when player in the air
         playerAnimation.SetFloat("AirSpeedY", playerRb.velocity.y);
@@ -142,6 +144,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (playerState.cutscene) return;
         Recoil();
     }
     private void OnDrawGizmos()
@@ -149,7 +152,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(SideAttackTransform.position, SideAttackArea);
         Gizmos.DrawWireCube(groundCheckPoint.position + new Vector3(-0.05f, 0, 0) + Vector3.down * groundCheckDistance / 2, new Vector3(boxSize.x, boxSize.y, 1));
-        //Debug.DrawLine(groundCheckPoint.position, groundCheckPoint.position + Vector3.down * groundCheckDistance, Color.red);
     }
     //private bool IsOnGround()
     //{
@@ -394,5 +396,22 @@ public class PlayerController : MonoBehaviour
         playerState.isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    public IEnumerator WalkIntoNewScene(Vector2 exitDir, float delay)
+    {
+        if (exitDir.y > 0)
+        {
+            playerRb.velocity = jumpForce * exitDir;
+        }
+        if (exitDir.x != 0)
+        {
+            horizontalInput = exitDir.x > 0 ? 1 : -1;
+
+            Move();
+        }
+        Flip();
+        yield return new WaitForSeconds(delay);
+        playerState.cutscene = false;
     }
 }

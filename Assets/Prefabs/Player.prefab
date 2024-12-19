@@ -191,9 +191,9 @@ MonoBehaviour:
   groundCheckLayer:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckDistance: 0.2
-  jumpForce: 20
   boxSize: {x: 1.8, y: 0.1}
+  groundCheckDistance: 0.2
+  jumpForce: 15
   maxAirJump: 1
   recoilXStep: 5
   recoilXSpeed: 20
