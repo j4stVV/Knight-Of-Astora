@@ -116,7 +116,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &4312455625691553630
 BoxCollider2D:
@@ -150,7 +150,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08648634, y: 1.3518858}
+  m_Offset: {x: -0.08, y: 1.35}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -161,7 +161,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7528524, y: 2.6834679}
+  m_Size: {x: 1.75, y: 2.65}
   m_EdgeRadius: 0
 --- !u!114 &970128306319859662
 MonoBehaviour:
@@ -191,7 +191,7 @@ MonoBehaviour:
   groundCheckLayer:
     serializedVersion: 2
     m_Bits: 8
-  boxSize: {x: 1.8, y: 0.1}
+  boxSize: {x: 1.75, y: 0.1}
   groundCheckDistance: 0.2
   jumpForce: 15
   maxAirJump: 1
@@ -223,7 +223,9 @@ MonoBehaviour:
   recoilingX: 0
   lookingRight: 0
   isHealing: 0
+  alive: 1
   invincible: 0
+  cutscene: 0
 --- !u!95 &56074413742692360
 Animator:
   serializedVersion: 5
@@ -288,7 +290,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

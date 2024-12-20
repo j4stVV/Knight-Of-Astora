@@ -18,22 +18,48 @@ public class Enemy : MonoBehaviour
     protected float damage = 1;
 
     protected Rigidbody2D rb;
+    protected SpriteRenderer sr;
+    protected Animator anim;
+
+    protected enum EnemyStates
+    {
+        Crawler_Idle,
+        Crawler_Flip,
+
+        Bat_Idle, 
+        Bat_Chase,
+        Bat_Stunned, 
+        Bat_Death,
+    } 
+    protected EnemyStates currentEnemyState;
+
+    protected virtual EnemyStates GetCurrentEnemyState
+    {
+        get { return currentEnemyState; }
+        set
+        {
+            if (currentEnemyState != value)
+            {
+                currentEnemyState = value;
+
+                ChangeCurrentAnimation();
+            }
+        }
+    }
     protected virtual void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         player = PlayerController.Instance;
     }
     protected virtual void Update()
     {
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
+        UpdateEnemyState();
         if (isRecoiling)
         {
             if (recoilTimer < recoilLength)
@@ -59,14 +85,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    /*protected void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
-        {
-            Attack();
-        }
-    }*/
-
     protected void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
@@ -74,7 +92,12 @@ public class Enemy : MonoBehaviour
             Attack();
         }
     }
-
+    protected virtual void UpdateEnemyState() { }
+    protected virtual void ChangeCurrentAnimation() { }
+    protected void ChangState(EnemyStates newState)
+    {
+        GetCurrentEnemyState = newState;
+    }
     protected virtual void Attack()
     {
         PlayerController.Instance.TakeDamage(damage);
