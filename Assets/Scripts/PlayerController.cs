@@ -103,8 +103,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (playerState.cutscene) return;
-
-        horizontalInput = Input.GetAxis("Horizontal");
+        if (playerState.alive)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+        }
         // Set speed when player in the air
         playerAnimation.SetFloat("AirSpeedY", playerRb.velocity.y);
 
@@ -120,27 +122,17 @@ public class PlayerController : MonoBehaviour
             playerState.isRolling = false;
             rollCurrentTime = 0f;
         }
-        //Check if player land on ground
-        Grounded();
-
-        //if (!PauseMenu.instance.IsPause)
-        //{
-        //    Flip();
-        //    Move();
-        //    Jump();
-        //    Attack();
-        //    Roll();
-        //    StartDash();
-        //    Heal();
-        //}
-
-        Flip();
-        Move();
-        Jump();
-        Attack();
-        Roll();
-        StartDash();
-        Heal();
+        if (playerState.alive)
+        {
+            Grounded();
+            Flip();
+            Move();
+            Jump();
+            Attack();
+            Roll();
+            StartDash();
+            Heal();
+        }
     }
     private void FixedUpdate()
     {
@@ -299,9 +291,20 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        Health -= Mathf.RoundToInt(damage);
-        healController.SetHealth(Health);
-        StartCoroutine(StopTakingDamage());
+        if (playerState.alive)
+        {
+            Health -= Mathf.RoundToInt(damage);
+            healController.SetHealth(Health);
+            if (Health <= 0)
+            {
+                Health = 0;
+                StartCoroutine(Death());
+            }
+            else
+            {
+                StartCoroutine(StopTakingDamage());
+            }
+        }
     }
     IEnumerator StopTakingDamage()
     {
@@ -397,10 +400,27 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+    IEnumerator Death()
+    {
+        playerState.alive = false;
+        playerAnimation.SetTrigger("Death");
 
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(UIManager.Instance.ActiveDeathScreen());
+    }
+    public void Respawn()
+    {
+        if (!playerState.alive)
+        {
+            playerState.alive = true;
+            Health = maxHealth;
+            healController.SetMaxHealth(maxHealth); 
+            playerAnimation.Play("Idle");
+        }
+    }
     public IEnumerator WalkIntoNewScene(Vector2 exitDir, float delay)
     {
-        if (exitDir.y > 0)
+        if (exitDir.y != 0)
         {
             playerRb.velocity = jumpForce * exitDir;
         }
