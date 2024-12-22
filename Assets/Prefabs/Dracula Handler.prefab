@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1045393010641884086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8357995895100469447}
+  m_Layer: 0
+  m_Name: Attack Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8357995895100469447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045393010641884086}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438281191410538770}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1461896870609757707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6663062980609237699}
+  m_Layer: 0
+  m_Name: Ground Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6663062980609237699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461896870609757707}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.92, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438281191410538770}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5110305075965199313
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +96,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7312586027471395753}
+  - {fileID: 6663062980609237699}
+  - {fileID: 8357995895100469447}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &8660323802277999810
@@ -223,6 +287,21 @@ MonoBehaviour:
   recoilTimer: 0
   player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
   speed: 0
+  SideAttackTransform: {fileID: 8357995895100469447}
+  SideAttackArea: {x: 7, y: 6}
+  attackRange: 0
+  attackTimer: 0
+  facingLeft: 0
+  groundCheckPoint: {fileID: 6663062980609237699}
+  groundCheckLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  boxSize: {x: 0, y: 0}
+  groundCheckDistance: 0
+  attacking: 0
+  attackCountDown: 0
+  fireballAttack: 0
+  FireBall: {fileID: 8554225165291830420, guid: 50a74b32b23369c4b8947e790eef2c84, type: 3}
 --- !u!1 &7419144522728437745
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +313,7 @@ GameObject:
   - component: {fileID: 7312586027471395753}
   - component: {fileID: 6489671252590868945}
   - component: {fileID: 7948034651558297236}
+  - component: {fileID: 4541212248361205902}
   m_Layer: 6
   m_Name: Dracula
   m_TagString: Untagged
@@ -329,3 +409,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4541212248361205902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7419144522728437745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55abe3bf5c645114da6f1055216178b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

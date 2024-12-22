@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected PlayerController player;
     [SerializeField] protected float speed;
 
-    protected float damage = 1;
+    public float damage = 1;
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         player = PlayerController.Instance;
+        anim = GetComponent<Animator>();
     }
     protected virtual void Update()
     {

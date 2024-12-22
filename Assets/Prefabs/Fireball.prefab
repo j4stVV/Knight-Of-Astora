@@ -159,5 +159,7 @@ MonoBehaviour:
   abilitiesState: 0
   damage: 1
   speed: 5
-  xAxis: 0
-  yAxis: 0
+  xAxis: -1
+  yAxis: -1
+  rotationZ: 0
+  target: {fileID: 6597577238280649097, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
