@@ -32,7 +32,7 @@ public class Crawler : Enemy
                 if (Physics2D.Raycast(transform.position + ledgeCheckStartPoint, Vector2.down, ledgeCheckY, whatIsGround)
                     || Physics2D.Raycast(transform.position, wallCheckDir, ledgeCheckX, whatIsGround))
                 {
-                    ChangState(EnemyStates.Crawler_Flip);
+                    ChangeState(EnemyStates.Crawler_Flip);
                 }
                 if (transform.localScale.x > 0)
                 {
@@ -49,7 +49,7 @@ public class Crawler : Enemy
                 {
                     timer = 0;
                     transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-                    ChangState(EnemyStates.Crawler_Idle);
+                    ChangeState(EnemyStates.Crawler_Idle);
                 }
                 break;
         }

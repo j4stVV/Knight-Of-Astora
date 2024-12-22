@@ -11,9 +11,16 @@ public class Bat : Enemy
     protected override void Start()
     {
         base.Start();
-        ChangState(EnemyStates.Bat_Idle);   
+        ChangeState(EnemyStates.Bat_Idle);   
     }
-
+    protected override void Update()
+    {
+        base.Update();
+        if (!PlayerController.Instance.playerState.alive)
+        {
+            ChangeState(EnemyStates.Bat_Idle);
+        }
+    }
     protected override void UpdateEnemyState()
     {
         float distance = Vector2.Distance(transform.position, PlayerController.Instance.transform.position);     
@@ -23,7 +30,7 @@ public class Bat : Enemy
             case EnemyStates.Bat_Idle:
                 if (distance < chaseDistance)
                 {
-                    ChangState(EnemyStates.Bat_Chase);
+                    ChangeState(EnemyStates.Bat_Chase);
                 }
                 break;
             case EnemyStates.Bat_Chase:
@@ -35,12 +42,13 @@ public class Bat : Enemy
                 timer += Time.deltaTime;
                 if (timer > stunDuration)
                 {
-                    ChangState(EnemyStates.Bat_Idle);
+                    ChangeState(EnemyStates.Bat_Idle);
                     timer = 0;
                 }
                 break;
             case EnemyStates.Bat_Death:
-                
+                rb.gravityScale = 12f;
+                Destroy(gameObject, 0.5f);
                 break;
 
         }
@@ -51,11 +59,11 @@ public class Bat : Enemy
         base.EnemyHit(damage, hitDirection, hitForce);
         if (health <= 0)
         {
-            ChangState(EnemyStates.Bat_Death);
+            ChangeState(EnemyStates.Bat_Death);
         }
         else
         {
-            ChangState(EnemyStates.Bat_Stunned);
+            ChangeState(EnemyStates.Bat_Stunned);
         }
     }
 
@@ -63,8 +71,10 @@ public class Bat : Enemy
     {
         anim.SetBool("Idle", GetCurrentEnemyState == EnemyStates.Bat_Idle);
         anim.SetBool("Chase", GetCurrentEnemyState == EnemyStates.Bat_Chase);
-        anim.SetBool("Stunned", GetCurrentEnemyState == EnemyStates.Bat_Stunned);
-
+        if (GetCurrentEnemyState == EnemyStates.Bat_Stunned)
+        {
+            anim.SetTrigger("Stunned");
+        }
         if (GetCurrentEnemyState == EnemyStates.Bat_Death)
         {
             anim.SetTrigger("Death");
