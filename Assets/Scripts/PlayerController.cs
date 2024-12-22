@@ -7,7 +7,7 @@ using static UnityEngine.UI.Image;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController Instance;
+    public static PlayerController Instance { get; private set; }
     
     [Header("Player state")]
     public PlayerState playerState;
@@ -102,7 +102,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        if (playerState.cutscene) return;
+        if (playerState.alive)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+        }
         // Set speed when player in the air
         playerAnimation.SetFloat("AirSpeedY", playerRb.velocity.y);
 
@@ -118,30 +122,21 @@ public class PlayerController : MonoBehaviour
             playerState.isRolling = false;
             rollCurrentTime = 0f;
         }
-        //Check if player land on ground
-        Grounded();
-
-        //if (!PauseMenu.instance.IsPause)
-        //{
-        //    Flip();
-        //    Move();
-        //    Jump();
-        //    Attack();
-        //    Roll();
-        //    StartDash();
-        //    Heal();
-        //}
-
-        Flip();
-        Move();
-        Jump();
-        Attack();
-        Roll();
-        StartDash();
-        Heal();
+        if (playerState.alive)
+        {
+            Grounded();
+            Flip();
+            Move();
+            Jump();
+            Attack();
+            Roll();
+            StartDash();
+            Heal();
+        }
     }
     private void FixedUpdate()
     {
+        if (playerState.cutscene) return;
         Recoil();
     }
     private void OnDrawGizmos()
@@ -149,7 +144,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(SideAttackTransform.position, SideAttackArea);
         Gizmos.DrawWireCube(groundCheckPoint.position + new Vector3(-0.05f, 0, 0) + Vector3.down * groundCheckDistance / 2, new Vector3(boxSize.x, boxSize.y, 1));
-        //Debug.DrawLine(groundCheckPoint.position, groundCheckPoint.position + Vector3.down * groundCheckDistance, Color.red);
     }
     //private bool IsOnGround()
     //{
@@ -297,9 +291,20 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        Health -= Mathf.RoundToInt(damage);
-        healController.SetHealth(Health);
-        StartCoroutine(StopTakingDamage());
+        if (playerState.alive)
+        {
+            Health -= Mathf.RoundToInt(damage);
+            healController.SetHealth(Health);
+            if (Health <= 0)
+            {
+                Health = 0;
+                StartCoroutine(Death());
+            }
+            else
+            {
+                StartCoroutine(StopTakingDamage());
+            }
+        }
     }
     IEnumerator StopTakingDamage()
     {
@@ -394,5 +399,39 @@ public class PlayerController : MonoBehaviour
         playerState.isDashing = false;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+    IEnumerator Death()
+    {
+        playerState.alive = false;
+        playerAnimation.SetTrigger("Death");
+
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(UIManager.Instance.ActiveDeathScreen());
+    }
+    public void Respawn()
+    {
+        if (!playerState.alive)
+        {
+            playerState.alive = true;
+            Health = maxHealth;
+            healController.SetMaxHealth(maxHealth); 
+            playerAnimation.Play("Idle");
+        }
+    }
+    public IEnumerator WalkIntoNewScene(Vector2 exitDir, float delay)
+    {
+        if (exitDir.y != 0)
+        {
+            playerRb.velocity = jumpForce * exitDir;
+        }
+        if (exitDir.x != 0)
+        {
+            horizontalInput = exitDir.x > 0 ? 1 : -1;
+
+            Move();
+        }
+        Flip();
+        yield return new WaitForSeconds(delay);
+        playerState.cutscene = false;
     }
 }

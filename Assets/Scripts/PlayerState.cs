@@ -9,8 +9,9 @@ public class PlayerState : MonoBehaviour
     public bool isJumping = false;
     public bool recoilingX = false;
     public bool lookingRight;
-
     public bool isHealing;
-
+    public bool alive = true;
     public bool invincible = false;
+
+    public bool cutscene = false;
 }

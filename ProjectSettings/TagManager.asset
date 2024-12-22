@@ -8,6 +8,7 @@ TagManager:
   - Attackable
   - Wall
   - Enemy
+  - Water
   layers:
   - Default
   - TransparentFX
