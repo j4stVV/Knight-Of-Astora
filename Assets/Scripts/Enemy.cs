@@ -15,9 +15,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected PlayerController player;
     [SerializeField] protected float speed;
 
-    protected float damage = 1;
+    public float damage = 1;
 
     protected Rigidbody2D rb;
+    protected SpriteRenderer sr;
+    public Animator anim;
+    protected AudioSource audioSource;
+
+    protected enum EnemyStates
+    {
+        //Dracula
+        Dracula_Stage1,
+        Dracula_Stage2
+    }
+
     protected virtual void Start()
     {
         
@@ -27,6 +38,7 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = PlayerController.Instance;
+        anim = GetComponent<Animator>();
     }
     protected virtual void Update()
     {

@@ -161,3 +161,5 @@ MonoBehaviour:
   speed: 5
   xAxis: 0
   yAxis: -1
+  rotationZ: 0
+  target: {fileID: 6597577238280649097, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}

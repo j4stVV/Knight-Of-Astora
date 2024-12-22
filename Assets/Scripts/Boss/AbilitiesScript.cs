@@ -12,6 +12,7 @@ public class AbilitiesScript : MonoBehaviour
     [SerializeField] private int speed;
     [SerializeField] private float xAxis;
     [SerializeField] private float yAxis;
+    [SerializeField] private Transform target;
 
     Animator anim;
 
@@ -32,6 +33,9 @@ public class AbilitiesScript : MonoBehaviour
         {
             return;
         }
+        //Vector3 direction = target.position - transform.position;
+        //transform.eulerAngles = Quaternion.LookRotation(direction).eulerAngles;
+
         transform.position += speed * new Vector3(xAxis, yAxis, 0) * Time.deltaTime;
     }
     private void OnTriggerEnter2D(Collider2D other)
