@@ -191,12 +191,15 @@ MonoBehaviour:
   groundCheckLayer:
     serializedVersion: 2
     m_Bits: 8
+  waterCheckLayer:
+    serializedVersion: 2
+    m_Bits: 16
   boxSize: {x: 1.75, y: 0.1}
   groundCheckDistance: 0.2
   jumpForce: 15
   maxAirJump: 1
   recoilXStep: 5
-  recoilXSpeed: 20
+  recoilXSpeed: 10
   health: 0
   maxHealth: 5
   timeToHeal: 1
@@ -225,7 +228,6 @@ MonoBehaviour:
   isHealing: 0
   alive: 1
   invincible: 0
-  cutscene: 0
 --- !u!95 &56074413742692360
 Animator:
   serializedVersion: 5

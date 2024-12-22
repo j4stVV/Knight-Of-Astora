@@ -5,8 +5,20 @@ using UnityEngine.UI;
 
 public class HealController : MonoBehaviour
 {
-    public Slider slider;
+    public static HealController Instance { get; private set; }
 
+    public Slider slider;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     public void SetMaxHealth(int maxHealth)
     {
         slider.maxValue = maxHealth;

@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionedFromScene: 
+  platformingRespawnPoint: {x: -45, y: -7}
+  respawnPoint: {x: 0, y: 0}
+  bornfire: {fileID: 0}
