@@ -102,7 +102,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (playerState.cutscene) return;
+
+        if (playerState.cutscene || PauseMenu.instance.IsPause) return;
         if (playerState.alive)
         {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -153,7 +154,7 @@ public class PlayerController : MonoBehaviour
     //    }
     //    else return false;
     //}
-    private bool IsOnGround()
+    public bool IsOnGround()
     {
         if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, groundCheckLayer))
         {
