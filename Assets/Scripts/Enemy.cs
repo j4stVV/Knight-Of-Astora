@@ -12,14 +12,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float recoilTimer;
 
 
-    [SerializeField] protected PlayerController player;
+    private PlayerController player;
     [SerializeField] protected float speed;
 
     public float damage = 1;
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
-    protected Animator anim;
+    public Animator anim;
 
     protected enum EnemyStates
     {
@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         player = PlayerController.Instance;
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
     }
     protected virtual void Update()
     {
