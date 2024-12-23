@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class BossScript : Enemy
 {
@@ -24,6 +25,10 @@ public class BossScript : Enemy
     bool stunned, canStun;
     bool alive;
 
+    [Header("Movement")]
+    public float jumpForce;
+    public float jumpDistance; 
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -31,7 +36,7 @@ public class BossScript : Enemy
         Gizmos.DrawWireCube(groundCheckPoint.position + new Vector3(-0.05f, 0, 0) +
             Vector3.down * groundCheckDistance / 2, new Vector3(boxSize.x, boxSize.y, 1));
     }
-    private bool IsOnGround()
+    public bool IsOnGround()
     {
         if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0,
             Vector2.down, groundCheckDistance, groundCheckLayer))
@@ -43,23 +48,32 @@ public class BossScript : Enemy
             return false;
         }
     }
+    //private void Grounded()
+    //{
+    //    if (IsOnGround())
+    //    {
+    //        anim.SetBool("Grounded", true);
+    //        jump = false;
+    //    }
+    //    else
+    //    {
+    //        anim.SetBool("Grounded", false);
+    //        jump = true;
+    //    }
+    //}
     public void Flip()
     {
         if (PlayerController.Instance.transform.position.x < transform.position.x
             && transform.localScale.x > 0)
         {
-            transform.eulerAngles = new Vector2(transform.eulerAngles.x, 180);
+            transform.eulerAngles = new Vector2(transform.eulerAngles.x, 0);
             facingLeft = true;
         }
         else
         {
-            transform.eulerAngles = new Vector2(transform.eulerAngles.x, 0);
+            transform.eulerAngles = new Vector2(transform.eulerAngles.x, 180);
             facingLeft = false;
         }
-    }
-    public void CastSpell()
-    {
-
     }
 
     protected override void Awake()
@@ -73,20 +87,20 @@ public class BossScript : Enemy
     protected override void Start()
     {
         base.Start();
-        //anim = GetComponent<Animator>();
-
+        
         alive = true;
     }
     
     protected override void Update()
     {
         base.Update();
-        if (!isRecoiling)
+        if (!attacking)
         {
-            transform.position = Vector2.MoveTowards
-                (transform.position,
-                new Vector2(PlayerController.Instance.transform.position.x, transform.position.y),
-                speed * Time.deltaTime);
+            attackCountDown -= Time.deltaTime;
+        }
+        if (alive)
+        {
+            //Grounded();
         }
     }
     private void OnCollisionStay2D(Collision2D other)
@@ -95,26 +109,37 @@ public class BossScript : Enemy
     }
     #region attacking
     #region variable
+    [HideInInspector] public bool jump;
     [HideInInspector] public bool attacking;
     [HideInInspector] public float attackCountDown;
+    [HideInInspector] public bool damagedlayer = false;
 
+    [HideInInspector] public Vector2 moveToPosition;
     #endregion
 
     #region Control
     public void AttackHandler()
     {
-        
+        if(currentEnemyState == EnemyStates.Dracula_Stage1)
+        {
+
+        }
     }
     public void ResetAllAttack()
     {
+        attacking = false;
+
         fireballAttack = false;
+
+        StopCoroutine(Barrage());
     }
     #endregion
 
     #region Stage 1
+
     [HideInInspector] public bool fireballAttack;
     public GameObject FireBall;
-
+    
     void BarrageBendDown() 
     {
         attacking = true;

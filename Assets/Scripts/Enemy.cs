@@ -12,14 +12,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float recoilTimer;
 
 
-    private PlayerController player;
-    [SerializeField] protected float speed;
+    [SerializeField] protected PlayerController player;
+    public float speed;
 
     public float damage = 1;
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
-    public Animator anim;
+    protected Animator anim;
 
     protected enum EnemyStates
     {
@@ -30,6 +30,10 @@ public class Enemy : MonoBehaviour
         Bat_Chase,
         Bat_Stunned, 
         Bat_Death,
+
+        //Dracula
+        Dracula_Stage1,
+        Dracula_Stage2
     } 
     protected EnemyStates currentEnemyState;
 
