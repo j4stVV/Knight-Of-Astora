@@ -30,7 +30,7 @@ public class DraEvents : MonoBehaviour
     }
     IEnumerator BarrageAttackTransition()
     {
-         yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
         BossScript.instance.anim.SetBool("Cast", true);
     }
 }

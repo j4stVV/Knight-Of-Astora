@@ -73,7 +73,7 @@ public class BossScript : Enemy
     protected override void Start()
     {
         base.Start();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
 
         alive = true;
     }
