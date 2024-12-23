@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
     public string transitionedFromScene;
 
     public Vector2 platformingRespawnPoint;
-    public Vector2 respawnPoint;
-    [SerializeField] Bornfire bornfire;
-    public static GameManager Instance { get; private set; }
-
+    private string checkpointSceneName; // Tên scene của checkpoint
+    private Vector2 checkpointPosition; // Vị trí checkpoint
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,30 +19,58 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
-        bornfire = FindObjectOfType<Bornfire>();
     }
+
+    public void SetCheckpoint(string sceneName, Vector2 position)
+    {
+        checkpointSceneName = sceneName;
+        checkpointPosition = position;
+
+        Debug.Log($"Checkpoint set! Scene: {sceneName}, Position: {position}");
+    }
+
     public void RespawnPlayer()
     {
-        if (bornfire != null)
+        if (!string.IsNullOrEmpty(checkpointSceneName))
         {
-            if (bornfire.interacted)
+            if (SceneManager.GetActiveScene().name != checkpointSceneName)
             {
-                respawnPoint = bornfire.transform.position;
+                // Chuyển về scene chứa checkpoint
+                SceneManager.LoadScene(checkpointSceneName);
+                StartCoroutine(RespawnAfterSceneLoad());
             }
             else
             {
-                respawnPoint = platformingRespawnPoint;
+                // Hồi sinh tại checkpoint trong scene hiện tại
+                RespawnAtCheckpoint();
             }
         }
         else
         {
-            respawnPoint = platformingRespawnPoint;
+            // Hồi sinh tại vị trí mặc định
+            RespawnAtDefault();
         }
-        PlayerController.Instance.transform.position = respawnPoint;
+    }
+
+    private IEnumerator RespawnAfterSceneLoad()
+    {
+        yield return new WaitForSeconds(0.1f); // Đợi scene load xong
+        RespawnAtCheckpoint();
+    }
+
+    private void RespawnAtCheckpoint()
+    {
+        PlayerController.Instance.transform.position = checkpointPosition;
         StartCoroutine(UIManager.Instance.DeactiveDeathScreen());
         PlayerController.Instance.Respawn();
     }
-    
+
+    private void RespawnAtDefault()
+    {
+        PlayerController.Instance.transform.position = platformingRespawnPoint;
+        StartCoroutine(UIManager.Instance.DeactiveDeathScreen());
+        PlayerController.Instance.Respawn();
+    }
 }

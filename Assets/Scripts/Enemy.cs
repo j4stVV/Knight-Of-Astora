@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
-    [HideInInspector] public Animator anim;
+    protected Animator anim;
 
     protected enum EnemyStates
     {
@@ -60,11 +60,10 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         player = PlayerController.Instance;
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
     }
     protected virtual void Update()
     {
-        UpdateEnemyState();
         if (isRecoiling)
         {
             if (recoilTimer < recoilLength)
@@ -77,6 +76,10 @@ public class Enemy : MonoBehaviour
                 recoilTimer = 0;
             }
         }
+        else
+        {
+            UpdateEnemyState();
+        }
     }
 
     public virtual void EnemyHit(float damage, Vector2 hitDirection, float hitForce)
@@ -85,7 +88,7 @@ public class Enemy : MonoBehaviour
         
         if (!isRecoiling)
         {
-            rb.AddForce(hitForce * recoilFactor * hitDirection);
+            rb.velocity = hitForce * recoilFactor * hitDirection;
             isRecoiling = true;
         }
     }
@@ -99,7 +102,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void UpdateEnemyState() { }
     protected virtual void ChangeCurrentAnimation() { }
-    protected void ChangState(EnemyStates newState)
+    protected void ChangeState(EnemyStates newState)
     {
         GetCurrentEnemyState = newState;
     }

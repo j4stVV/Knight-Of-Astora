@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private LayerMask groundCheckLayer;
+    [SerializeField] private LayerMask waterCheckLayer;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float jumpForce;
@@ -57,17 +58,17 @@ public class PlayerController : MonoBehaviour
     [Header("Heal")]
     //Health
     public int health;
-    public int maxHealth;
+    [SerializeField] private int maxHealth;
     private float healTimer;
     [SerializeField] float timeToHeal;
-    public HealController healController;
+    [SerializeField] private HealController healController;
 
     [Header("Mana")]
     //Mana
     [SerializeField] float mana;
     [SerializeField] float manaDrainSpeed;
     [SerializeField] float manaGain;
-    public ManaController manaController;
+    [SerializeField] private ManaController manaController;
 
     private Rigidbody2D playerRb;
     private Animator playerAnimation;
@@ -78,6 +79,8 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<Animator>();
         playerBC = GetComponent<BoxCollider2D>();
+        healController = HealController.Instance;
+        manaController = ManaController.Instance;
 
         gravity = playerRb.gravityScale;
 
@@ -85,7 +88,7 @@ public class PlayerController : MonoBehaviour
         healController.SetMaxHealth(Health);
 
         Mana = mana;
-        manaController.SetMaxMana(Mana);
+        manaController.SetMana(Mana);
     }
 
     private void Awake()
@@ -98,12 +101,12 @@ public class PlayerController : MonoBehaviour
         {
             Instance = this;
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
     {
-
-        if (playerState.cutscene || PauseMenu.instance.IsPause) return;
+        //if (playerState.cutscene) return;
         if (playerState.alive)
         {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -125,6 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         if (playerState.alive)
         {
+            Water();
             Grounded();
             Flip();
             Move();
@@ -137,7 +141,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (playerState.cutscene) return;
+        //if (playerState.cutscene) return;
         Recoil();
     }
     private void OnDrawGizmos()
@@ -162,7 +166,13 @@ public class PlayerController : MonoBehaviour
         }
         else return false;
     }
-
+    private void Water()
+    {
+        if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, waterCheckLayer))
+        {
+            StartCoroutine(Death());
+        }
+    }
     private void Grounded()
     {
         if (IsOnGround())
@@ -243,23 +253,22 @@ public class PlayerController : MonoBehaviour
             playerAnimation.SetTrigger("Attack" + currentAttack);
             timeSinceAttack = 0f;
 
-            Hit(SideAttackTransform, SideAttackArea, ref playerState.recoilingX, recoilXSpeed);
+            int recoilLeftOrRight = playerState.lookingRight ? 1 : -1;
+            Hit(SideAttackTransform, SideAttackArea, ref playerState.recoilingX, Vector2.right * recoilLeftOrRight, recoilXSpeed);
         }
     }
-    void Hit(Transform attackTransform, Vector2 attackArea, ref bool recoilDir, float recoilStrength)
+    void Hit(Transform attackTransform, Vector2 attackArea, ref bool recoilBool, Vector2 recoilDir, float recoilStrength)
     {
         Collider2D[] objectsToHit = Physics2D.OverlapBoxAll(attackTransform.position, attackArea, 0, attackableLayer);
         if (objectsToHit.Length > 0)
         {
-            recoilDir = true;
+            recoilBool = true;
         }
         for (int i = 0; i < objectsToHit.Length; i++)
         {
             if (objectsToHit[i].GetComponent<Enemy>() != null)
             {
-                objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, 
-                    (-transform.position + objectsToHit[i].transform.position).normalized, 
-                    recoilStrength);
+                objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, recoilDir, recoilStrength);
                 if (objectsToHit[i].CompareTag("Enemy"))
                 {
                     Mana += manaGain;
@@ -415,7 +424,7 @@ public class PlayerController : MonoBehaviour
         {
             playerState.alive = true;
             Health = maxHealth;
-            healController.SetMaxHealth(maxHealth); 
+            healController.SetMaxHealth(maxHealth);
             playerAnimation.Play("Idle");
         }
     }
@@ -433,6 +442,6 @@ public class PlayerController : MonoBehaviour
         }
         Flip();
         yield return new WaitForSeconds(delay);
-        playerState.cutscene = false;
+        //playerState.cutscene = false;
     }
 }
