@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
-    protected Animator anim;
+    public Animator anim;
 
     protected enum EnemyStates
     {
