@@ -23,6 +23,7 @@ public class AbilitiesScript : MonoBehaviour
     }
     void Start()
     {
+        Destroy(gameObject, 3f);
         anim = GetComponent<Animator>();
         abilitiesState = false;
     }
@@ -33,10 +34,8 @@ public class AbilitiesScript : MonoBehaviour
         {
             return;
         }
-        //Vector3 direction = target.position - transform.position;
-        //transform.eulerAngles = Quaternion.LookRotation(direction).eulerAngles;
-
-        transform.position += speed * new Vector3(xAxis, yAxis, 0) * Time.deltaTime;
+        int direction = BossScript.instance.facingLeft ? 1 : -1;
+        transform.position += speed * new Vector3(xAxis * direction, yAxis, 0) * Time.deltaTime;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

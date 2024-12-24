@@ -97,6 +97,7 @@ Transform:
   - {fileID: 7312586027471395753}
   - {fileID: 6663062980609237699}
   - {fileID: 8357995895100469447}
+  - {fileID: 8226791564031374196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &912850508653267517
@@ -169,7 +170,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 10}
+  m_Size: {x: 7, y: 10}
   m_EdgeRadius: 0
 --- !u!114 &1282497809294076176
 MonoBehaviour:
@@ -187,11 +188,10 @@ MonoBehaviour:
   recoilLength: 1
   recoilFactor: 1
   isRecoiling: 0
-  recoilTimer: 1
+  recoilTimer: 0.5
   player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
   speed: 10
   damage: 1
-  anim: {fileID: 0}
   SideAttackTransform: {fileID: 8357995895100469447}
   SideAttackArea: {x: 7, y: 6}
   attackRange: 5
@@ -205,13 +205,45 @@ MonoBehaviour:
   groundCheckDistance: 1
   jumpForce: 10
   jumpDistance: 0
+  abilitiesSpawn: {fileID: 8226791564031374196}
   jump: 0
   attacking: 0
   attackCountDown: 0
   damagedlayer: 0
-  moveToPosition: {x: 0, y: 0}
   fireballAttack: 0
   FireBall: {fileID: 8554225165291830420, guid: 50a74b32b23369c4b8947e790eef2c84, type: 3}
+  trippleAttack: 0
+--- !u!1 &5845340750310392631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8226791564031374196}
+  m_Layer: 0
+  m_Name: FireballSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8226791564031374196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5845340750310392631}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.99, y: 2.22, z: -0.056919392}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438281191410538770}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7419144522728437745
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,4 +371,3 @@ MonoBehaviour:
   player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
   speed: 3
   damage: 1
-  anim: {fileID: 0}

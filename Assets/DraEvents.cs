@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class DraEvents : Enemy
 {
-    private void Hit(Transform attackTransform, Vector2 attackArea)
-    {
-        Collider2D[] objectsToHit = Physics2D.OverlapBoxAll(attackTransform.position, attackArea, 0);
-        for (int i = 0; i < objectsToHit.Length; i++)
-        {
-            if (objectsToHit[i].GetComponent<PlayerController>() != null) 
-            {
-                objectsToHit[i].GetComponent<PlayerController>().TakeDamage(BossScript.instance.damage);
-            }
-        }
-    }
-
     void BendDownCheck()
     {
-        if (BossScript.instance.fireballAttack)
+        if (BossScript.instance.fireballAttack || BossScript.instance.trippleAttack)
             StartCoroutine(BarrageAttackTransition());
     }
     void BarrageOrOutBreak()
@@ -27,10 +15,19 @@ public class DraEvents : Enemy
         {
             BossScript.instance.StartCoroutine(BossScript.instance.Barrage());
         }
+        else if (BossScript.instance.trippleAttack)
+        {
+            BossScript.instance.StartCoroutine(BossScript.instance.TripleBarrage());
+        }
+        
     }
     IEnumerator BarrageAttackTransition()
     {
         yield return new WaitForSeconds(1f);
         anim.SetBool("Cast", true);
+    }
+    void DestroyAfterDeath()
+    {
+        BossScript.instance.DestroyAfterDeath();
     }
 }
