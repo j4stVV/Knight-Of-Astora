@@ -1,81 +1,78 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Boss_Jump : StateMachineBehaviour
 {
     Rigidbody2D rb;
+
+    bool isGrounded = false;
+    bool isFalling = false;
+    bool isJumping = false;
+    bool isIdle = true;
+
+    float xForce;
+    float yForce;
+
+    float lastYPos;
+
+    float _distance;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb = animator.GetComponentInParent<Rigidbody2D>();
-        BossScript.instance.jumpDistance = Vector2.Distance(PlayerController.Instance.transform.position,
-            rb.transform.position);
+        _distance = Mathf.Abs(PlayerController.Instance.transform.position.x - rb.position.x);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         TargetPlayerPosition(animator);
-
+        
         if (BossScript.instance.attackCountDown <= 0)
         {
             BossScript.instance.AttackHandler();
             BossScript.instance.attackCountDown = BossScript.instance.attackTimer;
         }
     }
+    
     void TargetPlayerPosition(Animator animator)
     {
+        
         if (PlayerController.Instance.IsOnGround())
         {
             BossScript.instance.Flip();
-            float xForce;
-            float yForce;
-            if (BossScript.instance.facingLeft)
-            {
-                xForce = -BossScript.instance.jumpDistance;
-            }
-            else 
-            {
-                xForce = BossScript.instance.jumpDistance;
-            }
+            xForce = (BossScript.instance.jumpDistance - 6f) / 2;
             yForce = BossScript.instance.jumpForce;
 
-            rb.velocity = new Vector2(xForce, yForce);
+            int direction = 0;
+            if (BossScript.instance.facingLeft)
+            {
+                direction = -1;
+            }
+            else
+            {
+                direction = 1;
+            }
+
+            if (_distance <= BossScript.instance.jumpDistance / 2)
+            {
+                rb.velocity = new Vector2(xForce * direction, 0);
+            }
+            else
+            {
+                rb.velocity = new Vector2(xForce * direction, yForce);
+            }
         }
-        float _distance = PlayerController.Instance.transform.position.x - rb.position.x;
         if (_distance <= BossScript.instance.attackRange)
         {
             animator.SetBool("Jump", false);
         }
     }
-    //void SpaceOut(Animator animator)
-    //{
-    //    if (PlayerController.Instance.IsOnGround())
-    //    {
-    //        BossScript.instance.Flip();
-    //        float xForce;
-    //        float yForce;
-    //        if (BossScript.instance.facingLeft)
-    //        {
-    //            xForce = -BossScript.instance.jumpDistance;
-    //        }
-    //        else
-    //        {
-    //            xForce = BossScript.instance.jumpDistance;
-    //        }
-    //        yForce = BossScript.instance.jumpForce;
-            
-    //        rb.velocity = new Vector2(xForce, yForce);
-    //    }
-
-    //    float _distance = PlayerController.Instance.transform.position.x - rb.position.x;
-    //    if (_distance <= BossScript.instance.attackRange)
-    //    {
-    //        animator.SetBool("Jump", false);
-    //    }
-    //}
+    
     void BarrageAttack()
     {
         if (BossScript.instance.FireBall)
@@ -86,7 +83,7 @@ public class Boss_Jump : StateMachineBehaviour
             rb.MovePosition(_newPos);
 
             float _distance = Vector2.Distance(rb.position, _newPos);
-            if( _distance > 12f && _distance < 17f)
+            if( _distance > 12f && _distance < 17f && !BossScript.instance.IsOnGround())
             {
                 BossScript.instance.Barrage();
             }

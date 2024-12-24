@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DraEvents : MonoBehaviour
+public class DraEvents : Enemy
 {
     private void Hit(Transform attackTransform, Vector2 attackArea)
     {
@@ -31,6 +31,6 @@ public class DraEvents : MonoBehaviour
     IEnumerator BarrageAttackTransition()
     {
         yield return new WaitForSeconds(1f);
-        BossScript.instance.anim.SetBool("Cast", true);
+        anim.SetBool("Cast", true);
     }
 }
