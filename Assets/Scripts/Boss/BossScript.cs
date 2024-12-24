@@ -48,19 +48,6 @@ public class BossScript : Enemy
             return false;
         }
     }
-    //private void Grounded()
-    //{
-    //    if (IsOnGround())
-    //    {
-    //        anim.SetBool("Grounded", true);
-    //        jump = false;
-    //    }
-    //    else
-    //    {
-    //        anim.SetBool("Grounded", false);
-    //        jump = true;
-    //    }
-    //}
     public void Flip()
     {
         if (PlayerController.Instance.transform.position.x < transform.position.x
@@ -87,7 +74,6 @@ public class BossScript : Enemy
     protected override void Start()
     {
         base.Start();
-        
         alive = true;
     }
     
@@ -100,7 +86,7 @@ public class BossScript : Enemy
         }
         if (alive)
         {
-            //Grounded();
+            
         }
     }
     private void OnCollisionStay2D(Collision2D other)
