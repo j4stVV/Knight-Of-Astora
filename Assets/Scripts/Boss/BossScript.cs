@@ -27,7 +27,10 @@ public class BossScript : Enemy
 
     [Header("Movement")]
     public float jumpForce;
-    public float jumpDistance; 
+    public float jumpDistance;
+
+    [Header("Abilities")]
+    [SerializeField] private Transform abilitiesSpawn;
 
     private void OnDrawGizmos()
     {
@@ -62,6 +65,23 @@ public class BossScript : Enemy
             facingLeft = false;
         }
     }
+    protected override void UpdateEnemyState()
+    {
+        if (PlayerController.Instance != null) 
+        {
+            switch (GetCurrentEnemyState)
+            {
+                case EnemyStates.Dracula_Stage1:
+                    attackTimer = 3f;
+                    break;
+                case EnemyStates.Dracula_Stage2:
+                    attackTimer = 2f;
+                    break;
+
+            }
+        }
+
+    }
 
     protected override void Awake()
     {
@@ -74,19 +94,22 @@ public class BossScript : Enemy
     protected override void Start()
     {
         base.Start();
+        anim = GetComponentInChildren<Animator>();
+        ChangeState(EnemyStates.Dracula_Stage1);
         alive = true;
     }
     
     protected override void Update()
     {
         base.Update();
+
+        if (health <= 0 && alive)
+        {
+            Death(0);
+        }
         if (!attacking)
         {
             attackCountDown -= Time.deltaTime;
-        }
-        if (alive)
-        {
-            
         }
     }
     private void OnCollisionStay2D(Collision2D other)
@@ -100,24 +123,35 @@ public class BossScript : Enemy
     [HideInInspector] public float attackCountDown;
     [HideInInspector] public bool damagedlayer = false;
 
-    [HideInInspector] public Vector2 moveToPosition;
     #endregion
 
     #region Control
     public void AttackHandler()
     {
-        if(currentEnemyState == EnemyStates.Dracula_Stage1)
+        if (currentEnemyState == EnemyStates.Dracula_Stage1)
         {
-
+            if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
+            {
+                BarrageBendDown();
+            }
+        }
+        if (currentEnemyState == EnemyStates.Dracula_Stage2)
+        {
+            if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
+            {
+                TripplelAttack();
+            }
         }
     }
     public void ResetAllAttack()
     {
         attacking = false;
 
-        fireballAttack = false;
-
         StopCoroutine(Barrage());
+        StopCoroutine(TripleBarrage());
+
+        fireballAttack = false;
+        trippleAttack = false;
     }
     #endregion
 
@@ -136,49 +170,90 @@ public class BossScript : Enemy
     public IEnumerator Barrage()
     {
         rb.velocity = Vector2.zero;
-        float currentAngle = 15f;
-        GameObject projectile = Instantiate(FireBall, transform.position, Quaternion.identity);
+        float currentAngle = 0f;
+        GameObject projectile = Instantiate(FireBall, abilitiesSpawn.position, Quaternion.identity);
         if (facingLeft)
         {
             projectile.transform.eulerAngles =new Vector3(projectile.transform.eulerAngles.x, 
-                180, currentAngle);
+                0, currentAngle);
         }
         else
         {
             projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x, 
-                0, currentAngle);
+                180, currentAngle);
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         ResetAllAttack();
+    }
+
+    #endregion
+
+    #region Stage_2
+    [HideInInspector] public bool trippleAttack;
+    void TripplelAttack()
+    {
+        attacking = true;
+        rb.velocity = Vector2.zero;
+        trippleAttack = true;
+        anim.SetTrigger("TrippleFireball");
     }
     public IEnumerator TripleBarrage()
     {
         rb.velocity = Vector2.zero;
-        float currentAngle = 15f;
-        for(int i=0; i< 3; i++)
+        float currentAngle = 0f;
+        for (int i = 0; i < 3; i++)
         {
-            GameObject projectile = Instantiate(FireBall, transform.position, Quaternion.identity);
+            GameObject projectile = Instantiate(FireBall, abilitiesSpawn.position, Quaternion.Euler(0,0,currentAngle));
             if (facingLeft)
-            {
-                projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x,
-                    180, currentAngle);
-            }
-            else
             {
                 projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x,
                     0, currentAngle);
             }
+            else
+            {
+                projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x,
+                    180, currentAngle);
+            }
+            currentAngle += 15f;
             yield return new WaitForSeconds(0.4f);
         }
-        
+
         yield return new WaitForSeconds(0.1f);
+        anim.SetBool("Cast", false);
         ResetAllAttack();
     }
-
+    
     #endregion
 
     #endregion
-
+    public void EnemyGetsHit(float dmgDone, Vector2 hitDirection, float hitForce)
+    {
+        #region healt to state
+        if(health > 5)
+        {
+            ChangeState(EnemyStates.Dracula_Stage1);
+        }
+        if (health <= 5)
+        {
+            ChangeState(EnemyStates.Dracula_Stage2);
+        }
+        if(health <= 0)
+        {
+            Death(0);
+        }
+        #endregion
+    }
+    protected void Death(float destroyTime)
+    {
+        ResetAllAttack();
+        alive = false;
+        rb.velocity = new Vector2(rb.velocity.x, -25);
+        anim.SetTrigger("Die");
+    }
+    public void DestroyAfterDeath()
+    {
+        Destroy(gameObject);
+    }
 
 
 }

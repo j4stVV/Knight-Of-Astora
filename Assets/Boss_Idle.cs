@@ -11,26 +11,26 @@ public class Boss_Idle : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb = animator.GetComponentInParent<Rigidbody2D>();
-        Debug.Log("-----1-----");
-        Debug.Log("Hello");
-
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb.velocity = Vector2.zero;
+        BossScript.instance.Flip();
         JumpToPlayer(animator);
 
         if (BossScript.instance.attackCountDown <= 0)
         {
+            Debug.Log("count down: " + BossScript.instance.attackCountDown);
             BossScript.instance.AttackHandler();
-            BossScript.instance.attackCountDown = BossScript.instance.attackTimer;
+            //BossScript.instance.attackCountDown = BossScript.instance.attackTimer;
+            BossScript.instance.attackCountDown = Random.Range(BossScript.instance.attackTimer - 1,
+                BossScript.instance.attackTimer + 1);
         }
         Boss_Fall.Instance.Grounded(animator);
     }
     
-
     void JumpToPlayer(Animator animator)
     {
         float _distance = Mathf.Abs(PlayerController.Instance.transform.position.x - rb.position.x);   
@@ -44,7 +44,8 @@ public class Boss_Idle : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        BossScript.instance.moveToPosition = PlayerController.Instance.transform.position;
+        BossScript.instance.jumpDistance = Mathf.Abs(PlayerController.Instance.transform.position.x 
+            - rb.position.x - BossScript.instance.attackRange);
     }
 
 }
