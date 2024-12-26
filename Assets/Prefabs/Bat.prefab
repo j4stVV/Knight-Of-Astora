@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -938153540, guid: 7742948b0c4a52d4e9a8e24cfc8ac440, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -100,13 +100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca393e639bbe647489051d5633c92e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 5
   recoilLength: 0.3
   recoilFactor: 0.5
   isRecoiling: 0
   recoilTimer: 0
   player: {fileID: 0}
-  speed: 40
+  speed: 10
+  damage: 1
   chaseDistance: 15
   stunDuration: 1
 --- !u!61 &4128144392376899593
