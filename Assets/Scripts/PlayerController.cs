@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         if (playerState.alive)
         {
-            Water();
+            Water();    
             Grounded();
             Flip();
             Move();
@@ -379,7 +379,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Roll()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Mana >= 0.3f && IsOnGround() && !playerState.isRolling && !playerState.isDashing && !playerState.isHealing)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Mana >= 0.3f && IsOnGround() && !playerState.isRolling 
+            && !playerState.isDashing && !playerState.isHealing)
         {
             playerState.isRolling = true;
             playerAnimation.SetTrigger("Roll");
