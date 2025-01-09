@@ -10,22 +10,19 @@ public class AbilitiesScript : MonoBehaviour
     [SerializeField] private bool abilitiesState;
     [SerializeField] private float damage;
     [SerializeField] private int speed;
-    [SerializeField] private float xAxis;
-    [SerializeField] private float yAxis;
-    [SerializeField] private Transform target;
+    public float xAxis;
+    public float yAxis;
 
-    Animator anim;
+    private Animator anim;
+    private int direction;
 
     // Start is called before the first frame update
-    private void Awake()
-    {
-        
-    }
     void Start()
     {
         Destroy(gameObject, 3f);
         anim = GetComponent<Animator>();
         abilitiesState = false;
+        direction = BossScript.instance.facingLeft ? 1 : -1;
     }
 
     private void FixedUpdate()
@@ -34,18 +31,18 @@ public class AbilitiesScript : MonoBehaviour
         {
             return;
         }
-        int direction = BossScript.instance.facingLeft ? 1 : -1;
         transform.position += speed * new Vector3(xAxis * direction, yAxis, 0) * Time.deltaTime;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
+            //if(PlayerController.Instance.)
             abilitiesState = true;
             anim.SetBool(abilitiesName, abilitiesState);
             other.GetComponent<PlayerController>().TakeDamage(damage);
         }
-
+            
         if (other.tag == "Ground" || other.tag == "Wall")
         {
             abilitiesState = true;
