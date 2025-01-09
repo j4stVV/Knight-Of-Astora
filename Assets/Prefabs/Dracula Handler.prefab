@@ -192,9 +192,10 @@ MonoBehaviour:
   player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
   speed: 10
   damage: 1
+  anim: {fileID: 0}
   SideAttackTransform: {fileID: 8357995895100469447}
   SideAttackArea: {x: 7, y: 6}
-  attackRange: 5
+  attackRange: 10
   attackTimer: 5
   facingLeft: 0
   groundCheckPoint: {fileID: 6663062980609237699}
@@ -371,3 +372,4 @@ MonoBehaviour:
   player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
   speed: 3
   damage: 1
+  anim: {fileID: 0}

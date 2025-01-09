@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Boss_Fall : StateMachineBehaviour
@@ -16,11 +17,12 @@ public class Boss_Fall : StateMachineBehaviour
     {
         Grounded(animator);
     }
-    public void Grounded(Animator animator)
+    public async void Grounded(Animator animator)
     {
         if (BossScript.instance.IsOnGround())
         {
             animator.SetBool("Grounded", true);
+            await Task.Delay(2000);
         }
         else
         {

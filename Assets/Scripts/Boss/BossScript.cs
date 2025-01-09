@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -128,20 +130,21 @@ public class BossScript : Enemy
     #region Control
     public void AttackHandler()
     {
-        if (currentEnemyState == EnemyStates.Dracula_Stage1)
-        {
-            if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
-            {
-                BarrageBendDown();
-            }
-        }
-        if (currentEnemyState == EnemyStates.Dracula_Stage2)
-        {
-            if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
-            {
-                TripplelAttack();
-            }
-        }
+        //if (currentEnemyState == EnemyStates.Dracula_Stage1)
+        //{
+        //    if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
+        //    {
+        //        BarrageBendDown();
+        //    }
+        //}
+        //if (currentEnemyState == EnemyStates.Dracula_Stage2)
+        //{
+        //    if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
+        //    {
+        //        TripplelAttack();
+        //    }
+        //}
+        TripplelAttack();
     }
     public void ResetAllAttack()
     {
@@ -199,11 +202,18 @@ public class BossScript : Enemy
     }
     public IEnumerator TripleBarrage()
     {
+        //Set boss velocity to 0
         rb.velocity = Vector2.zero;
+        
         float currentAngle = 0f;
         for (int i = 0; i < 3; i++)
         {
-            GameObject projectile = Instantiate(FireBall, abilitiesSpawn.position, Quaternion.Euler(0,0,currentAngle));
+            //Initiate fireball at abilities spawn position with currentAngle
+            GameObject projectile = Instantiate(FireBall, abilitiesSpawn.position, Quaternion.Euler( 0, 0, currentAngle));
+            AbilitiesScript abilitiesScript = projectile.GetComponent<AbilitiesScript>();
+            float currentToRadian = (45f + currentAngle) * Mathf.Deg2Rad;
+            abilitiesScript.xAxis = -(Mathf.Sqrt(2) * Mathf.Cos(currentToRadian));
+            abilitiesScript.yAxis = -(Mathf.Sqrt(2) * Mathf.Sin(currentToRadian));
             if (facingLeft)
             {
                 projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x,
@@ -214,8 +224,8 @@ public class BossScript : Enemy
                 projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x,
                     180, currentAngle);
             }
-            currentAngle += 15f;
-            yield return new WaitForSeconds(0.4f);
+            currentAngle -= 10f;
+            yield return new WaitForSeconds(0.3f);
         }
 
         yield return new WaitForSeconds(0.1f);
@@ -226,8 +236,9 @@ public class BossScript : Enemy
     #endregion
 
     #endregion
-    public void EnemyGetsHit(float dmgDone, Vector2 hitDirection, float hitForce)
+    public override void EnemyHit(float dmgDone, Vector2 hitDirection, float hitForce)
     {
+        base.EnemyHit(dmgDone, hitDirection, hitForce);
         #region healt to state
         if(health > 5)
         {

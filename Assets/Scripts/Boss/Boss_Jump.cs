@@ -20,9 +20,11 @@ public class Boss_Jump : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        distanceX =Mathf.Abs(Mathf.Abs(PlayerController.Instance.transform.position.x -
+        //get range between player and boss minus half of attack range
+        //so that boss can get closer to player
+        distanceX = Mathf.Abs(Mathf.Abs(PlayerController.Instance.transform.position.x -
             rb.position.x) - BossScript.instance.attackRange / 2);
-        //distanceX =Mathf.Abs(PlayerController.Instance.transform.position.x - rb.position.x);
+
         TargetPlayerPosition(animator);
         
         if (BossScript.instance.attackCountDown <= 0)
@@ -53,26 +55,6 @@ public class Boss_Jump : StateMachineBehaviour
             animator.SetBool("Jump", false);
         }
     }
-    //void ZoneOutPlayer(Animator animator)
-    //{
-    //    if (PlayerController.Instance.IsOnGround())
-    //    {
-    //        float gravity = rb.gravityScale;
-    //        float maxHeight = BossScript.instance.jumpForce;
-    //        float timeToPeak = Mathf.Sqrt(2 * maxHeight / gravity);
-    //        float totalTime = timeToPeak * 2;
-    //        int direction = BossScript.instance.facingLeft ? 1 : -1;
-    //        float velocityX = Mathf.Abs(rb.position.x - BossScript.instance.attackRange) * direction / totalTime;
-    //        float velocityY = Mathf.Sqrt(2 * gravity * maxHeight);
-    //        rb.velocity = new Vector2(velocityX, velocityY);        //-> Important!!
-
-    //        rb.AddForce(rb.velocity, ForceMode2D.Impulse);
-    //    }
-    //    if (BossScript.instance.attackCountDown > 0)
-    //    {
-    //        animator.SetBool("Jump", false);
-    //    }
-    //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

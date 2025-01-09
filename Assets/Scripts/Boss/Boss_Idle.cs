@@ -18,11 +18,10 @@ public class Boss_Idle : StateMachineBehaviour
     {
         rb.velocity = Vector2.zero;
         BossScript.instance.Flip();
-        JumpToPlayer(animator);
+        //JumpToPlayer(animator);
 
         if (BossScript.instance.attackCountDown <= 0)
         {
-            Debug.Log("count down: " + BossScript.instance.attackCountDown);
             BossScript.instance.AttackHandler();
             //BossScript.instance.attackCountDown = BossScript.instance.attackTimer;
             BossScript.instance.attackCountDown = Random.Range(BossScript.instance.attackTimer - 1,
