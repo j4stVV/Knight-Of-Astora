@@ -37,12 +37,13 @@ public class AbilitiesScript : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            //if(PlayerController.Instance.)
-            abilitiesState = true;
-            anim.SetBool(abilitiesName, abilitiesState);
-            other.GetComponent<PlayerController>().TakeDamage(damage);
-        }
-            
+            if (!PlayerController.Instance.playerState.invincible)
+            {
+                abilitiesState = true;
+                anim.SetBool(abilitiesName, abilitiesState);
+                other.GetComponent<PlayerController>().TakeDamage(damage);
+            }
+        }   
         if (other.tag == "Ground" || other.tag == "Wall")
         {
             abilitiesState = true;

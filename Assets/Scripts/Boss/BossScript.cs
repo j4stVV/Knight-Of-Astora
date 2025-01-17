@@ -144,7 +144,8 @@ public class BossScript : Enemy
         //        TripplelAttack();
         //    }
         //}
-        TripplelAttack();
+        //TripplelAttack();
+        Lunge();
     }
     public void ResetAllAttack()
     {
@@ -152,6 +153,7 @@ public class BossScript : Enemy
 
         StopCoroutine(Barrage());
         StopCoroutine(TripleBarrage());
+        StopCoroutine(Lunge());
 
         fireballAttack = false;
         trippleAttack = false;
@@ -193,12 +195,23 @@ public class BossScript : Enemy
 
     #region Stage_2
     [HideInInspector] public bool trippleAttack;
+    [HideInInspector] public bool lungeAttack;
+    [HideInInspector] public bool dmgPlayer = false;
     void TripplelAttack()
     {
         attacking = true;
         rb.velocity = Vector2.zero;
         trippleAttack = true;
         anim.SetTrigger("TrippleFireball");
+    }
+    IEnumerator Lunge()
+    {
+        attacking = true;
+        anim.SetBool("Lunge", true);
+        yield return new WaitForSeconds(0.25f);
+        anim.SetBool("Lunge", false);
+        dmgPlayer = false;
+        ResetAllAttack();
     }
     public IEnumerator TripleBarrage()
     {
