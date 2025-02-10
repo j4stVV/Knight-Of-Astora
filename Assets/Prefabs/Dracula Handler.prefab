@@ -214,6 +214,8 @@ MonoBehaviour:
   fireballAttack: 0
   FireBall: {fileID: 8554225165291830420, guid: 50a74b32b23369c4b8947e790eef2c84, type: 3}
   trippleAttack: 0
+  lungeAttack: 0
+  dmgPlayer: 0
 --- !u!1 &5845340750310392631
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +275,7 @@ Transform:
   m_GameObject: {fileID: 7419144522728437745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

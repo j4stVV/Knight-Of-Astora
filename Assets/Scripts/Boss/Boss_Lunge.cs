@@ -8,7 +8,7 @@ public class Boss_Lunge : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        rb = animator.GetComponent<Rigidbody2D>();
+        rb = animator.GetComponentInParent<Rigidbody2D>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -17,6 +17,7 @@ public class Boss_Lunge : StateMachineBehaviour
         rb.gravityScale = 0;
         int dir = BossScript.instance.facingLeft ? 1 : -1;
         rb.velocity = new Vector2( dir * BossScript.instance.speed * 5, 0f);
+        //rb.transform.x += 
         if (Vector2.Distance(rb.position, PlayerController.Instance.transform.position) <= BossScript.instance.attackRange
             && !BossScript.instance.dmgPlayer)
         {
