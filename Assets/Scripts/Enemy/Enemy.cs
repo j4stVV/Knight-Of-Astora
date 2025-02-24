@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float recoilLength;
     [SerializeField] protected float recoilFactor;
     [SerializeField] protected bool isRecoiling = false;
+    [SerializeField] protected bool isFacingRight = false;
 
     [SerializeField] protected float recoilTimer;
 
@@ -19,13 +21,24 @@ public class Enemy : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
-    public Animator anim;
+    protected Animator anim;
 
     protected enum EnemyStates
     {
+        //Skeleton
+        Ske_Idle,
+        Ske_Patrol,
+        Ske_Chase,
+        Ske_ReturnToStart,
+        Ske_Attack,
+        Ske_Stunned,
+        Ske_Death,
+
+        //Crawler
         Crawler_Idle,
         Crawler_Flip,
 
+        //Bat
         Bat_Idle, 
         Bat_Chase,
         Bat_Stunned, 
@@ -50,17 +63,22 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    protected virtual void Awake()
+    {
+        try
+        {
+            player = PlayerController.Instance;
+        }
+        catch(Exception ex)
+        {
+            Debug.LogError(ex.ToString());
+        }
+    }
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-    }
-
-    protected virtual void Awake()
-    {
-        player = PlayerController.Instance;
-        //anim = GetComponent<Animator>();
     }
     protected virtual void Update()
     {
@@ -109,5 +127,9 @@ public class Enemy : MonoBehaviour
     protected virtual void Attack()
     {
         PlayerController.Instance.TakeDamage(damage);
+    }
+    protected virtual void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 }

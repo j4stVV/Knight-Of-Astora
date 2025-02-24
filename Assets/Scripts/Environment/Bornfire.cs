@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Bornfire : MonoBehaviour
 {
     public bool inRange;
     public bool interacted;
+
+    [SerializeField] private TextMeshPro tutorialBornfire;
+
     private void Update()
     {
         if (inRange && Input.GetButtonDown("Interact"))
@@ -22,7 +26,11 @@ public class Bornfire : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) inRange = true;
+        if (collision.CompareTag("Player"))
+        {
+            inRange = true;
+            //tutorialBornfire.IsActive = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

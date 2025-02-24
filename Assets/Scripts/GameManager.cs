@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public string transitionedFromScene;
 
-    [SerializeField]private GameObject bossFightZone;
+    //[SerializeField]private GameObject bossFightZone;
 
     public Vector2 platformingRespawnPoint;
     private string checkpointSceneName; // Tên scene của checkpoint
@@ -55,10 +55,10 @@ public class GameManager : MonoBehaviour
             RespawnAtDefault();
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        bossFightZone.SetActive(true);
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    bossFightZone.SetActive(true);
+    //}
 
     private IEnumerator RespawnAfterSceneLoad()
     {

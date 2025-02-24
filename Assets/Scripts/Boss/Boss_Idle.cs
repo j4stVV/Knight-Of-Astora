@@ -18,7 +18,7 @@ public class Boss_Idle : StateMachineBehaviour
     {
         rb.velocity = Vector2.zero;
         BossScript.instance.Flip();
-        //JumpToPlayer(animator);
+        JumpToPlayer(animator);
 
         if (BossScript.instance.attackCountDown <= 0)
         {

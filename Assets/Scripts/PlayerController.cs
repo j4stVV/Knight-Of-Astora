@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
@@ -49,6 +50,13 @@ public class PlayerController : MonoBehaviour
     private int airJumpCounter = 0;
     [SerializeField] private int maxAirJump;
 
+    [Header("Wall Sliding")]
+    [SerializeField] private Transform[] wallCheckPoints;
+    [SerializeField] private float circleRadius;
+    [SerializeField] private LayerMask wallCheckLayer;
+    [SerializeField] GameObject slideDust;
+
+
     [Header("Recoil")]
     //Recoil
     [SerializeField] int recoilXStep = 5;
@@ -74,6 +82,11 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimation;
     private BoxCollider2D playerBC;
 
+    //test
+    float angleInRadian;
+    float alterLocalScale;
+
+    
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
@@ -126,11 +139,25 @@ public class PlayerController : MonoBehaviour
             playerState.isRolling = false;
             rollCurrentTime = 0f;
         }
+        //notice: turn this on when back to normal
+        //if (playerState.alive && !PauseMenu.instance.IsPause)
+        //{
+        //    Water();    
+        //    Grounded();
+        //    Flip();
+        //    Move();
+        //    Jump();
+        //    Attack();
+        //    Roll();
+        //    StartDash();
+        //    Heal();
+        //}
         if (playerState.alive)
         {
+            Flip();
             Water();    
             Grounded();
-            Flip();
+            WallSliding();
             Move();
             Jump();
             Attack();
@@ -138,6 +165,10 @@ public class PlayerController : MonoBehaviour
             StartDash();
             Heal();
         }
+
+        //replace localScale when compute in roll & dash 
+        angleInRadian = transform.eulerAngles.y * Mathf.Deg2Rad;
+        alterLocalScale = Mathf.Cos(angleInRadian);
     }
     private void FixedUpdate()
     {
@@ -148,31 +179,21 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(SideAttackTransform.position, SideAttackArea);
-        Gizmos.DrawWireCube(groundCheckPoint.position + new Vector3(-0.05f, 0, 0) + Vector3.down * groundCheckDistance / 2, new Vector3(boxSize.x, boxSize.y, 1));
+        Gizmos.color = IsOnGround() ? Color.green : Color.red;
+        Gizmos.DrawWireCube(groundCheckPoint.position + Vector3.down * groundCheckDistance / 2, new Vector3(boxSize.x, boxSize.y, 1));
+        Gizmos.color = IsWallSliding() ? Color.green : Color.red;
+        for (int i = 0; i < wallCheckPoints.Length; i++)
+        {
+            Gizmos.DrawWireSphere(wallCheckPoints[i].position, circleRadius);
+        }
     }
-    //private bool IsOnGround()
-    //{
-    //    if (Physics2D.Raycast(groundCheckPoint.position, Vector2.down, groundCheckDistance, groundCheckLayer))
-    //    {
-    //        return true;
-    //    }
-    //    else return false;
-    //}
     public bool IsOnGround()
     {
         if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, groundCheckLayer))
-        {
             return true;
-        }
         else return false;
     }
-    private void Water()
-    {
-        if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, waterCheckLayer))
-        {
-            StartCoroutine(Death());
-        }
-    }
+    
     private void Grounded()
     {
         if (IsOnGround())
@@ -187,16 +208,42 @@ public class PlayerController : MonoBehaviour
             playerAnimation.SetBool("Grounded", false);
         }
     }
+    bool IsWallSliding()
+    {
+        bool m_wallSensorR1 = Physics2D.OverlapCircle(wallCheckPoints[0].position, circleRadius, wallCheckLayer);
+        bool m_wallSensorR2 = Physics2D.OverlapCircle(wallCheckPoints[1].position, circleRadius, wallCheckLayer);
+        bool m_wallSensorL1 = Physics2D.OverlapCircle(wallCheckPoints[2].position, circleRadius, wallCheckLayer);
+        bool m_wallSensorL2 = Physics2D.OverlapCircle(wallCheckPoints[3].position, circleRadius, wallCheckLayer);
+
+        if ((m_wallSensorR1 && m_wallSensorR2) || (m_wallSensorL1 && m_wallSensorL2))
+            return true;
+        else return false;
+    }
+    void WallSliding()
+    {
+        playerAnimation.SetBool("WallSlide", IsWallSliding());
+    }
+    private void Water()
+    {
+        if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, waterCheckLayer))
+        {
+            StartCoroutine(Death());
+        }
+    }
     private void Flip()
     {
-        if (horizontalInput > 0)
+        if (horizontalInput > 0 && !playerState.lookingRight)
         {
-            transform.localScale = new Vector2(1, transform.localScale.y); 
+            //transform.localScale = new Vector2(1, transform.localScale.y);
+            Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
             playerState.lookingRight = true;
         }
-        else if (horizontalInput < 0)
+        else if (horizontalInput < 0 && playerState.lookingRight)
         {
-            transform.localScale = new Vector2(-1, transform.localScale.y);
+            //transform.localScale = new Vector2(-1, transform.localScale.y);
+            Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
             playerState.lookingRight = false;
         }
     }
@@ -214,7 +261,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerAnimation.SetFloat("Speed", 0);
-
         }
     }
     private void Jump()
@@ -275,7 +321,6 @@ public class PlayerController : MonoBehaviour
                     manaController.SetMana(Mana);
                 }
             } 
-            
         }
     }
     void Recoil()
@@ -387,7 +432,7 @@ public class PlayerController : MonoBehaviour
             Mana -= 0.3f;
             manaController.SetMana(Mana);
             StartCoroutine(IFrame());
-            playerRb.velocity = new Vector2(rollForce * transform.localScale.x, 0);
+            playerRb.velocity = new Vector2(rollForce * alterLocalScale, 0);
         }
     }
     private void StartDash()
@@ -404,7 +449,7 @@ public class PlayerController : MonoBehaviour
         playerState.isDashing = true;
         playerAnimation.SetTrigger("Dash");
         playerRb.gravityScale = 0;
-        playerRb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0);
+        playerRb.velocity = new Vector2(alterLocalScale * dashSpeed, 0);
         yield return new WaitForSeconds(dashTime);
         playerRb.gravityScale = gravity;
         playerState.isDashing = false;
@@ -444,5 +489,22 @@ public class PlayerController : MonoBehaviour
         Flip();
         yield return new WaitForSeconds(delay);
         //playerState.cutscene = false;
+    }
+    void AE_SlideDust()
+    {
+        Vector3 spawnPosition;
+
+        if (playerState.lookingRight == true)
+            spawnPosition = wallCheckPoints[1].transform.position;
+        else
+            spawnPosition = wallCheckPoints[3].transform.position;
+
+        if (slideDust != null)
+        {
+            // Set correct arrow spawn position
+            GameObject dust = Instantiate(slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
+            // Turn arrow in correct direction
+            dust.transform.localScale = new Vector3((playerState.lookingRight ? 1 : -1), 1, 1);
+        }
     }
 }

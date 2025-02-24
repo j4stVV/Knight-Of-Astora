@@ -79,12 +79,10 @@ public class BossScript : Enemy
                 case EnemyStates.Dracula_Stage2:
                     attackTimer = 2f;
                     break;
-
             }
         }
 
     }
-
     protected override void Awake()
     {
         base.Awake();
@@ -130,22 +128,22 @@ public class BossScript : Enemy
     #region Control
     public void AttackHandler()
     {
-        //if (currentEnemyState == EnemyStates.Dracula_Stage1)
-        //{
-        //    if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
-        //    {
-        //        BarrageBendDown();
-        //    }
-        //}
-        //if (currentEnemyState == EnemyStates.Dracula_Stage2)
-        //{
-        //    if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
-        //    {
-        //        TripplelAttack();
-        //    }
-        //}
+        if (currentEnemyState == EnemyStates.Dracula_Stage1)
+        {
+            if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
+            {
+                BarrageBendDown();
+            }
+        }
+        if (currentEnemyState == EnemyStates.Dracula_Stage2)
+        {
+            if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
+            {
+                TripplelAttack();
+            }
+        }
         //TripplelAttack();
-        Lunge();
+        //Lunge();
     }
     public void ResetAllAttack()
     {

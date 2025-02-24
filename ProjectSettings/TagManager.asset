@@ -17,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Attackable
-  - 
+  - Wall
   - 
   - 
   - 
@@ -54,6 +54,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Front Decor
+    uniqueID: 997386341
     locked: 0
   - name: Grass
     uniqueID: 208140317
