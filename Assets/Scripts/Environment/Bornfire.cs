@@ -29,7 +29,6 @@ public class Bornfire : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             inRange = true;
-            //tutorialBornfire.IsActive = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

@@ -5,32 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
-    [SerializeField] private string transitionTo;
+    [SerializeField] private string transitionToScene;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Vector2 exitDirection;
     [SerializeField] private float exitTime;
-
-    private void Start()
-    {
-        if (transitionTo == GameManager.Instance.transitionedFromScene)
-        {
-            PlayerController.Instance.transform.position = startPoint.position;
-
-            StartCoroutine(PlayerController.Instance.WalkIntoNewScene(exitDirection, exitTime));
-        }
-        //StartCoroutine(UIManager.Instance.sceneFader.Fade(SceneFader.FadeDirection.Out));
-    }
+    private bool isActive = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isActive)
         {
+            isActive = true;
             GameManager.Instance.transitionedFromScene = SceneManager.GetActiveScene().name;
-
-            //PlayerController.Instance.playerState.cutscene = true;
-            SceneManager.LoadScene(transitionTo);
-
-            //StartCoroutine(UIManager.Instance.sceneFader.FadeAndLoadScene(SceneFader.FadeDirection.In, transitionTo));  
+            exitDirection = PlayerController.Instance.playerRb.velocity;
+            GameManager.Instance.setTransitionPoint(startPoint.position, exitDirection);
+            NextLevel();            
         }
+    }
+    void NextLevel()
+    {
+        StartCoroutine(GameManager.Instance.FadeAndLoadScene(transitionToScene));
     }
 }

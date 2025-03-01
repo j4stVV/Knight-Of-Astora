@@ -14,7 +14,7 @@ public class CameraFollowObject : MonoBehaviour
 
     private Coroutine turnCoroutine;
 
-    private HeroKnight player;
+    private PlayerController player;
 
     private bool isFacingRight;
 
@@ -29,7 +29,7 @@ public class CameraFollowObject : MonoBehaviour
             instance = this;
         }
 
-        player = playerTransform.gameObject.GetComponent<HeroKnight>();
+        player = playerTransform.gameObject.GetComponent<PlayerController>();
 
         //isFacingRight = player.IsFacingRight;
     }

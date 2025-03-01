@@ -11,14 +11,18 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private bool isSetting = false;
     public bool IsPause {  get { return isPaused; } }
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseSettingUI;
 
     void Start()
     {
+        Time.timeScale = 1.0f;
         if(instance == null)
             instance = this;
     }
     void Update()
     {
+        isPaused = pauseMenuUI.activeSelf || pauseSettingUI.activeSelf;
+        isSetting = pauseSettingUI.activeSelf;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GamePause();
@@ -27,9 +31,12 @@ public class PauseMenu : MonoBehaviour
     }
     public void GamePause()
     {
-        if (!isPaused && !isSetting)
+        if (!isPaused)
         {
-            Pause();
+            if (!isSetting)
+                Pause();
+            else
+                TurnSettingMenuOff();
         }
         else
         {
@@ -48,8 +55,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenuUI.SetActive(false);
     }
+    void TurnSettingMenuOff()
+    {
+        isSetting = false;
+        pauseMenuUI.SetActive(isSetting);
+    }
     
-
     public void BackToMenu()
     {
         SceneManager.LoadScene("MenuScene");

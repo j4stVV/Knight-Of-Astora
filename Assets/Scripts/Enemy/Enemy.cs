@@ -13,8 +13,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected float recoilTimer;
 
-
-    [SerializeField] protected PlayerController player;
+    protected PlayerController player;
     public float speed;
 
     public float damage = 1;
@@ -37,12 +36,14 @@ public class Enemy : MonoBehaviour
         //Crawler
         Crawler_Idle,
         Crawler_Flip,
+        Crawler_Stunned,
 
         //Bat
         Bat_Idle, 
         Bat_Chase,
         Bat_Stunned, 
         Bat_Death,
+        Bat_ReturnToStart,
 
         //Dracula
         Dracula_Stage1,

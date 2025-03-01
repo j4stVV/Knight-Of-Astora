@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Enemy
   - Water
+  - CamBoundary
   layers:
   - Default
   - TransparentFX

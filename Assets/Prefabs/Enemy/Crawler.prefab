@@ -176,14 +176,13 @@ MonoBehaviour:
   recoilLength: 0.3
   recoilFactor: 0.5
   isRecoiling: 0
-  isFacingRight: 0
+  isFacingRight: 1
   recoilTimer: 0
-  player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
-  speed: 3
+  speed: 2
   damage: 1
-  flipWaitTime: 1
-  ledgeCheckX: 1.2
+  ledgeCheckX: 1
   ledgeCheckY: 1
+  patrolRange: 5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float manaGain;
     [SerializeField] private ManaController manaController;
 
-    private Rigidbody2D playerRb;
+    public Rigidbody2D playerRb {  get; private set; }
     private Animator playerAnimation;
     private BoxCollider2D playerBC;
 
@@ -142,8 +142,9 @@ public class PlayerController : MonoBehaviour
         //notice: turn this on when back to normal
         //if (playerState.alive && !PauseMenu.instance.IsPause)
         //{
-        //    Water();    
+        //    Water();
         //    Grounded();
+        //    WallSliding();
         //    Flip();
         //    Move();
         //    Jump();
@@ -154,12 +155,13 @@ public class PlayerController : MonoBehaviour
         //}
         if (playerState.alive)
         {
-            Flip();
-            Water();    
+            Water();
             Grounded();
             WallSliding();
+            Flip();
             Move();
             Jump();
+            WallJump();
             Attack();
             Roll();
             StartDash();
@@ -193,7 +195,6 @@ public class PlayerController : MonoBehaviour
             return true;
         else return false;
     }
-    
     private void Grounded()
     {
         if (IsOnGround())
@@ -221,7 +222,15 @@ public class PlayerController : MonoBehaviour
     }
     void WallSliding()
     {
-        playerAnimation.SetBool("WallSlide", IsWallSliding());
+        if(IsWallSliding())
+        {
+            playerAnimation.SetBool("WallSlide", true);
+            airJumpCounter = 0;
+            dashed = false;
+            playerState.isJumping = false;
+        }
+        else
+            playerAnimation.SetBool("WallSlide", false);
     }
     private void Water()
     {
@@ -274,11 +283,31 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !playerState.isRolling && !playerState.isHealing)
         {
             playerState.isJumping = true;
-            //playerState.isOnGround = false;
             playerAnimation.SetTrigger("Jump");
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
         }
         else if (!IsOnGround() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
+        {
+            airJumpCounter++;
+            playerAnimation.SetTrigger("Jump");
+            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
+        }
+    }
+    void WallJump()
+    {
+        if (Input.GetKeyUp(KeyCode.Space) && playerRb.velocity.y > 0)
+        {
+            playerAnimation.SetTrigger("Jump");
+            playerRb.velocity = new Vector2(playerRb.velocity.x, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsWallSliding() && !playerState.isRolling && !playerState.isHealing)
+        {
+            playerState.isJumping = true;
+            playerAnimation.SetTrigger("Jump");
+            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
+        }
+        else if (!IsWallSliding() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
         {
             airJumpCounter++;
             playerAnimation.SetTrigger("Jump");
@@ -459,6 +488,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Death()
     {
         playerState.alive = false;
+        playerRb.velocity = Vector2.zero;
         playerAnimation.SetTrigger("Death");
 
         yield return new WaitForSeconds(0.5f);
@@ -474,11 +504,13 @@ public class PlayerController : MonoBehaviour
             playerAnimation.Play("Idle");
         }
     }
-    public IEnumerator WalkIntoNewScene(Vector2 exitDir, float delay)
+    public IEnumerator WalkIntoNewScene(Vector3 spawnPosition, Vector2 exitDir, float delay)
     {
+        transform.position = spawnPosition;
         if (exitDir.y != 0)
         {
-            playerRb.velocity = jumpForce * exitDir;
+            //playerRb.velocity = jumpForce * exitDir;
+            playerRb.velocity = exitDir;
         }
         if (exitDir.x != 0)
         {
@@ -486,9 +518,7 @@ public class PlayerController : MonoBehaviour
 
             Move();
         }
-        Flip();
         yield return new WaitForSeconds(delay);
-        //playerState.cutscene = false;
     }
     void AE_SlideDust()
     {
