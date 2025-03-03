@@ -16,7 +16,6 @@ public class SceneTransition : MonoBehaviour
         if (other.CompareTag("Player") && !isActive)
         {
             isActive = true;
-            GameManager.Instance.transitionedFromScene = SceneManager.GetActiveScene().name;
             exitDirection = PlayerController.Instance.playerRb.velocity;
             GameManager.Instance.setTransitionPoint(startPoint.position, exitDirection);
             NextLevel();            

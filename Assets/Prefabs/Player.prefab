@@ -52,7 +52,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6597577238280649097
 Transform:
   m_ObjectHideFlags: 0
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: {fileID: 5125890170233402065}
   playerSpeed: 10
+  _cameraFollowGO: {fileID: 0}
   rollForce: 10
   dashSpeed: 25
   dashTime: 0.3

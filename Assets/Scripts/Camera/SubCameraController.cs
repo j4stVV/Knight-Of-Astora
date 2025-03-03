@@ -7,9 +7,18 @@ public class SubCameraController : MonoBehaviour
 {
     public static SubCameraController Instance;
     private CinemachineConfiner2D confiner;
-    private float eslapsed = 3f;
-    private void Start()
+    private float timeGap = 3f;
+    private float lastUpdateTime;
+    private void Update()
     {
+        if(Time.time > lastUpdateTime + timeGap)
+        {
+            FindCamBoundary();
+        }
+    }
+    void FindCamBoundary()
+    {
+        lastUpdateTime = Time.time; 
         confiner = GetComponent<CinemachineConfiner2D>();
         GameObject boundaryObject = GameObject.FindGameObjectWithTag("CamBoundary");
         if (boundaryObject != null)
@@ -24,11 +33,6 @@ public class SubCameraController : MonoBehaviour
                 Debug.LogError("Not found component Collider2D on GameObject with tag \"CamBoundary\"");
             }
         }
-    }
-
-    void FindCamBoundary()
-    {
-
     }
 
 }

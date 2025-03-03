@@ -11,11 +11,15 @@ public class Skeleton : Enemy
 
     [Header("Chase Settings")]
     [SerializeField] private float detectionRange = 6f;
-    [SerializeField] private float maxChasingDistance = 20f;
+    [SerializeField] private float maxChasingDistance = 15f;
+    [SerializeField] private float maxDistanceFromStart = 20f;
     [SerializeField] private float chasingSpeed;
 
     [Header("Patrol Settings")]
     [SerializeField] private float patrolRange = 5f;
+    [SerializeField] private float ledgeCheckX = 1f;
+    [SerializeField] private float ledgeCheckY = 2f;
+    [SerializeField] private LayerMask whatIsGround;
 
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 3f;
@@ -73,7 +77,7 @@ public class Skeleton : Enemy
         rb.velocity = Vector2.zero;
 
         float distanceToPlayer = Vector2.Distance(transform.position,
-            PlayerController.Instance.transform.position);
+            player.transform.position);
 
         if (Time.time >= (lastAttackTime + attackCooldown) && distanceToPlayer <= attackRange)
         {
@@ -90,6 +94,13 @@ public class Skeleton : Enemy
     {
         CheckPlayerDetection();
 
+        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(-ledgeCheckX, 1.5f) : new Vector3(ledgeCheckX, 1.5f);
+        Vector2 wallCheckDir = transform.localScale.x > 0 ? -transform.right : transform.right;
+        if (!Physics2D.Raycast(transform.position + ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
+            || Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), wallCheckDir, ledgeCheckX, whatIsGround))
+        {
+            Flip();
+        }
         anim.SetBool("Walk", true);
 
         float currentPatrolPosition = transform.position.x;
@@ -116,7 +127,7 @@ public class Skeleton : Enemy
     }
     void CheckPlayerDetection()     // => done
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, PlayerController.Instance.transform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         
         if (distanceToPlayer <= detectionRange)
         {
@@ -128,10 +139,10 @@ public class Skeleton : Enemy
     {
         anim.SetBool("Walk", true);
 
-        float distanceToPlayer = Vector2.Distance(transform.position, PlayerController.Instance.transform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         float distanceToStartPos = Vector2.Distance(transform.position, originalPos);
 
-        if (distanceToPlayer > maxChasingDistance || distanceToStartPos > maxChasingDistance)
+        if (distanceToPlayer > maxChasingDistance || distanceToStartPos > maxDistanceFromStart)
         {
             ChangeState(EnemyStates.Ske_ReturnToStart);
             return;
@@ -142,13 +153,13 @@ public class Skeleton : Enemy
             currentEnemyState = EnemyStates.Ske_Attack;
             return;
         }
-        Vector2 direction = (PlayerController.Instance.transform.position - transform.position).normalized;
+        Vector2 direction = (player.transform.position - transform.position).normalized;
 
         //chasing player until player gone too far from foes' initiate position
         float attackDir = isFacingRight ? 1f : -1f;
         transform.position = Vector2.MoveTowards
                 (transform.position,
-                new Vector2(PlayerController.Instance.transform.position.x + attackRange * attackDir, transform.position.y),
+                new Vector2(player.transform.position.x + attackRange * attackDir, transform.position.y),
                 chasingSpeed * Time.deltaTime);
         if (direction.x > 0 && !isFacingRight)
             Flip();
@@ -179,7 +190,7 @@ public class Skeleton : Enemy
     void PerformAttack()    // => done
     {       
         float distanceToPlayer = Vector2.Distance(transform.position, 
-            PlayerController.Instance.transform.position);
+            player.transform.position);
 
         //check if player is out of range
         if (distanceToPlayer > attackRange)
@@ -190,7 +201,7 @@ public class Skeleton : Enemy
         }
 
         //Check the Ske's direction has the same ones with the player
-        Vector2 directionToPlayer = (PlayerController.Instance.transform.position - transform.position).normalized;
+        Vector2 directionToPlayer = (player.transform.position - transform.position).normalized;
         bool playerInFront = (isFacingRight && directionToPlayer.x > 0) || (!isFacingRight && directionToPlayer.x < 0);
 
         if (!playerInFront)
@@ -236,10 +247,10 @@ public class Skeleton : Enemy
     {
         rb.velocity = Vector2.zero;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, PlayerController.Instance.transform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         float distanceToStart = Vector2.Distance(transform.position, originalPos);
 
-        if (distanceToPlayer <= detectionRange && distanceToStart <= maxChasingDistance)
+        if (distanceToPlayer <= detectionRange && distanceToStart <= maxDistanceFromStart)
         {
             if (distanceToPlayer <= attackRange)
             {
@@ -282,6 +293,22 @@ public class Skeleton : Enemy
         else
         {
             ChangeState(EnemyStates.Ske_Stunned);
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(-ledgeCheckX, 1.5f) : new Vector3(ledgeCheckX, 1.5f);
+        Vector2 wallCheckDir = transform.localScale.x > 0 ? -transform.right : transform.right;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position + ledgeCheckStart, Vector3.down * ledgeCheckY);
+        Gizmos.DrawRay(transform.position + new Vector3(0, 0.5f, 0), wallCheckDir);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            ChangeState(EnemyStates.Ske_Death);
+            anim.SetTrigger("Death");
         }
     }
 }

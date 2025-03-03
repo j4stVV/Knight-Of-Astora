@@ -6,14 +6,23 @@ public class Crawler : Enemy
 {
     [SerializeField] private float ledgeCheckX; 
     [SerializeField] private float ledgeCheckY; 
-    [SerializeField] private float patrolRange; 
+    [SerializeField] private float patrolRange;
     [SerializeField] private LayerMask whatIsGround;
+
+    [Header("Chase Settings")]
+    [SerializeField] private float detectionRange;
+    [SerializeField] private float maxChasingDistance;
+    [SerializeField] private float maxDistanceFromStart;
+    [SerializeField] private float chasingSpeed;
+
     private Vector3 startPos;
+
     protected override void Start()
     {
         base.Start();
         startPos = transform.position;
         currentEnemyState = EnemyStates.Crawler_Idle;
+        chasingSpeed = speed * 2;
     }
     protected override void Update()
     {
@@ -26,13 +35,9 @@ public class Crawler : Enemy
             case EnemyStates.Crawler_Idle:
                 Idle();
                 break;
-            case EnemyStates.Crawler_Flip:
-                Flip();
-                break;
             case EnemyStates.Crawler_Stunned:
                 Stunned();
                 break;
-
         }
     }
     void Idle()
@@ -42,7 +47,7 @@ public class Crawler : Enemy
         if (!Physics2D.Raycast(transform.position + ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
             || Physics2D.Raycast(transform.position, wallCheckDir, ledgeCheckX, whatIsGround))
         {
-            ChangeState(EnemyStates.Crawler_Flip);
+            Flip();
         }
 
         float currentPatrolPosition = transform.position.x;
@@ -55,7 +60,7 @@ public class Crawler : Enemy
             moveDir = Vector2.right * speed * Time.deltaTime;
             if (currentPatrolPosition >= rightBound)
             {
-                ChangeState(EnemyStates.Crawler_Flip);
+                Flip();
             }
         }
         else
@@ -63,7 +68,7 @@ public class Crawler : Enemy
             moveDir = -Vector2.right * speed * Time.deltaTime;
             if (currentPatrolPosition <= leftBound)
             {
-                ChangeState(EnemyStates.Crawler_Flip);
+                Flip();
             }
         }
         transform.Translate(moveDir);
@@ -77,8 +82,8 @@ public class Crawler : Enemy
     {
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
-        ChangeState(EnemyStates.Crawler_Idle);
     }
+
     protected override void ChangeCurrentAnimation()
     {
         anim.SetBool("Idle", (GetCurrentEnemyState == EnemyStates.Crawler_Idle));

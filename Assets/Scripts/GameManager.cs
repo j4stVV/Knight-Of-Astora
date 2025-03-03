@@ -8,14 +8,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     //respawn variables
+    [SerializeField] private Transform player;
+    private Vector3 playerDefaultRespawnPos;
     private int defaultSceneIndex = 1;
-    private Vector2 platformingRespawnPoint = new Vector2(-37, -11);
     private string checkpointSceneName; 
     private Vector2 checkpointPosition;
 
     //scene transition variables
     [SerializeField] private Animator transitionAnim;
-    public string transitionedFromScene;
     private Vector2 transitionPos;
     private Vector2 transitionDir;
     private float delay = 0f;
@@ -31,15 +31,14 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        playerDefaultRespawnPos = player.position;
     }
     public void FadeIn()
     {
-        Debug.Log("Fade in called");
         transitionAnim.SetTrigger("Start");
     }
     public void FadeOut()
     {
-        Debug.Log("Fade out called");
         transitionAnim.SetTrigger("End");
     }
     public void SetCheckpoint(string sceneName, Vector2 position)
@@ -70,14 +69,30 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            RespawnAtDefault();
+            if (SceneManager.GetActiveScene().name != checkpointSceneName)
+            {
+                SceneManager.LoadSceneAsync(defaultSceneIndex);
+                StartCoroutine(RespawnAfterSceneLoad());
+            }
+            else
+            {
+                RespawnAtCheckpoint();
+            }
         }
     }
     private IEnumerator RespawnAfterSceneLoad()
     {
         FadeIn();
-        yield return new WaitForSeconds(1f); // Đợi scene load xong
-        RespawnAtCheckpoint();
+        yield return new WaitForSeconds(1f);
+        if (!string.IsNullOrEmpty(checkpointSceneName))
+        {
+            RespawnAtCheckpoint();
+        }
+        else
+        {
+            RespawnAtDefault();
+        }
+            
     }
     private void RespawnAtCheckpoint()
     {
@@ -87,8 +102,7 @@ public class GameManager : MonoBehaviour
     }
     private void RespawnAtDefault()
     {
-        SceneManager.LoadSceneAsync(defaultSceneIndex);
-        PlayerController.Instance.transform.position = platformingRespawnPoint;
+        PlayerController.Instance.transform.position = playerDefaultRespawnPos;
         StartCoroutine(UIManager.Instance.DeactiveDeathScreen());
         PlayerController.Instance.Respawn();
     }

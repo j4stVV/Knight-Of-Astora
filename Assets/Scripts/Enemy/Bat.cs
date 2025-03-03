@@ -13,9 +13,9 @@ public class Bat : Enemy
     //[SerializeField] private float targetReachedDistance = 0.3f;
 
     [Header("Chase Settings")]
-    [SerializeField] private float chaseDistance = 5f;
-    [SerializeField] private float maxChasingDistance = 7f;
-    [SerializeField] private float maxDistanceFromStart = 15f;
+    [SerializeField] private float detectedPlayerRange = 8f;
+    [SerializeField] private float maxChasingDistance = 10f;
+    [SerializeField] private float maxDistanceFromStart = 20f;
 
     [Header("Stunned Settings")]
     [SerializeField] private float stunDuration = 1f;
@@ -44,11 +44,11 @@ public class Bat : Enemy
     {
         //trong base.update da co san UpdateEnemyState
         base.Update();
-        if (!PlayerController.Instance.playerState.alive)
-        {
-            ChangeState(EnemyStates.Bat_Idle);
-            return;
-        }
+        //if (!player.playerState.alive)
+        //{
+        //    ChangeState(EnemyStates.Bat_Idle);
+        //    return;
+        //}
     }
     protected override void UpdateEnemyState()
     {
@@ -72,7 +72,7 @@ public class Bat : Enemy
                 break;
         }
     }
-    #region Process create path and make bat follow the path
+    #region Process create path and make the bat follow the path
     void CreateChasePath()
     {
         if (seeker.IsDone())
@@ -126,7 +126,7 @@ public class Bat : Enemy
     {
         float distance = Vector2.Distance(transform.position, player.transform.position);
         isReturningToStart = false;
-        if (distance < chaseDistance)
+        if (distance < detectedPlayerRange)
         {
             ChangeState(EnemyStates.Bat_Chase);
             CreateChasePath();
@@ -156,7 +156,6 @@ public class Bat : Enemy
         }
         FollowPath(chaseMultiSpeed);
     }
-
     void ReturnToStart()
     {
         isReturningToStart = true;
@@ -185,7 +184,6 @@ public class Bat : Enemy
             timer = 0;
         }
     }
-
     public override void EnemyHit(float damage, Vector2 hitDirection, float hitForce)
     {
         base.EnemyHit(damage, hitDirection, hitForce);
@@ -223,8 +221,8 @@ public class Bat : Enemy
 
     private void OnDrawGizmosSelected()
     {
-        // draw chase range in Scene view
-        Gizmos.color = Color.red;
+        //draw chase range in Scene view
+        Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(startPosition, maxDistanceFromStart);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, maxChasingDistance);

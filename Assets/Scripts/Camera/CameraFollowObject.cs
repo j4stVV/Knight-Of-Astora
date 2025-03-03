@@ -20,14 +20,13 @@ public class CameraFollowObject : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if(instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            instance = this;
-        }
+
+        instance = this;
 
         player = playerTransform.gameObject.GetComponent<PlayerController>();
 
@@ -36,7 +35,20 @@ public class CameraFollowObject : MonoBehaviour
     private void Update()
     {
         //Make the camera CameraFollowObject follow the player's position
-        transform.position = playerTransform.position;
+        //transform.position = playerTransform.position;
+
+        
+        // Check if reference is lost and try to reacquire it
+        if (playerTransform == null && PlayerController.Instance != null)
+        {
+            playerTransform = PlayerController.Instance.transform;
+        }
+
+        // Only follow if we have a valid transform
+        if (playerTransform != null)
+        {
+            transform.position = playerTransform.position;
+        }
     }
 
     public void CallTurn()
@@ -44,7 +56,6 @@ public class CameraFollowObject : MonoBehaviour
         //turnCoroutine = StartCoroutine(FlipYLerp());
         LeanTween.rotateY(gameObject, DetermineEndRotation(), flipYRotationTime).setEaseInOutSine(); 
     }
-
     private IEnumerator FlipYLerp()
     {
         float startRotation = transform.localEulerAngles.y;

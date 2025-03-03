@@ -194,9 +194,9 @@ MonoBehaviour:
   damage: 1
   pathUpdateInterval: 0.5
   nextWaypointDistance: 1
-  chaseDistance: 5
-  maxChasingDistance: 7
-  maxDistanceFromStart: 15
+  detectedPlayerRange: 8
+  maxChasingDistance: 10
+  maxDistanceFromStart: 20
   stunDuration: 1
 --- !u!114 &1101765611395451976
 MonoBehaviour:

@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour
 
         //Crawler
         Crawler_Idle,
-        Crawler_Flip,
         Crawler_Stunned,
 
         //Bat
@@ -70,7 +69,7 @@ public class Enemy : MonoBehaviour
         {
             player = PlayerController.Instance;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.LogError(ex.ToString());
         }

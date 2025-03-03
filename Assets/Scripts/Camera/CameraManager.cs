@@ -29,11 +29,13 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) 
+        if (instance != null && instance != this)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+            return;
         }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
         for (int i = 0; i < allVirtualCameras.Length; i++)
         {
             if (allVirtualCameras[i].enabled)
@@ -189,7 +191,6 @@ public class CameraManager : MonoBehaviour
             framingTransposer = currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
 
         }
-
     }
 
     #endregion

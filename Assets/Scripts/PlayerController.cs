@@ -12,18 +12,18 @@ public class PlayerController : MonoBehaviour
     
     [Header("Player state")]
     public PlayerState playerState;
-    //Input
     private float horizontalInput;
     [SerializeField] private float playerSpeed;
 
+    [Header("Camera Stuff")]
+    [SerializeField] private GameObject _cameraFollowGO;
+
     [Header("Roll")]
-    //Rolling
     private float rollDuration = 0.5f;
     private float rollCurrentTime;
     [SerializeField] private float rollForce;
 
     [Header("Dash")]
-    //Dashing
     private bool canDash = true;
     private bool dashed;
     private float gravity;
@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashCooldown;
 
     [Header("Attack")]
-    //Attacking
     private int currentAttack = 0;
     private float timeSinceAttack;
     [SerializeField] private float damage = 1f;
@@ -56,15 +55,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask wallCheckLayer;
     [SerializeField] GameObject slideDust;
 
-
     [Header("Recoil")]
-    //Recoil
     [SerializeField] int recoilXStep = 5;
     [SerializeField] float recoilXSpeed = 100;
     int stepsXRecoiled;
 
     [Header("Heal")]
-    //Health
     public int health;
     [SerializeField] private int maxHealth;
     private float healTimer;
@@ -82,11 +78,27 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnimation;
     private BoxCollider2D playerBC;
 
-    //test
+    //Alter setting to combine old code
     float angleInRadian;
     float alterLocalScale;
 
-    
+    //Camera
+    private CameraFollowObject _cameraFollowObject;
+    private float _fallSpeedYDampingChangeThreshold;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+
+        }
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
@@ -102,19 +114,9 @@ public class PlayerController : MonoBehaviour
 
         Mana = mana;
         manaController.SetMana(Mana);
-    }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-        DontDestroyOnLoad(gameObject);
+        _cameraFollowObject = _cameraFollowGO.GetComponent<CameraFollowObject>();
+        _fallSpeedYDampingChangeThreshold = CameraManager.instance.fallSpeedYDampingChangeThreshold;
     }
 
     void Update()
@@ -139,7 +141,7 @@ public class PlayerController : MonoBehaviour
             playerState.isRolling = false;
             rollCurrentTime = 0f;
         }
-        //notice: turn this on when back to normal
+        //note: turn this on when back to normal
         //if (playerState.alive && !PauseMenu.instance.IsPause)
         //{
         //    Water();
@@ -153,6 +155,9 @@ public class PlayerController : MonoBehaviour
         //    StartDash();
         //    Heal();
         //}
+        //CameraSetting();
+
+        //For test Scene
         if (playerState.alive)
         {
             Water();
@@ -232,10 +237,27 @@ public class PlayerController : MonoBehaviour
         else
             playerAnimation.SetBool("WallSlide", false);
     }
+    void CameraSetting()
+    {
+        //if player is falling past a certain speed threshold
+        if(playerRb.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+        {
+            CameraManager.instance.LerpYDamping(true);
+        }
+        //if player is standing still or moving up
+        if(playerRb.velocity.y >= 0 && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+        {
+            //reset so it can be called again
+            CameraManager.instance.LerpedFromPlayerFalling = false;
+
+            CameraManager.instance.LerpYDamping(false);
+        }
+    }
     private void Water()
     {
         if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, waterCheckLayer))
         {
+            playerRb.velocity = Vector2.down;
             StartCoroutine(Death());
         }
     }
@@ -247,6 +269,9 @@ public class PlayerController : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             playerState.lookingRight = true;
+
+            //Turn the camera follow object
+            _cameraFollowObject.CallTurn();
         }
         else if (horizontalInput < 0 && playerState.lookingRight)
         {
@@ -254,6 +279,9 @@ public class PlayerController : MonoBehaviour
             Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             playerState.lookingRight = false;
+
+            //Turn the camera follow object
+            _cameraFollowObject.CallTurn();
         }
     }
     private void Move()
@@ -503,6 +531,12 @@ public class PlayerController : MonoBehaviour
             healController.SetMaxHealth(maxHealth);
             playerAnimation.Play("Idle");
         }
+    }
+    public void RespawnAtDefault(Vector2 respawnPos)
+    {
+        transform.position = respawnPos;
+        playerRb.velocity = Vector2.zero;
+        Respawn();
     }
     public IEnumerator WalkIntoNewScene(Vector3 spawnPosition, Vector2 exitDir, float delay)
     {
