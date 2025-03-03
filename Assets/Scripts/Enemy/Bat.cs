@@ -44,11 +44,7 @@ public class Bat : Enemy
     {
         //trong base.update da co san UpdateEnemyState
         base.Update();
-        //if (!player.playerState.alive)
-        //{
-        //    ChangeState(EnemyStates.Bat_Idle);
-        //    return;
-        //}
+        
     }
     protected override void UpdateEnemyState()
     {
@@ -109,6 +105,9 @@ public class Bat : Enemy
 
         float currentSpeed = speed * speedMultiplier;
 
+        //testing
+        Vector2 originDir = (Vector2)currentPath.vectorPath[currentWaypoint] - (Vector2)transform.position;
+
         Vector2 direction = ((Vector2)currentPath.vectorPath[currentWaypoint] - (Vector2)transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + direction * currentSpeed * Time.deltaTime;
         rb.MovePosition(newPosition);
@@ -124,9 +123,9 @@ public class Bat : Enemy
     #endregion
     void Idle()
     {
-        float distance = Vector2.Distance(transform.position, player.transform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         isReturningToStart = false;
-        if (distance < detectedPlayerRange)
+        if (distanceToPlayer < detectedPlayerRange)
         {
             ChangeState(EnemyStates.Bat_Chase);
             CreateChasePath();
@@ -160,27 +159,51 @@ public class Bat : Enemy
     {
         isReturningToStart = true;
         float returnMultiSpeed = 2.5f;
+        float distanceFromStart = Vector2.Distance(transform.position, startPosition);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        float disToStart = Vector3.Distance(rb.position, startPosition);
+        if (distanceFromStart < maxDistanceFromStart)
+        {
+            if (distanceToPlayer < detectedPlayerRange)
+            {
+                isReturningToStart = false;
+                currentPath = null;
+                ChangeState(EnemyStates.Bat_Chase);
+                CreateChasePath();
+                return;
+            }
+        }
 
         if (Time.time > lastPathUpdateTime + pathUpdateInterval)
         {
             CreateReturnPath();
         }
-        if (disToStart < 0.2f)
+        if (distanceFromStart <= 1f)
         {
             currentPath = null;
             transform.position = startPosition;
             ChangeState(EnemyStates.Bat_Idle);
+            return;
         }
+
         FollowPath(returnMultiSpeed);
     }
     void Stunned()
     {
+        float distanceFromStart = Vector2.Distance(transform.position, startPosition);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         timer += Time.deltaTime;
         if (timer > stunDuration)
         {
-            ChangeState(EnemyStates.Bat_Idle);
+            if (distanceFromStart > maxDistanceFromStart || distanceToPlayer > maxChasingDistance)
+            {
+                ChangeState(EnemyStates.Bat_ReturnToStart);
+            }
+            else
+            {
+                ChangeState(EnemyStates.Bat_Idle);
+            }
+            rb.velocity = Vector2.zero;
             timer = 0;
         }
     }
@@ -193,7 +216,6 @@ public class Bat : Enemy
         }
         else
         {
-            isReturningToStart = false;
             ChangeState(EnemyStates.Bat_Stunned);
         }
     }
@@ -224,8 +246,10 @@ public class Bat : Enemy
         //draw chase range in Scene view
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(startPosition, maxDistanceFromStart);
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, maxChasingDistance);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectedPlayerRange);
 
         // draw path
         if (currentPath != null)
