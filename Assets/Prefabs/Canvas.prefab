@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 7875961551623709767}
   - component: {fileID: 6418842446842219554}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: EndGameScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

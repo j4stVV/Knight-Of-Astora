@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Water
   - CamBoundary
+  - HiddenRoom
   layers:
   - Default
   - TransparentFX

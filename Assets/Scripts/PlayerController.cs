@@ -142,7 +142,23 @@ public class PlayerController : MonoBehaviour
             rollCurrentTime = 0f;
         }
         //note: turn this on when back to normal
-        //if (playerState.alive && !PauseMenu.instance.IsPause)
+        if (playerState.alive && !PauseMenu.instance.IsPause)
+        {
+            Water();
+            Grounded();
+            WallSliding();
+            Flip();
+            Move();
+            Jump();
+            Attack();
+            Roll();
+            StartDash();
+            Heal();
+        }
+        CameraSetting();
+
+        //For test Scene
+        //if (playerState.alive)
         //{
         //    Water();
         //    Grounded();
@@ -155,23 +171,6 @@ public class PlayerController : MonoBehaviour
         //    StartDash();
         //    Heal();
         //}
-        //CameraSetting();
-
-        //For test Scene
-        if (playerState.alive)
-        {
-            Water();
-            Grounded();
-            WallSliding();
-            Flip();
-            Move();
-            Jump();
-            WallJump();
-            Attack();
-            Roll();
-            StartDash();
-            Heal();
-        }
 
         //replace localScale when compute in roll & dash 
         angleInRadian = transform.eulerAngles.y * Mathf.Deg2Rad;
@@ -179,7 +178,6 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //if (playerState.cutscene) return;
         Recoil();
     }
     private void OnDrawGizmos()
@@ -314,28 +312,7 @@ public class PlayerController : MonoBehaviour
             playerAnimation.SetTrigger("Jump");
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
         }
-        else if (!IsOnGround() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
-        {
-            airJumpCounter++;
-            playerAnimation.SetTrigger("Jump");
-            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
-        }
-    }
-    void WallJump()
-    {
-        if (Input.GetKeyUp(KeyCode.Space) && playerRb.velocity.y > 0)
-        {
-            playerAnimation.SetTrigger("Jump");
-            playerRb.velocity = new Vector2(playerRb.velocity.x, 0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsWallSliding() && !playerState.isRolling && !playerState.isHealing)
-        {
-            playerState.isJumping = true;
-            playerAnimation.SetTrigger("Jump");
-            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
-        }
-        else if (!IsWallSliding() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
+        else if (!IsOnGround() || !IsWallSliding() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
         {
             airJumpCounter++;
             playerAnimation.SetTrigger("Jump");
@@ -444,7 +421,8 @@ public class PlayerController : MonoBehaviour
     }
     void Heal()
     {
-        if (Input.GetMouseButton(1) && Health < maxHealth && !playerState.isRolling && Mana > 0 && !playerState.isDashing && !playerState.isJumping)
+        if (Input.GetMouseButton(1) && Health < maxHealth && !playerState.isRolling && Mana > 0 
+            && !playerState.isDashing && !playerState.isJumping && IsOnGround())
         {
             playerRb.velocity = Vector3.zero;
             playerState.isHealing = true;

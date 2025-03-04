@@ -11,7 +11,7 @@ public class Skeleton : Enemy
 
     [Header("Chase Settings")]
     [SerializeField] private float detectionRange = 6f;
-    [SerializeField] private float maxChasingDistance = 15f;
+    [SerializeField] private float maxChasingDistance = 12f;
     [SerializeField] private float maxDistanceFromStart = 20f;
     [SerializeField] private float chasingSpeed;
 
@@ -26,6 +26,10 @@ public class Skeleton : Enemy
     [SerializeField] private float attackCooldown = 2f;
     private float lastAttackTime;
 
+    [Header("Stun Settings")]
+    [SerializeField] private float stunDuration;
+    private float timer;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,10 +42,6 @@ public class Skeleton : Enemy
     protected override void Update()
     {
         base.Update();
-        if (!isRecoiling)
-        {
-            
-        }
     }
     protected override void UpdateEnemyState()
     {
@@ -245,29 +245,34 @@ public class Skeleton : Enemy
     }
     void Stunned()
     {
-        rb.velocity = Vector2.zero;
+        timer += Time.deltaTime;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         float distanceToStart = Vector2.Distance(transform.position, originalPos);
 
-        if (distanceToPlayer <= detectionRange && distanceToStart <= maxDistanceFromStart)
+        if (timer > stunDuration)
         {
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= detectionRange && distanceToStart <= maxDistanceFromStart)
             {
-                ChangeState(EnemyStates.Ske_Attack);
+                if (distanceToPlayer <= attackRange)
+                {
+                    ChangeState(EnemyStates.Ske_Attack);
+                }
+                else
+                {
+                    ChangeState(EnemyStates.Ske_Chase);
+                }
+            }
+            else if (distanceToStart > maxChasingDistance)
+            {
+                ChangeState(EnemyStates.Ske_ReturnToStart);
             }
             else
             {
-                ChangeState(EnemyStates.Ske_Chase);
+                ChangeState(EnemyStates.Ske_Patrol);
             }
-        }
-        else if (distanceToStart > maxChasingDistance)
-        {
-            ChangeState(EnemyStates.Ske_ReturnToStart);
-        }
-        else
-        {
-            ChangeState(EnemyStates.Ske_Patrol);
+            rb.velocity = Vector2.zero;
+            timer = 0;
         }
     }
     void Flip()     // => done

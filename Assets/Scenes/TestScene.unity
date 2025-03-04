@@ -1208,6 +1208,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4913725192857112764, guid: 87d563383cb7369468ea9c95a8245429, type: 3}
+      propertyPath: maxChasingDistance
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8828412070961522643, guid: 87d563383cb7369468ea9c95a8245429, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
