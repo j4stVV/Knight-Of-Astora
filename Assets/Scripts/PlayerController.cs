@@ -11,33 +11,34 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance { get; private set; }
     
     [Header("Player state")]
+    [SerializeField] private float playerSpeed;
     public PlayerState playerState;
     private float horizontalInput;
-    [SerializeField] private float playerSpeed;
-
+    
     [Header("Camera Stuff")]
     [SerializeField] private GameObject _cameraFollowGO;
 
     [Header("Roll")]
+    [SerializeField] private float rollForce;
     private float rollDuration = 0.5f;
     private float rollCurrentTime;
-    [SerializeField] private float rollForce;
 
     [Header("Dash")]
-    private bool canDash = true;
-    private bool dashed;
-    private float gravity;
     [SerializeField] private float dashSpeed;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCooldown;
+    private bool canDash = true;
+    private bool dashed;
+    private float gravity;
 
     [Header("Attack")]
-    private int currentAttack = 0;
-    private float timeSinceAttack;
     [SerializeField] private float damage = 1f;
     [SerializeField] Transform SideAttackTransform;
     [SerializeField] Vector2 SideAttackArea;
     [SerializeField] LayerMask attackableLayer;
+    [SerializeField] AudioClip attackAudioClip;
+    private int currentAttack = 0;
+    private float timeSinceAttack;
 
     [Header("Jump")]
     [SerializeField] private Transform groundCheckPoint;
@@ -63,12 +64,13 @@ public class PlayerController : MonoBehaviour
     [Header("Heal")]
     public int health;
     [SerializeField] private int maxHealth;
-    private float healTimer;
     [SerializeField] float timeToHeal;
     [SerializeField] private HealController healController;
+    [SerializeField] private ParticleSystem dmgParticles;
+    private float healTimer;
+    private ParticleSystem dmgParticlesInstance;
 
     [Header("Mana")]
-    //Mana
     [SerializeField] float mana;
     [SerializeField] float manaDrainSpeed;
     [SerializeField] float manaGain;
@@ -95,7 +97,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             Instance = this;
-
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -156,21 +157,6 @@ public class PlayerController : MonoBehaviour
             Heal();
         }
         CameraSetting();
-
-        //For test Scene
-        //if (playerState.alive)
-        //{
-        //    Water();
-        //    Grounded();
-        //    WallSliding();
-        //    Flip();
-        //    Move();
-        //    Jump();
-        //    Attack();
-        //    Roll();
-        //    StartDash();
-        //    Heal();
-        //}
 
         //replace localScale when compute in roll & dash 
         angleInRadian = transform.eulerAngles.y * Mathf.Deg2Rad;
@@ -255,7 +241,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics2D.BoxCast(groundCheckPoint.position, boxSize, 0, Vector2.down, groundCheckDistance, waterCheckLayer))
         {
-            playerRb.velocity = Vector2.down;
+            playerState.alive = false;
             StartCoroutine(Death());
         }
     }
@@ -312,7 +298,7 @@ public class PlayerController : MonoBehaviour
             playerAnimation.SetTrigger("Jump");
             playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
         }
-        else if (!IsOnGround() || !IsWallSliding() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
+        else if (!IsOnGround() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
         {
             airJumpCounter++;
             playerAnimation.SetTrigger("Jump");
@@ -324,6 +310,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && timeSinceAttack > 0.5f && !playerState.isRolling && !playerState.isHealing)
         {
             currentAttack++;
+            SoundFXManager.instance.PlaySoundFX(attackAudioClip, transform, 1f);
             if (currentAttack > 3)
                 currentAttack = 1;
 
@@ -340,6 +327,7 @@ public class PlayerController : MonoBehaviour
     void Hit(Transform attackTransform, Vector2 attackArea, ref bool recoilBool, Vector2 recoilDir, float recoilStrength)
     {
         Collider2D[] objectsToHit = Physics2D.OverlapBoxAll(attackTransform.position, attackArea, 0, attackableLayer);
+        List<Enemy> hitEnemies = new List<Enemy>();
         if (objectsToHit.Length > 0)
         {
             recoilBool = true;
@@ -348,6 +336,16 @@ public class PlayerController : MonoBehaviour
         {
             if (objectsToHit[i].GetComponent<Enemy>() != null)
             {
+                //Enemy e = objectsToHit[i].GetComponent<Enemy>();
+                //if (e.CompareTag("Enemy") && !hitEnemies.Contains(e))
+                //{
+                //    e.EnemyHit(damage, recoilDir, recoilStrength);
+                //    Mana += manaGain;
+                //    manaController.SetMana(Mana);
+                //    e.EnemyHit(damage, (transform.position - objectsToHit[i].transform.position).normalized, recoilStrength);
+                //    hitEnemies.Add(e);
+                //}
+
                 objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, recoilDir, recoilStrength);
                 if (objectsToHit[i].CompareTag("Enemy"))
                 {
@@ -378,7 +376,7 @@ public class PlayerController : MonoBehaviour
         stepsXRecoiled = 0;
         playerState.recoilingX = false;
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Vector2 attackPos)
     {
         if (playerState.alive)
         {
@@ -392,6 +390,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 StartCoroutine(StopTakingDamage());
+                SpawnDmgParticles(attackPos);
             }
         }
     }
@@ -412,6 +411,12 @@ public class PlayerController : MonoBehaviour
                 health = Mathf.Clamp(value, 0, maxHealth);
             }
         }
+    }
+    void SpawnDmgParticles(Vector2 attackPos)
+    {
+        Vector2 attackDir = new Vector2(transform.position.x - attackPos.x, 0).normalized + new Vector2(0, 1.5f);
+        Quaternion spawnQuaternion = Quaternion.FromToRotation(Vector2.right, attackDir);
+        dmgParticlesInstance = Instantiate(dmgParticles, transform.position, spawnQuaternion);
     }
     IEnumerator IFrame()
     {
@@ -521,7 +526,6 @@ public class PlayerController : MonoBehaviour
         transform.position = spawnPosition;
         if (exitDir.y != 0)
         {
-            //playerRb.velocity = jumpForce * exitDir;
             playerRb.velocity = exitDir;
         }
         if (exitDir.x != 0)

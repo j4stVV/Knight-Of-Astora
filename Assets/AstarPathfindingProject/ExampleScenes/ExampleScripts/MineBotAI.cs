@@ -39,7 +39,7 @@ namespace Pathfinding.Examples {
 						try {
 							if (oldField != null) field.SetValue(newComp, oldField.GetValue(this));
 						} catch (System.Exception e) {
-							Debug.LogError("Failed to upgrade some fields.\n" + e);
+                            Debug.LogError("Failed to upgrade some fields.\n" + e);
 						}
 					}
 					for (int i = components.Length - 1; i > index; i--) UnityEditorInternal.ComponentUtility.MoveComponentUp(newComp);

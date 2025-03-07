@@ -210,8 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67cb7d7d956b3ab488a15947fc1f6476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 5125890170233402065}
   playerSpeed: 10
+  playerState: {fileID: 5125890170233402065}
   _cameraFollowGO: {fileID: 0}
   rollForce: 10
   dashSpeed: 25
@@ -223,6 +223,7 @@ MonoBehaviour:
   attackableLayer:
     serializedVersion: 2
     m_Bits: 64
+  attackAudioClip: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
   groundCheckPoint: {fileID: 1640986507855607739}
   groundCheckLayer:
     serializedVersion: 2
@@ -250,6 +251,7 @@ MonoBehaviour:
   maxHealth: 5
   timeToHeal: 1
   healController: {fileID: 0}
+  dmgParticles: {fileID: 882544650855764161, guid: 1dfcc9ce943d7784cb6f9ad57bb27967, type: 3}
   mana: 1
   manaDrainSpeed: 0.3
   manaGain: 0.2

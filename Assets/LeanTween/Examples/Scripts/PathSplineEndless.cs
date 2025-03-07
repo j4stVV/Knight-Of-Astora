@@ -108,7 +108,7 @@ public class PathSplineEndless : MonoBehaviour {
 	void refreshSpline(){
 		track = new LTSpline( trackPts.ToArray() );
 		carIter = track.ratioAtPoint( car.transform.position ); // we created a new spline so we need to update the cars iteration point on this new spline
-		// Debug.Log("distance:"+track.distance+" carIter:"+carIter);
+		// ("distance:"+track.distance+" carIter:"+carIter);
 		carAdd = 40f / track.distance; // we want to make sure the speed is based on the distance of the spline for a more constant speed
 	}
 

@@ -93,7 +93,7 @@ namespace Pathfinding {
 			try {
 				Inspector();
 			} catch (System.Exception e) {
-				Debug.LogException(e, target);
+                Debug.LogException(e, target);
 			}
 			serializedObject.ApplyModifiedProperties();
 			if (targets.Length == 1 && (target as MonoBehaviour).enabled) {

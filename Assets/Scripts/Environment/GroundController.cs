@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class GroundController : MonoBehaviour
 {
-    [SerializeField] GameObject bossFightRoom;
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject bossFightArea;
+    [SerializeField] GameObject boss;
+    [SerializeField] Vector2 spawnPos;
 
-    // Update is called once per frame
-    void Update()
+    private GameObject bossInstance;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("Player"))
+        {
+            bossFightArea.SetActive(true);
+            bossInstance = Instantiate(boss, spawnPos, Quaternion.identity);
+            gameObject.SetActive(false);
+        }
     }
 }

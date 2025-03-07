@@ -148,7 +148,7 @@ namespace Pathfinding.Serialization {
 				var helper = go.GetComponent<UnityReferenceHelper>();
 
 				if (helper == null) {
-					Debug.Log("Adding UnityReferenceHelper to Unity Reference '"+obj.name+"'");
+                    Debug.Log("Adding UnityReferenceHelper to Unity Reference '"+obj.name+"'");
 					helper = go.AddComponent<UnityReferenceHelper>();
 				}
 
@@ -318,7 +318,7 @@ namespace Pathfinding.Serialization {
 			type = type ?? WindowsStoreCompatibility.GetTypeInfo(typeof(Transform)).Assembly.GetType(typename);
 
 			if (Type.Equals(type, null)) {
-				Debug.LogError("Could not find type '"+typename+"'. Cannot deserialize Unity reference");
+                Debug.LogError("Could not find type '"+typename+"'. Cannot deserialize Unity reference");
 				return null;
 			}
 

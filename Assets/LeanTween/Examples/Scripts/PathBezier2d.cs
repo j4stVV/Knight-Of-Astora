@@ -24,7 +24,7 @@ public class PathBezier2d : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-		// Debug.Log("drwaing");
+		// ("drwaing");
 		Gizmos.color = Color.red;
 		if(visualizePath!=null)
 			visualizePath.gizmoDraw(); // To Visualize the path, use this method

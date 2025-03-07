@@ -64,7 +64,7 @@ namespace Pathfinding {
 								if (error == "") {
 									path = AssetDatabase.GetAssetPath(obj);
 								} else {
-									Debug.LogError("Couldn't move asset - "+error);
+                                    Debug.LogError("Couldn't move asset - "+error);
 								}
 							}
 						}
@@ -73,7 +73,7 @@ namespace Pathfinding {
 							if (FixLabel("Due to technical reasons, the main asset must\nhave the same name as the referenced asset")) {
 								string error = AssetDatabase.RenameAsset(path, obj.name);
 								if (error != "") {
-									Debug.LogError("Couldn't rename asset - "+error);
+                                    Debug.LogError("Couldn't rename asset - "+error);
 								}
 							}
 						}

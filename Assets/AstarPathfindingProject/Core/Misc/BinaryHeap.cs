@@ -122,7 +122,7 @@ namespace Pathfinding {
 			var newHeap = new Tuple[newSize];
 			heap.CopyTo(newHeap, 0);
 #if ASTARDEBUG
-			UnityEngine.Debug.Log("Resizing binary heap to "+newSize);
+			UnityEngine.("Resizing binary heap to "+newSize);
 #endif
 			heap = newHeap;
 		}
@@ -317,7 +317,7 @@ namespace Pathfinding {
 			}
 
 #if ASTARDEBUG
-			UnityEngine.Debug.Log("+++ Rebuilt Heap - "+changes+" changes +++");
+			UnityEngine.("+++ Rebuilt Heap - "+changes+" changes +++");
 #endif
 		}
 	}

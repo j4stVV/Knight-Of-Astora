@@ -41,7 +41,7 @@ public class AbilitiesScript : MonoBehaviour
             {
                 abilitiesState = true;
                 anim.SetBool(abilitiesName, abilitiesState);
-                other.GetComponent<PlayerController>().TakeDamage(damage);
+                other.GetComponent<PlayerController>().TakeDamage(damage, anim.transform.position);
             }
         }   
         if (other.tag == "Ground" || other.tag == "Wall")

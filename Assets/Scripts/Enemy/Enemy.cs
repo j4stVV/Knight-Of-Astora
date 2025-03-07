@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Basic Stats:")]
     [SerializeField] protected float health;
     [SerializeField] protected float recoilLength;
     [SerializeField] protected float recoilFactor;
     [SerializeField] protected bool isRecoiling = false;
     [SerializeField] protected bool isFacingRight = false;
-
     [SerializeField] protected float recoilTimer;
+    //[SerializeField] protected float attackCooldown = 2f;
+    [SerializeField] protected AudioClip dmgSoundClip;
 
     protected PlayerController player;
     public float speed;
-
-    public float damage = 1;
+    public float damage = 1f;
+    protected float lastAttackUpdateTime;
 
     protected Rigidbody2D rb;
     protected SpriteRenderer sr;
@@ -106,7 +108,8 @@ public class Enemy : MonoBehaviour
         
         if (!isRecoiling)
         {
-            rb.velocity = hitForce * recoilFactor * hitDirection;
+            SoundFXManager.instance.PlaySoundFX(dmgSoundClip, transform, 1f);
+            rb.AddForce(hitForce * recoilFactor * hitDirection);
             isRecoiling = true;
         }
     }
@@ -118,6 +121,17 @@ public class Enemy : MonoBehaviour
             Attack();
         }
     }
+    //protected void OnCollisionStay2D(Collision2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
+    //    {
+    //        if(Time.time > lastAttackUpdateTime + attackCooldown)
+    //        {
+    //            Attack();
+    //            lastAttackUpdateTime = Time.time;
+    //        }
+    //    }
+    //}
     protected virtual void UpdateEnemyState() { }
     protected virtual void ChangeCurrentAnimation() { }
     protected void ChangeState(EnemyStates newState)
@@ -126,7 +140,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void Attack()
     {
-        PlayerController.Instance.TakeDamage(damage);
+        PlayerController.Instance.TakeDamage(damage , rb.transform.position);
     }
     protected virtual void DestroyObject()
     {

@@ -36,7 +36,7 @@ public class GeneralAdvancedTechniques : MonoBehaviour {
 			int first = (int)Mathf.Floor(val);
 			int next = first < movePts.Length-1 ? first + 1 : first;
 			float diff = val - (float)first;
-			// Debug.Log("val:"+val+" first:"+first+" next:"+next);
+			// ("val:"+val+" first:"+first+" next:"+next);
 			Vector3 diffPos = (movePts[next].position-movePts[first].position);
 			avatarMove.transform.position = movePts[first].position + diffPos*diff;
 		}).setEase(LeanTweenType.easeInOutExpo).setLoopPingPong();

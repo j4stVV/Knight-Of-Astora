@@ -10,9 +10,9 @@ public class BossScript : Enemy
 
     public static BossScript instance;
 
+    [Header("Attack")]
     public Transform SideAttackTransform;
     public Vector2 SideAttackArea;
-
     public float attackRange;
     public float attackTimer;
 
@@ -261,6 +261,7 @@ public class BossScript : Enemy
         }
         if(health <= 0)
         {
+            //StartCoroutine(UIManager.Instance.EndGameActive());
             Death(0);
         }
         #endregion

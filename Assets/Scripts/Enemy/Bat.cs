@@ -10,7 +10,6 @@ public class Bat : Enemy
     [Header("A Star Algorithms")]
     [SerializeField] private float pathUpdateInterval = 0.5f; // Route update frequency
     [SerializeField] private float nextWaypointDistance = 3f; // Distance to move to next waypoint
-    //[SerializeField] private float targetReachedDistance = 0.3f;
 
     [Header("Chase Settings")]
     [SerializeField] private float detectedPlayerRange = 8f;
@@ -44,7 +43,6 @@ public class Bat : Enemy
     {
         //trong base.update da co san UpdateEnemyState
         base.Update();
-        
     }
     protected override void UpdateEnemyState()
     {

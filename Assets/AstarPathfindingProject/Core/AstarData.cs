@@ -214,7 +214,7 @@ namespace Pathfinding {
 		///
 		/// <code>
 		/// AstarPath.active.data.GetNodes(node => {
-		///     Debug.Log("I found a node at position " + (Vector3)node.position);
+		///     ("I found a node at position " + (Vector3)node.position);
 		/// });
 		/// </code>
 		///
@@ -254,7 +254,7 @@ namespace Pathfinding {
 
 				GraphModifier.TriggerEvent(GraphModifier.EventType.PostCacheLoad);
 			} else {
-				Debug.LogError("Can't load from cache since the cache is empty");
+                Debug.LogError("Can't load from cache since the cache is empty");
 			}
 			graphLock.Release();
 		}
@@ -295,7 +295,7 @@ namespace Pathfinding {
 			byte[] bytes = sr.CloseSerialize();
 			checksum = sr.GetChecksum();
 #if ASTARDEBUG
-			Debug.Log("Got a whole bunch of data, "+bytes.Length+" bytes");
+			("Got a whole bunch of data, "+bytes.Length+" bytes");
 #endif
 			graphLock.Release();
 			return bytes;
@@ -353,14 +353,14 @@ namespace Pathfinding {
 						DeserializeGraphsPartAdditive(sr);
 						sr.CloseDeserialize();
 					} else {
-						Debug.Log("Invalid data file (cannot read zip).\nThe data is either corrupt or it was saved using a 3.0.x or earlier version of the system");
+                        Debug.Log("Invalid data file (cannot read zip).\nThe data is either corrupt or it was saved using a 3.0.x or earlier version of the system");
 					}
 				} else {
 					throw new System.ArgumentNullException("bytes");
 				}
 				active.VerifyIntegrity();
 			} catch (System.Exception e) {
-				Debug.LogError("Caught exception while deserializing data.\n"+e);
+                Debug.LogError("Caught exception while deserializing data.\n"+e);
 				graphs = new NavGraph[0];
 			}
 
@@ -394,7 +394,7 @@ namespace Pathfinding {
 			for (int i = 0; i < graphs.Length; i++) {
 				for (int j = i+1; j < graphs.Length; j++) {
 					if (graphs[i] != null && graphs[j] != null && graphs[i].guid == graphs[j].guid) {
-						Debug.LogWarning("Guid Conflict when importing graphs additively. Imported graph will get a new Guid.\nThis message is (relatively) harmless.");
+                        Debug.LogWarning("Guid Conflict when importing graphs additively. Imported graph will get a new Guid.\nThis message is (relatively) harmless.");
 						graphs[i].guid = Pathfinding.Util.Guid.NewGuid();
 						break;
 					}
@@ -449,7 +449,7 @@ namespace Pathfinding {
 			graphTypes = graphList.ToArray();
 
 #if ASTARDEBUG
-			Debug.Log("Found "+graphTypes.Length+" graph types");
+			("Found "+graphTypes.Length+" graph types");
 #endif
 #else
 			graphTypes = DefaultGraphTypes;
@@ -481,14 +481,14 @@ namespace Pathfinding {
 		/// </summary>
 		[System.Obsolete("Use CreateGraph(System.Type) instead")]
 		public NavGraph CreateGraph (string type) {
-			Debug.Log("Creating Graph of type '"+type+"'");
+            Debug.Log("Creating Graph of type '"+type+"'");
 
 			for (int i = 0; i < graphTypes.Length; i++) {
 				if (graphTypes[i].Name == type) {
 					return CreateGraph(graphTypes[i]);
 				}
 			}
-			Debug.LogError("Graph type ("+type+") wasn't found");
+            Debug.LogError("Graph type ("+type+") wasn't found");
 			return null;
 		}
 
@@ -519,7 +519,7 @@ namespace Pathfinding {
 			}
 
 			if (graph == null) {
-				Debug.LogError("No NavGraph of type '"+type+"' could be found");
+                Debug.LogError("No NavGraph of type '"+type+"' could be found");
 				return null;
 			}
 
@@ -542,7 +542,7 @@ namespace Pathfinding {
 			}
 
 			if (graph == null) {
-				Debug.LogError("No NavGraph of type '"+type+"' could be found, "+graphTypes.Length+" graph types are avaliable");
+                Debug.LogError("No NavGraph of type '"+type+"' could be found, "+graphTypes.Length+" graph types are avaliable");
 				return null;
 			}
 

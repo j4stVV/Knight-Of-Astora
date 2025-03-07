@@ -21,7 +21,7 @@ public class Boss_Lunge : StateMachineBehaviour
         if (Vector2.Distance(rb.position, PlayerController.Instance.transform.position) <= BossScript.instance.attackRange
             && !BossScript.instance.dmgPlayer)
         {
-            PlayerController.Instance.TakeDamage(BossScript.instance.damage);
+            PlayerController.Instance.TakeDamage(BossScript.instance.damage, rb.transform.position);
         }
             
     }

@@ -188,11 +188,11 @@ MonoBehaviour:
   recoilLength: 1
   recoilFactor: 1
   isRecoiling: 0
+  isFacingRight: 0
   recoilTimer: 0.5
-  player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
+  dmgSoundClip: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
   speed: 10
   damage: 1
-  anim: {fileID: 0}
   SideAttackTransform: {fileID: 8357995895100469447}
   SideAttackArea: {x: 7, y: 6}
   attackRange: 10
@@ -370,8 +370,8 @@ MonoBehaviour:
   recoilLength: 1
   recoilFactor: 1
   isRecoiling: 0
+  isFacingRight: 0
   recoilTimer: 1
-  player: {fileID: 970128306319859662, guid: 7d5bff46aefc49548a4a028a71276dba, type: 3}
+  dmgSoundClip: {fileID: 0}
   speed: 3
   damage: 1
-  anim: {fileID: 0}

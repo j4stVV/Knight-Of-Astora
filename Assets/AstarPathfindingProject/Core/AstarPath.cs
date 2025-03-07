@@ -832,7 +832,7 @@ public class AstarPath : VersionedMonoBehaviour {
 			if (logPathResults == PathLog.InGame) {
 				inGameDebugPath = debug;
 			} else if (path.error) {
-				Debug.LogWarning(debug);
+                Debug.LogWarning(debug);
 			} else {
 				Debug.Log(debug);
 			}
@@ -1197,7 +1197,7 @@ public class AstarPath : VersionedMonoBehaviour {
 			int memory = SystemInfo.systemMemorySize;
 
 			if (memory <= 0) {
-				Debug.LogError("Machine reporting that is has <= 0 bytes of RAM. This is definitely not true, assuming 1 GiB");
+                Debug.LogError("Machine reporting that is has <= 0 bytes of RAM. This is definitely not true, assuming 1 GiB");
 				memory = 1024;
 			}
 
@@ -1223,7 +1223,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		active = this;
 
 		if (FindObjectsOfType(typeof(AstarPath)).Length > 1) {
-			Debug.LogError("You should NOT have more than one AstarPath component in the scene at any time.\n" +
+            Debug.LogError("You should NOT have more than one AstarPath component in the scene at any time.\n" +
 				"This can cause serious errors since the AstarPath component builds around a singleton pattern.");
 		}
 
@@ -1397,7 +1397,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		pathProcessor.queue.TerminateReceivers();
 
 		if (logPathResults == PathLog.Heavy)
-			Debug.Log("Processing Possible Work Items");
+            Debug.Log("Processing Possible Work Items");
 
 		// Stop the graph update thread (if it is running)
 		graphUpdates.DisableMultithreading();
@@ -1413,7 +1413,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		pathReturnQueue.ReturnPaths(false);
 
 		if (logPathResults == PathLog.Heavy)
-			Debug.Log("Destroying Graphs");
+            Debug.Log("Destroying Graphs");
 
 
 		// Clean up graph data
@@ -1610,7 +1610,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// Scans a particular graph asynchronously. This is a IEnumerable, you can loop through it to get the progress
 	/// <code>
 	/// foreach (Progress progress in AstarPath.active.ScanAsync()) {
-	///     Debug.Log("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
+	///     ("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
 	/// }
 	/// </code>
 	/// You can scan graphs asyncronously by yielding when you loop through the progress.
@@ -1619,7 +1619,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// <code>
 	/// IEnumerator Start () {
 	///     foreach (Progress progress in AstarPath.active.ScanAsync()) {
-	///         Debug.Log("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
+	///         ("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
 	///         yield return null;
 	///     }
 	/// }
@@ -1637,7 +1637,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	///
 	/// <code>
 	/// foreach (Progress progress in AstarPath.active.ScanAsync()) {
-	///     Debug.Log("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
+	///     ("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
 	/// }
 	/// </code>
 	/// You can scan graphs asyncronously by yielding when you loop through the progress.
@@ -1646,7 +1646,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// <code>
 	/// IEnumerator Start () {
 	///     foreach (Progress progress in AstarPath.active.ScanAsync()) {
-	///         Debug.Log("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
+	///         ("Scanning... " + progress.description + " - " + (progress.progress*100).ToString("0") + "%");
 	///         yield return null;
 	///     }
 	/// }
@@ -1781,7 +1781,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		System.GC.Collect();
 
 		if (logPathResults != PathLog.None && logPathResults != PathLog.OnlyErrors) {
-			Debug.Log("Scanning - Process took "+(lastScanTime*1000).ToString("0")+" ms to complete");
+            Debug.Log("Scanning - Process took "+(lastScanTime*1000).ToString("0")+" ms to complete");
 		}
 	}
 
@@ -1934,7 +1934,7 @@ public class AstarPath : VersionedMonoBehaviour {
 		var astar = active;
 
 		if (System.Object.ReferenceEquals(astar, null)) {
-			Debug.LogError("There is no AstarPath object in the scene or it has not been initialized yet");
+            Debug.LogError("There is no AstarPath object in the scene or it has not been initialized yet");
 			return;
 		}
 
@@ -1949,9 +1949,9 @@ public class AstarPath : VersionedMonoBehaviour {
 		}
 
 		if (astar.graphs == null || astar.graphs.Length == 0) {
-			Debug.LogError("There are no graphs in the scene");
+            Debug.LogError("There are no graphs in the scene");
 			path.FailWithError("There are no graphs in the scene");
-			Debug.LogError(path.errorLog);
+            Debug.LogError(path.errorLog);
 			return;
 		}
 

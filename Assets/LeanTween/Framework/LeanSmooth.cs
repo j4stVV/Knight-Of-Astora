@@ -7,7 +7,7 @@ using UnityEngine;
 * <strong>Example: </strong><br />fromY = LeanSmooth.spring(fromY, followArrow.localPosition.y, ref velocityY, 1.1f);<br />
 * fromVec3 = LeanSmooth.damp(fromVec3, dude5Title.localPosition, ref velocityVec3, 1.1f);<br />
 * fromColor = LeanSmooth.damp(fromColor, dude5Title.GetComponent<Renderer>().material.color, ref velocityColor, 1.1f);<br />
-* Debug.Log("Smoothed y:" + fromY + " vec3:" + fromVec3 + " color:" + fromColor);<br />
+* ("Smoothed y:" + fromY + " vec3:" + fromVec3 + " color:" + fromColor);<br />
 *
 * @class LeanSmooth
 */
@@ -27,7 +27,7 @@ public class LeanSmooth {
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * followVar = LeanSmooth.damp(followVar, destinationVar, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:"+followVar);
+    * ("current:"+followVar);
     */
     public static float damp(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f)
     {
@@ -69,7 +69,7 @@ public class LeanSmooth {
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * transform.position = LeanSmooth.damp(transform.position, destTrans.position, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:"+transform.position);
+    * ("current:"+transform.position);
     */
     public static Vector3 damp(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f)
     {
@@ -92,7 +92,7 @@ public class LeanSmooth {
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * fromColor = LeanSmooth.damp(fromColor, transform.GetComponent<Renderer>().material.color, ref velocityColor, 1.1f);\n
-    * Debug.Log("current:"+fromColor);
+    * ("current:"+fromColor);
     */
     public static Color damp(Color current, Color target, ref Color currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f)
     {
@@ -118,7 +118,7 @@ public class LeanSmooth {
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
     * @example
     * followVar = LeanSmooth.spring(followVar, destinationVar, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:"+followVar);
+    * ("current:"+followVar);
     */
     public static float spring(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f)
     {
@@ -153,7 +153,7 @@ public class LeanSmooth {
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
     * @example
     * transform.position = LeanSmooth.spring(transform.position, destTrans.position, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:"+transform.position);
+    * ("current:"+transform.position);
     */
     public static Vector3 spring(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f)
     {
@@ -178,7 +178,7 @@ public class LeanSmooth {
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
     * @example
     * fromColor = LeanSmooth.spring(fromColor, transform.GetComponent<Renderer>().material.color, ref velocityColor, 1.1f);\n
-    * Debug.Log("current:"+fromColor);
+    * ("current:"+fromColor);
     */
     public static Color spring(Color current, Color target, ref Color currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f)
     {
@@ -200,7 +200,7 @@ public class LeanSmooth {
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * followVar = LeanSmooth.linear(followVar, destinationVar, 50f);\n
-    * Debug.Log("current:"+followVar);
+    * ("current:"+followVar);
     */
     public static float linear(float current, float target, float moveSpeed, float deltaTime = -1f)
     {
@@ -232,7 +232,7 @@ public class LeanSmooth {
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * transform.position = LeanSmooth.linear(transform.position, followTrans.position, 50f);\n
-    * Debug.Log("current:"+transform.position);
+    * ("current:"+transform.position);
     */
     public static Vector3 linear(Vector3 current, Vector3 target, float moveSpeed, float deltaTime = -1f)
     {
@@ -253,7 +253,7 @@ public class LeanSmooth {
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * fromColor = LeanSmooth.linear(fromColor, transform.GetComponent<Renderer>().material.color, 50f);\n
-    * Debug.Log("current:"+fromColor);
+    * ("current:"+fromColor);
     */
     public static Color linear(Color current, Color target, float moveSpeed)
     {
@@ -280,7 +280,7 @@ public class LeanSmooth {
     * @param {float} [hitDamping]:float the rate at which to dampen the bounciness of when it reaches it's destination
     * @example
     * followVar = LeanSmooth.bounceOut(followVar, destinationVar, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:"+followVar);
+    * ("current:"+followVar);
     */
     public static float bounceOut(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f, float hitDamping = 0.9f)
     {
@@ -324,7 +324,7 @@ public class LeanSmooth {
     * @param {float} [hitDamping]:float the rate at which to dampen the bounciness of when it reaches it's destination
     * @example
     * transform.position = LeanSmooth.bounceOut(transform.position, followTrans.position, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:"+transform.position);
+    * ("current:"+transform.position);
     */
     public static Vector3 bounceOut(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f, float hitDamping = 0.9f)
     {
@@ -350,7 +350,7 @@ public class LeanSmooth {
     * @param {float} [hitDamping]:float the rate at which to dampen the bounciness of when it reaches it's destination
     * @example
     * fromColor = LeanSmooth.bounceOut(fromColor, transform.GetComponent<Renderer>().material.color, ref followVelocity, 1.1f);\n
-    * Debug.Log("current:" + fromColor);
+    * ("current:" + fromColor);
     */
     public static Color bounceOut(Color current, Color target, ref Color currentVelocity, float smoothTime, float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f, float hitDamping = 0.9f)
     {

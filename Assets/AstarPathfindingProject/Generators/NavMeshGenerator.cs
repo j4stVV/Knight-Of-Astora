@@ -207,7 +207,7 @@ namespace Pathfinding {
 			Mesh mesh = ObjImporter.ImportFile(objMeshPath);
 
 			if (mesh == null) {
-				Debug.LogError("Couldn't read .obj file at '"+objMeshPath+"'");
+                Debug.LogError("Couldn't read .obj file at '"+objMeshPath+"'");
 				return;
 			}
 

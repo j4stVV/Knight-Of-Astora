@@ -36,7 +36,7 @@ public class PathSplines : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-		// Debug.Log("drwaing");
+		// ("drwaing");
 		if(cr==null)
 			OnEnable();
 		Gizmos.color = Color.red;

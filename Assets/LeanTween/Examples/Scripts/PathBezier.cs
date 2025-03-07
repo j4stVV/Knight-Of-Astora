@@ -21,8 +21,8 @@ public class PathBezier : MonoBehaviour {
 
 		// Tween automatically
 		LTDescr descr = LeanTween.move(avatar1, cr.pts, 6.5f).setOrientToPath(true).setRepeat(-1);
-		Debug.Log("length of path 1:"+cr.length);
-		Debug.Log("length of path 2:"+descr.optional.path.length);
+        Debug.Log("length of path 1:"+cr.length);
+        Debug.Log("length of path 2:"+descr.optional.path.length);
 	}
 	
 	private float iter;
@@ -36,7 +36,7 @@ public class PathBezier : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-		// Debug.Log("drwaing");
+		// ("drwaing");
 		if(cr!=null)
 			OnEnable();
 		Gizmos.color = Color.red;

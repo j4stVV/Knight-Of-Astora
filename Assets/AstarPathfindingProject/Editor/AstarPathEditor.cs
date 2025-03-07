@@ -85,7 +85,7 @@ namespace Pathfinding {
 			try {
 				GetAstarEditorSettings();
 			} catch (System.Exception e) {
-				Debug.LogException(e);
+                Debug.LogException(e);
 			}
 
 			LoadStyles();
@@ -162,7 +162,7 @@ namespace Pathfinding {
 							   "If you get this message and the AstarPathfindingProject is not at the root of your Assets folder (i.e at Assets/AstarPathfindingProject)" +
 							   " then you should move it to the root";
 
-				Debug.LogError(error);
+                Debug.LogError(error);
 				EditorUtility.DisplayDialog("Could not enable Js support", error, "ok");
 				return;
 			}
@@ -187,27 +187,27 @@ namespace Pathfinding {
 			if (System.IO.Directory.Exists(Application.dataPath+"/Plugins/AstarPathfindingProject")) {
 				string error = AssetDatabase.MoveAsset("Assets/Plugins/AstarPathfindingProject", scriptsFolder);
 				if (error != "") {
-					Debug.LogError("Couldn't disable Js - "+error);
+                    Debug.LogError("Couldn't disable Js - "+error);
 				} else {
 					try {
 						System.IO.Directory.Delete(Application.dataPath+"/Plugins");
 					} catch (System.Exception) {}
 				}
 			} else {
-				Debug.LogWarning("Could not disable JS - Could not find directory '"+Application.dataPath+"/Plugins/AstarPathfindingProject'");
+                Debug.LogWarning("Could not disable JS - Could not find directory '"+Application.dataPath+"/Plugins/AstarPathfindingProject'");
 			}
 
 			if (System.IO.Directory.Exists(Application.dataPath+"/AstarPathfindingEditor/Editor")) {
 				string error = AssetDatabase.MoveAsset("Assets/AstarPathfindingEditor/Editor", scriptsFolder + "/Editor");
 				if (error != "") {
-					Debug.LogError("Couldn't disable Js - "+error);
+                    Debug.LogError("Couldn't disable Js - "+error);
 				} else {
 					try {
 						System.IO.Directory.Delete(Application.dataPath+"/AstarPathfindingEditor");
 					} catch (System.Exception) {}
 				}
 			} else {
-				Debug.LogWarning("Could not disable JS - Could not find directory '"+Application.dataPath+"/AstarPathfindingEditor/Editor'");
+                Debug.LogWarning("Could not disable JS - Could not find directory '"+Application.dataPath+"/AstarPathfindingEditor/Editor'");
 			}
 
 			AssetDatabase.Refresh();
@@ -314,7 +314,7 @@ namespace Pathfinding {
 			if (astarSkin != null) {
 				astarSkin.button = inspectorSkin.button;
 			} else {
-				Debug.LogWarning("Could not load editor skin at '" + skinPath + "'");
+                Debug.LogWarning("Could not load editor skin at '" + skinPath + "'");
 				return false;
 			}
 
@@ -617,7 +617,7 @@ namespace Pathfinding {
 				EditorGUI.indentLevel++;
 
 				if (anyNodesNull) {
-					Debug.LogError("Some nodes in the graph are null. Please report this error.");
+                    Debug.LogError("Some nodes in the graph are null. Please report this error.");
 				}
 
 				EditorGUILayout.LabelField("Nodes", total.ToString());
@@ -841,7 +841,7 @@ namespace Pathfinding {
 							byte[] bytes = Pathfinding.Serialization.AstarSerializer.LoadFromFile(path);
 							DeserializeGraphs(bytes);
 						} catch (System.Exception e) {
-							Debug.LogError("Could not load from file at '"+path+"'\n"+e);
+                            Debug.LogError("Could not load from file at '"+path+"'\n"+e);
 						}
 					}
 				}
@@ -955,7 +955,7 @@ namespace Pathfinding {
 				showSettings = true;
 				Selection.activeGameObject = astar.gameObject;
 			} else {
-				Debug.LogWarning("No AstarPath component in the scene");
+                Debug.LogWarning("No AstarPath component in the scene");
 			}
 		}
 
@@ -1206,7 +1206,7 @@ namespace Pathfinding {
 			if (graphEditorTypes.ContainsKey(graphType)) {
 				result = System.Activator.CreateInstance(graphEditorTypes[graphType].editorType) as GraphEditor;
 			} else {
-				Debug.LogError("Couldn't find an editor for the graph type '" + graphType + "' There are " + graphEditorTypes.Count + " available graph editors");
+                Debug.LogError("Couldn't find an editor for the graph type '" + graphType + "' There are " + graphEditorTypes.Count + " available graph editors");
 				result = new GraphEditor();
 			}
 
@@ -1356,8 +1356,8 @@ namespace Pathfinding {
 					if (data != null) Pathfinding.Serialization.TinyJsonDeserializer.Deserialize(data, graphEditors[i].GetType(), graphEditors[i], script.gameObject);
 				}
 			} catch (System.Exception e) {
-				Debug.LogError("Failed to deserialize graphs");
-				Debug.LogException(e);
+                Debug.LogError("Failed to deserialize graphs");
+                Debug.LogException(e);
 				script.data.SetData(null);
 			}
 		}
@@ -1387,7 +1387,7 @@ namespace Pathfinding {
 					}
 				}
 			} catch (System.Exception e) {
-				Debug.LogError("There was an error generating the graphs:\n"+e+"\n\nIf you think this is a bug, please contact me on forum.arongranberg.com (post a new thread)\n");
+                Debug.LogError("There was an error generating the graphs:\n"+e+"\n\nIf you think this is a bug, please contact me on forum.arongranberg.com (post a new thread)\n");
 				EditorUtility.DisplayDialog("Error Generating Graphs", "There was an error when generating graphs, check the console for more info", "Ok");
 				throw e;
 			} finally {

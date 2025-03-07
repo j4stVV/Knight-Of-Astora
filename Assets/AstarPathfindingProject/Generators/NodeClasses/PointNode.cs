@@ -30,9 +30,9 @@ namespace Pathfinding {
 		/// var pointNode = node as PointNode;
 		///
 		/// if (pointNode != null) {
-		///     Debug.Log("That node was created from the GameObject named " + pointNode.gameObject.name);
+		///     ("That node was created from the GameObject named " + pointNode.gameObject.name);
 		/// } else {
-		///     Debug.Log("That node is not a PointNode");
+		///     ("That node is not a PointNode");
 		/// }
 		/// </code>
 		/// </summary>
