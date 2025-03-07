@@ -310,7 +310,7 @@ namespace Pathfinding {
 
 				if (!status) {
 					if (force) {
-						Debug.LogError("Misbehaving WorkItem. 'force'=true but the work item did not complete.\nIf force=true is passed to a WorkItem it should always return true.");
+                        Debug.LogError("Misbehaving WorkItem. 'force'=true but the work item did not complete.\nIf force=true is passed to a WorkItem it should always return true.");
 					}
 
 					// Still work items to process

@@ -8,9 +8,9 @@ public class GeneralSimpleUI : MonoBehaviour {
 	public RectTransform button;
 
 	void Start () {
-		Debug.Log("For better examples see the 4.6_Examples folder!");
+        Debug.Log("For better examples see the 4.6_Examples folder!");
 		if(button==null){
-			Debug.LogError("Button not assigned! Create a new button via Hierarchy->Create->UI->Button. Then assign it to the button variable");
+            Debug.LogError("Button not assigned! Create a new button via Hierarchy->Create->UI->Button. Then assign it to the button variable");
 			return;
 		}
 		
@@ -23,7 +23,7 @@ public class GeneralSimpleUI : MonoBehaviour {
 
 		LeanTween.value(gameObject, 1f, 0.5f, 1f ).setOnUpdate( 
 			(float volume)=>{
-				Debug.Log("volume:"+volume);
+                Debug.Log("volume:"+volume);
 			}
 		);
 
@@ -49,7 +49,7 @@ public class GeneralSimpleUI : MonoBehaviour {
 
 	#else
 	void Start(){
-		Debug.LogError("Unity 4.6+ is required to use the new UI");
+		Error("Unity 4.6+ is required to use the new UI");
 	}
 	
 	#endif

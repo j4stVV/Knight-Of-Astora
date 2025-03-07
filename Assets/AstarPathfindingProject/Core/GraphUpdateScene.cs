@@ -230,7 +230,7 @@ namespace Pathfinding {
 		/// </summary>
 		public void Apply () {
 			if (AstarPath.active == null) {
-				Debug.LogError("There is no AstarPath object in the scene", this);
+                Debug.LogError("There is no AstarPath object in the scene", this);
 				return;
 			}
 
@@ -253,7 +253,7 @@ namespace Pathfinding {
 				} else {
 					var bounds = GetBounds();
 					if (bounds.center == Vector3.zero && bounds.size == Vector3.zero) {
-						Debug.LogError("Cannot apply GraphUpdateScene, no points defined and no renderer or collider attached", this);
+                        Debug.LogError("Cannot apply GraphUpdateScene, no points defined and no renderer or collider attached", this);
 						return;
 					}
 

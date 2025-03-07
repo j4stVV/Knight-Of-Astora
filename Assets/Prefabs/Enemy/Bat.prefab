@@ -190,12 +190,13 @@ MonoBehaviour:
   isRecoiling: 0
   isFacingRight: 0
   recoilTimer: 0
+  dmgSoundClip: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
   speed: 15
   damage: 1
   pathUpdateInterval: 0.5
   nextWaypointDistance: 1
   detectedPlayerRange: 8
-  maxChasingDistance: 10
+  maxChasingDistance: 15
   maxDistanceFromStart: 20
   stunDuration: 1
 --- !u!114 &1101765611395451976

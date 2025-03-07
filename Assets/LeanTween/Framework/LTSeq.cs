@@ -9,12 +9,12 @@ using UnityEngine;
 * var seq = LeanTween.sequence();<br>
 * seq.append(1f); <span style="color:gray">// delay everything one second</span><br>
 * seq.append( () => { <span style="color:gray">// fire an event before start</span><br>
-* &nbsp;Debug.Log("I have started");<br>
+* &nbsp;("I have started");<br>
 * });<br>
 * seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); <span style="color:gray">// do a tween</span><br>
 * seq.append( (object obj) => { <span style="color:gray">// fire event after tween</span><br>
 * &nbsp;var dict = obj as Dictionary<string,string>;<br>
-* &nbsp;Debug.Log("We are done now obj value:"+dict["hi"]);<br>
+* &nbsp;("We are done now obj value:"+dict["hi"]);<br>
 * }, new Dictionary<string,string>(){ {"hi","sup"} } );<br>
 * @class LTSeq
 * @constructor
@@ -46,7 +46,7 @@ public class LTSeq {
 			/*uint backId = toId & 0xFFFF;
 			uint backCounter = toId >> 16;
 			if(_id!=backId || backCounter!=counter){
-				Debug.LogError("BAD CONVERSION toId:"+_id);
+				Error("BAD CONVERSION toId:"+_id);
 			}*/
 
 			return (int)toId;
@@ -72,7 +72,7 @@ public class LTSeq {
 		this.current.toggle = true;
 		LTSeq lastCurrent = this.current;
 		this.current = LeanTween.sequence(true);
-		// Debug.Log("this.current:" + this.current.id + " lastCurrent:" + lastCurrent.id);
+		// ("this.current:" + this.current.id + " lastCurrent:" + lastCurrent.id);
 		this.current.previous = lastCurrent;
 		lastCurrent.toggle = false;
 		this.current.totalDelay = lastCurrent.totalDelay;
@@ -81,7 +81,7 @@ public class LTSeq {
 	}
 
 	private float addPreviousDelays(){
-//		Debug.Log("delay:"+delay+" count:"+this.current.count+" this.current.totalDelay:"+this.current.totalDelay);
+//		("delay:"+delay+" count:"+this.current.count+" this.current.totalDelay:"+this.current.totalDelay);
 
 		LTSeq prev = this.current.previous;
 
@@ -114,16 +114,16 @@ public class LTSeq {
 	* @example
 	* var seq = LeanTween.sequence();<br>
 	* seq.append( () => { // fire an event before start<br>
-	* &nbsp;Debug.Log("I have started");<br>
+	* &nbsp;("I have started");<br>
 	* });<br>
 	* seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
 	* seq.append( () => { // fire event after tween<br>
-	* &nbsp;Debug.Log("We are done now");<br>
+	* &nbsp;("We are done now");<br>
 	* });;<br>
 	*/
 	public LTSeq append( System.Action callback ){
 		LTDescr newTween = LeanTween.delayedCall(0f, callback);
-//		Debug.Log("newTween:" + newTween);
+//		("newTween:" + newTween);
 		return append(newTween);
 	}
 
@@ -135,12 +135,12 @@ public class LTSeq {
 	* @example
 	* var seq = LeanTween.sequence();<br>
 	* seq.append( () => { // fire an event before start<br>
-	* &nbsp;Debug.Log("I have started");<br>
+	* &nbsp;("I have started");<br>
 	* });<br>
 	* seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
 	* seq.append((object obj) => { // fire event after tween
 	* &nbsp;var dict = obj as Dictionary<string,string>;
-	* &nbsp;Debug.Log("We are done now obj value:"+dict["hi"]);
+	* &nbsp;("We are done now obj value:"+dict["hi"]);
 	* &nbsp;}, new Dictionary<string,string>(){ {"hi","sup"} } );
 	*/
 	public LTSeq append( System.Action<object> callback, object obj ){
@@ -174,7 +174,7 @@ public class LTSeq {
 	public LTSeq append( LTDescr tween ){
 		this.current.tween = tween;
 
-//		Debug.Log("tween:" + tween + " delay:" + this.current.totalDelay);
+//		("tween:" + tween + " delay:" + this.current.totalDelay);
 
         this.current.totalDelay = addPreviousDelays();
 
@@ -193,7 +193,7 @@ public class LTSeq {
 
 
 	public LTSeq setScale( float timeScale ){
-//		Debug.Log("this.current:" + this.current.previous.debugIter+" tween:"+this.current.previous.tween);
+//		("this.current:" + this.current.previous.debugIter+" tween:"+this.current.previous.tween);
 		setScaleRecursive(this.current, timeScale, 500);
 
 		return addOn();
@@ -203,10 +203,10 @@ public class LTSeq {
 		if (count > 0) {
 			this.timeScale = timeScale;
 
-//			Debug.Log("seq.count:" + count + " seq.tween:" + seq.tween);
+//			("seq.count:" + count + " seq.tween:" + seq.tween);
 			seq.totalDelay *= timeScale;
 			if (seq.tween != null) {
-//			Debug.Log("seq.tween.time * timeScale:" + seq.tween.time * timeScale + " seq.totalDelay:"+seq.totalDelay +" time:"+seq.tween.time+" seq.tween.delay:"+seq.tween.delay);
+//			("seq.tween.time * timeScale:" + seq.tween.time * timeScale + " seq.totalDelay:"+seq.totalDelay +" time:"+seq.tween.time+" seq.tween.delay:"+seq.tween.delay);
 				if (seq.tween.time != 0f)
 					seq.tween.setTime(seq.tween.time * timeScale);
 				seq.tween.setDelay(seq.tween.delay * timeScale);

@@ -27,7 +27,6 @@ public class PauseMenu : MonoBehaviour
         {
             GamePause();
         }
-        
     }
     public void GamePause()
     {

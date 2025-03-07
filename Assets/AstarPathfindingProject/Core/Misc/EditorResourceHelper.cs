@@ -49,7 +49,7 @@ namespace Pathfinding {
 				if (System.IO.File.Exists(package.resolvedPath + "/Editor/EditorAssets/AstarEditorSkinLight.guiskin")) {
 					return true;
 				} else {
-					Debug.LogError("Could not find editor assets folder in package at " + editorAssets + ". Is the package corrupt?");
+                    Debug.LogError("Could not find editor assets folder in package at " + editorAssets + ". Is the package corrupt?");
 					return false;
 				}
 			}
@@ -94,7 +94,7 @@ namespace Pathfinding {
 				}
 
 				if (!found) {
-					Debug.LogWarning("Could not locate editor assets folder. Make sure you have imported the package correctly.\nA* Pathfinding Project");
+                    Debug.LogWarning("Could not locate editor assets folder. Make sure you have imported the package correctly.\nA* Pathfinding Project");
 					return false;
 				}
 			}

@@ -9,6 +9,10 @@ public class SubCameraController : MonoBehaviour
     private CinemachineConfiner2D confiner;
     private float timeGap = 3f;
     private float lastUpdateTime;
+    private void Awake()
+    {
+        FindCamBoundary();
+    }
     private void Update()
     {
         if(Time.time > lastUpdateTime + timeGap)

@@ -112,7 +112,7 @@ namespace Pathfinding {
 				exitAsyncThread.Set();
 
 				if (!graphUpdateThread.Join(5*1000)) {
-					Debug.LogError("Graph update thread did not exit in 5 seconds");
+                    Debug.LogError("Graph update thread did not exit in 5 seconds");
 				}
 
 				graphUpdateThread = null;
@@ -137,7 +137,7 @@ namespace Pathfinding {
 			while (graphUpdateQueue.Count > 0) {
 				GraphUpdateObject ob = graphUpdateQueue.Dequeue();
 				if (ob.internalStage != GraphUpdateObject.STAGE_PENDING) {
-					Debug.LogError("Expected remaining graph updates to be pending");
+                    Debug.LogError("Expected remaining graph updates to be pending");
 					continue;
 				}
 				ob.internalStage = 0;
@@ -252,7 +252,7 @@ namespace Pathfinding {
 					try {
 						s.graph.UpdateArea(s.obj);
 					} catch (System.Exception e) {
-						Debug.LogError("Error while updating graphs\n"+e);
+                        Debug.LogError("Error while updating graphs\n"+e);
 					}
 
 					if ((threading & GraphUpdateThreading.UnityPost) != 0) {
@@ -298,7 +298,7 @@ namespace Pathfinding {
 					try {
 						s.graph.UpdateAreaPost(s.obj);
 					} catch (System.Exception e) {
-						Debug.LogError("Error while updating graphs (post step)\n"+e);
+                        Debug.LogError("Error while updating graphs (post step)\n"+e);
 					}
 				}
 
@@ -353,7 +353,7 @@ namespace Pathfinding {
 							throw new System.NotSupportedException("" + aguo.order);
 						}
 					} catch (System.Exception e) {
-						Debug.LogError("Exception while updating graphs:\n"+e);
+                        Debug.LogError("Exception while updating graphs:\n"+e);
 					}
 #if UNITY_2017_3_OR_NEWER
 					asyncUpdateProfilingSampler.End();

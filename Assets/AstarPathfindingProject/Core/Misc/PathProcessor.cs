@@ -202,8 +202,8 @@ namespace Pathfinding {
 
 					// Queue termination exceptions should be ignored, they are supposed to kill the thread
 					if (!(e is ThreadControlQueue.QueueTerminationException)) {
-						Debug.LogException(e);
-						Debug.LogError("Unhandled exception during pathfinding. Terminating.");
+                        Debug.LogException(e);
+                        Debug.LogError("Unhandled exception during pathfinding. Terminating.");
 						queue.TerminateReceivers();
 
 						// This will throw an exception supposed to kill the thread
@@ -220,7 +220,7 @@ namespace Pathfinding {
 			if (threads != null) {
 				for (int i = 0; i < threads.Length; i++) {
 					if (!threads[i].Join(200)) {
-						Debug.LogError("Could not terminate pathfinding thread["+i+"] in 200ms, trying Thread.Abort");
+                        Debug.LogError("Could not terminate pathfinding thread["+i+"] in 200ms, trying Thread.Abort");
 						threads[i].Abort();
 					}
 				}
@@ -405,11 +405,11 @@ namespace Pathfinding {
 #endif
 			{
 				if (astar.logPathResults == PathLog.Heavy)
-					Debug.LogWarning("Shutting down pathfinding thread #" + pathHandler.threadID);
+                    Debug.LogWarning("Shutting down pathfinding thread #" + pathHandler.threadID);
 				return;
 			}
-			Debug.LogException(e);
-			Debug.LogError("Unhandled exception during pathfinding. Terminating.");
+            Debug.LogException(e);
+            Debug.LogError("Unhandled exception during pathfinding. Terminating.");
 			// Unhandled exception, kill pathfinding
 			queue.TerminateReceivers();
 		} finally {
@@ -419,7 +419,7 @@ namespace Pathfinding {
 		}
 #endif
 
-			Debug.LogError("Error : This part should never be reached.");
+            Debug.LogError("Error : This part should never be reached.");
 			queue.ReceiverTerminated();
 		}
 

@@ -254,7 +254,7 @@ namespace Pathfinding {
 						t1 = System.Math.Max(t1, VectorMath.ClosestPointOnLineFactor(va1, va2, vb2));
 
 						if (t2 < t1) {
-							Debug.LogError("Something went wrong! " + t1 + " " + t2 + " " + va1 + " " + va2 + " " + vb1 + " " + vb2+"\nTODO, how can this happen?");
+                            Debug.LogError("Something went wrong! " + t1 + " " + t2 + " " + va1 + " " + va2 + " " + vb1 + " " + vb2+"\nTODO, how can this happen?");
 						} else {
 							Vector3 pa = (Vector3)(va2-va1)*t1 + (Vector3)va1;
 							Vector3 pb = (Vector3)(va2-va1)*t2 + (Vector3)va1;

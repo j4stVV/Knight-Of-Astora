@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField] GameObject deathScreen;
+    [SerializeField] GameObject endScreen;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -19,7 +20,6 @@ public class UIManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-    
     public IEnumerator ActiveDeathScreen()
     {
         yield return new WaitForSeconds(0.8f);
@@ -29,5 +29,10 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         deathScreen.SetActive(false);
+    }
+    public IEnumerator EndGameActive()
+    {
+        yield return new WaitForSeconds(0.5f);
+        endScreen.SetActive(true);
     }
 }

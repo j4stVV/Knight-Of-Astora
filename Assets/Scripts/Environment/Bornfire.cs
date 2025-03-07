@@ -8,8 +8,6 @@ public class Bornfire : MonoBehaviour
     public bool inRange;
     public bool interacted;
 
-    [SerializeField] private TextMeshPro tutorialBornfire;
-
     private void Update()
     {
         if (inRange && Input.GetButtonDown("Interact"))

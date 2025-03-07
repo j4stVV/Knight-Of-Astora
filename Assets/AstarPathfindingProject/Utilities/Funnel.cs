@@ -388,7 +388,7 @@ namespace Pathfinding {
 				}
 
 				if (funnelPath.Count > 2000) {
-					Debug.LogWarning("Avoiding infinite loop. Remove this check if you have this long paths.");
+                    Debug.LogWarning("Avoiding infinite loop. Remove this check if you have this long paths.");
 					break;
 				}
 

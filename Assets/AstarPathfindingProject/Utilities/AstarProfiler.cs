@@ -49,7 +49,7 @@ namespace Pathfinding {
 		public static void EndFastProfile (int tag) {
 			/*if (!profiles.ContainsKey(tag))
 			 * {
-			 *  Debug.LogError("Can only end profiling for a tag which has already been started (tag was " + tag + ")");
+			 *  Error("Can only end profiling for a tag which has already been started (tag was " + tag + ")");
 			 *  return;
 			 * }*/
 			ProfilePoint point = fastProfiles[tag];
@@ -82,7 +82,7 @@ namespace Pathfinding {
 			point.tmpBytes = GC.GetTotalMemory(false);
 			point.watch.Start();
 			//point.lastRecorded = DateTime.UtcNow;
-			//Debug.Log ("Starting " + tag);
+			// ("Starting " + tag);
 #endif
 		}
 
@@ -90,7 +90,7 @@ namespace Pathfinding {
 		public static void EndProfile (string tag) {
 #if !ASTAR_UNITY_PRO_PROFILER
 			if (!profiles.ContainsKey(tag)) {
-				Debug.LogError("Can only end profiling for a tag which has already been started (tag was " + tag + ")");
+                Debug.LogError("Can only end profiling for a tag which has already been started (tag was " + tag + ")");
 				return;
 			}
 			//Console.WriteLine ("Profile End - " + tag);
@@ -101,7 +101,7 @@ namespace Pathfinding {
 			point.watch.Stop();
 			point.totalBytes += GC.GetTotalMemory(false) - point.tmpBytes;
 			//profiles[tag] = point;
-			//Debug.Log ("Ending " + tag);
+			// ("Ending " + tag);
 #else
 			EndProfile();
 #endif
@@ -169,7 +169,7 @@ namespace Pathfinding {
 			output.Append("\n\n============================\n\t\tTotal runtime: ");
 			output.Append(endTime.TotalSeconds.ToString("F3"));
 			output.Append(" seconds\n============================");
-			Debug.Log(output.ToString());
+            Debug.Log(output.ToString());
 		}
 
 		[System.Diagnostics.Conditional("ProfileAstar")]
@@ -219,7 +219,7 @@ namespace Pathfinding {
 			output.Append("\n\n============================\n\t\tTotal runtime: ");
 			output.Append(endTime.TotalSeconds.ToString("F3"));
 			output.Append(" seconds\n============================");
-			Debug.Log(output.ToString());
+            Debug.Log(output.ToString());
 		}
 	}
 }

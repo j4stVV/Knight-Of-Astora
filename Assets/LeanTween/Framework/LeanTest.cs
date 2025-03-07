@@ -16,7 +16,7 @@ public class LeanTester : MonoBehaviour {
 	        yield return 0;
 	    }
 		if(LeanTest.testsFinished==false){
-			Debug.Log(LeanTest.formatB("Tests timed out!"));
+            Debug.Log(LeanTest.formatB("Tests timed out!"));
 			LeanTest.overview();
 		}
 	}
@@ -47,16 +47,16 @@ public class LeanTest : object {
 		string logName = formatB(definition) +" " + padding + " [ "+ (didPass ? formatC("pass","green") : formatC("fail","red")) +" ]";
 		if(didPass==false && failExplaination!=null)
 			logName += " - " + failExplaination;
-		Debug.Log(logName);
+        Debug.Log(logName);
 		if(didPass)
 			passes++;
 		tests++;
 		
-		// Debug.Log("tests:"+tests+" expected:"+expected);
+		// ("tests:"+tests+" expected:"+expected);
 		if(tests==expected && testsFinished==false){
 			overview();
 		}else if(tests>expected){
-			Debug.Log(formatB("Too many tests for a final report!") + " set LeanTest.expected = "+tests);
+            Debug.Log(formatB("Too many tests for a final report!") + " set LeanTest.expected = "+tests);
 		}
 
 		if(timeoutStarted==false){
@@ -117,7 +117,7 @@ public class LeanTest : object {
 		testsFinished = true;
 		int failedCnt = (expected-passes);
 		string failedStr = failedCnt > 0 ? formatBC(""+failedCnt,"red") : ""+failedCnt;
-		Debug.Log(formatB("Final Report:")+" _____________________ PASSED: "+formatBC(""+passes,"green")+" FAILED: "+failedStr+" ");
+        Debug.Log(formatB("Final Report:")+" _____________________ PASSED: "+formatBC(""+passes,"green")+" FAILED: "+failedStr+" ");
 	}
 }
 	

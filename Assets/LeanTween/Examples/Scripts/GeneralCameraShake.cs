@@ -24,7 +24,7 @@ public class GeneralCameraShake : MonoBehaviour {
 	void bigGuyJump(){
 		float height = Mathf.PerlinNoise(jumpIter, 0f)*10f;
 		height = height*height * 0.3f;
-		// Debug.Log("height:"+height+" jumpIter:"+jumpIter);
+		// ("height:"+height+" jumpIter:"+jumpIter);
 
 		LeanTween.moveY(avatarBig, height, 1f).setEase(LeanTweenType.easeInOutQuad).setOnComplete( ()=>{
 			LeanTween.moveY(avatarBig, 0f, 0.27f).setEase(LeanTweenType.easeInQuad).setOnComplete( ()=>{

@@ -111,7 +111,7 @@ namespace Pathfinding {
 		///
 		/// gg.GetNodes(node => {
 		///     // Here is a node
-		///     Debug.Log("I found a node at position " + (Vector3)node.position);
+		///     ("I found a node at position " + (Vector3)node.position);
 		/// });
 		/// </code>
 		///

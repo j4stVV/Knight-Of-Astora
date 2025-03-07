@@ -239,7 +239,7 @@ namespace Pathfinding {
 						otherPN.H = path.CalculateHScore(other);
 						otherPN.UpdateG(path);
 
-						//Debug.Log ("G " + otherPN.G + " F " + otherPN.F);
+						// ("G " + otherPN.G + " F " + otherPN.F);
 						handler.heap.Add(otherPN);
 						//Debug.DrawRay ((Vector3)otherPN.node.Position, Vector3.up,Color.blue);
 					} else {
@@ -253,7 +253,7 @@ namespace Pathfinding {
 						if (pathNode.G+tmpCost+path.GetTraversalCost(other) < otherPN.G)
 #endif
 						{
-							//Debug.Log ("Path better from " + NodeIndex + " to " + otherPN.node.NodeIndex + " " + (pathNode.G+tmpCost+path.GetTraversalCost(other)) + " < " + otherPN.G);
+							// ("Path better from " + NodeIndex + " to " + otherPN.node.NodeIndex + " " + (pathNode.G+tmpCost+path.GetTraversalCost(other)) + " < " + otherPN.G);
 							otherPN.cost = tmpCost;
 
 							otherPN.parent = pathNode;

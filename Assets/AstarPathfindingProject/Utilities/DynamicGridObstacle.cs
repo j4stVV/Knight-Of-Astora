@@ -108,7 +108,7 @@ namespace Pathfinding {
 			if (!Application.isPlaying) return;
 
 			if (coll == null && coll2D == null) {
-				Debug.LogError("Removed collider from DynamicGridObstacle", this);
+                Debug.LogError("Removed collider from DynamicGridObstacle", this);
 				enabled = false;
 				return;
 			}
