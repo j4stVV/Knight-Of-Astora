@@ -43,8 +43,7 @@ public class Boss_Idle : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        BossScript.instance.jumpDistance = Mathf.Abs(PlayerController.Instance.transform.position.x 
-            - rb.position.x - BossScript.instance.attackRange);
+        
     }
 
 }

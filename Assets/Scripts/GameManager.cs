@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        Time.timeScale = 1f;
         playerDefaultRespawnPos = player.position;
     }
     public void FadeIn()

@@ -22,8 +22,8 @@ public class Boss_Jump : StateMachineBehaviour
     {
         //get range between player and boss minus half of attack range
         //so that boss can get closer to player
-        distanceX = Mathf.Abs(Mathf.Abs(PlayerController.Instance.transform.position.x -
-            rb.position.x) - BossScript.instance.attackRange / 2);
+        distanceX = PlayerController.Instance.transform.position.x - rb.position.x 
+            - BossScript.instance.attackRange / 2;
 
         TargetPlayerPosition(animator);
         
@@ -38,17 +38,8 @@ public class Boss_Jump : StateMachineBehaviour
     {
         if (PlayerController.Instance.IsOnGround())
         {
-            rb.velocity = Vector2.zero;
-            float gravity = rb.gravityScale;                        
-            float maxHeight = BossScript.instance.jumpForce;        
-            float timeToPeak = Mathf.Sqrt(2 * maxHeight / gravity); 
-            float totalTime = timeToPeak * 2;                       
-            int direction = BossScript.instance.facingLeft ? -1 : 1;
-            float velocityX = distanceX * direction / totalTime;
-            float velocityY = Mathf.Sqrt(2 * gravity * maxHeight);  
-            rb.velocity = new Vector2(velocityX, velocityY);        //-> Important!!
-
-            rb.AddForce(rb.velocity, ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(distanceX, BossScript.instance.jumpForce), 
+                ForceMode2D.Impulse);
         }
         if (distanceX <= BossScript.instance.attackRange)
         {

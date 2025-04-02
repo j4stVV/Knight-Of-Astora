@@ -7,7 +7,6 @@ using UnityEngine.Playables;
 
 public class BossScript : Enemy
 {
-
     public static BossScript instance;
 
     [Header("Attack")]
@@ -25,7 +24,7 @@ public class BossScript : Enemy
     [SerializeField] private float groundCheckDistance;
 
     bool stunned, canStun;
-    bool alive;
+    public bool alive;
 
     [Header("Movement")]
     public float jumpForce;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Crawler : Enemy
@@ -14,6 +15,9 @@ public class Crawler : Enemy
     [SerializeField] private float maxChasingDistance;
     [SerializeField] private float maxDistanceFromStart;
     [SerializeField] private float chasingSpeed;
+
+    private float attackCD = 2f;
+    private float timer;
 
     private Vector3 startPos;
 
@@ -42,7 +46,8 @@ public class Crawler : Enemy
     }
     void Idle()
     {
-        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(ledgeCheckX, 0) : new Vector3(-ledgeCheckX, 0);
+        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? 
+            new Vector3(ledgeCheckX, 0) : new Vector3(-ledgeCheckX, 0);
         Vector2 wallCheckDir = transform.localScale.x > 0 ? transform.right : -transform.right;
         if (!Physics2D.Raycast(transform.position + ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
             || Physics2D.Raycast(transform.position, wallCheckDir, ledgeCheckX, whatIsGround))
@@ -83,7 +88,6 @@ public class Crawler : Enemy
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
     }
-
     protected override void ChangeCurrentAnimation()
     {
         anim.SetBool("Idle", (GetCurrentEnemyState == EnemyStates.Crawler_Idle));
@@ -98,6 +102,25 @@ public class Crawler : Enemy
         else
         {
             ChangeState(EnemyStates.Crawler_Stunned);
+        }
+    }
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
+        {
+            if(Time.time > lastAttackUpdateTime + attackCD)
+            {
+                Attack();
+                lastAttackUpdateTime = Time.time;
+            }
+                
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            Destroy(gameObject, 0.5f);
         }
     }
     private void OnDrawGizmos()

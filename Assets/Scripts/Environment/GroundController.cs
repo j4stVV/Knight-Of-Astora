@@ -9,13 +9,29 @@ public class GroundController : MonoBehaviour
     [SerializeField] Vector2 spawnPos;
 
     private GameObject bossInstance;
+
+    private void Update()
+    {
+        try
+        {
+            if (!BossScript.instance.alive)
+            {
+                bossFightArea.SetActive(false);
+                gameObject.SetActive(false);
+            }
+        }
+        catch(System.Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             bossFightArea.SetActive(true);
             bossInstance = Instantiate(boss, spawnPos, Quaternion.identity);
-            gameObject.SetActive(false);
+            transform.position -= new Vector3(30f, 0);
         }
     }
 }

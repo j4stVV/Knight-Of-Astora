@@ -32,12 +32,8 @@ public class CameraFollowObject : MonoBehaviour
 
         //isFacingRight = player.IsFacingRight;
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        //Make the camera CameraFollowObject follow the player's position
-        //transform.position = playerTransform.position;
-
-        
         // Check if reference is lost and try to reacquire it
         if (playerTransform == null && PlayerController.Instance != null)
         {

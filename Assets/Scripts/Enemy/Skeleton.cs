@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Skeleton : Enemy
@@ -90,11 +89,12 @@ public class Skeleton : Enemy
             currentEnemyState = EnemyStates.Ske_Chase;
         }
     }
-    void Patrol() // => done
+    void Patrol()
     {
         CheckPlayerDetection();
 
-        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(-ledgeCheckX, 1.5f) : new Vector3(ledgeCheckX, 1.5f);
+        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? 
+            new Vector3(-ledgeCheckX, 1.5f) : new Vector3(ledgeCheckX, 1.5f);
         Vector2 wallCheckDir = transform.localScale.x > 0 ? -transform.right : transform.right;
         if (!Physics2D.Raycast(transform.position + ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
             || Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), wallCheckDir, ledgeCheckX, whatIsGround))
@@ -125,7 +125,7 @@ public class Skeleton : Enemy
         }
         
     }
-    void CheckPlayerDetection()     // => done
+    void CheckPlayerDetection()    
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         
@@ -300,14 +300,6 @@ public class Skeleton : Enemy
             ChangeState(EnemyStates.Ske_Stunned);
         }
     }
-    private void OnDrawGizmos()
-    {
-        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(-ledgeCheckX, 1.5f) : new Vector3(ledgeCheckX, 1.5f);
-        Vector2 wallCheckDir = transform.localScale.x > 0 ? -transform.right : transform.right;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position + ledgeCheckStart, Vector3.down * ledgeCheckY);
-        Gizmos.DrawRay(transform.position + new Vector3(0, 0.5f, 0), wallCheckDir);
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Water"))
@@ -316,4 +308,13 @@ public class Skeleton : Enemy
             anim.SetTrigger("Death");
         }
     }
+    private void OnDrawGizmos()
+    {
+        Vector3 ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(-ledgeCheckX, 1.5f) : new Vector3(ledgeCheckX, 1.5f);
+        Vector2 wallCheckDir = transform.localScale.x > 0 ? -transform.right : transform.right;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position + ledgeCheckStart, Vector3.down * ledgeCheckY);
+        Gizmos.DrawRay(transform.position + new Vector3(0, 0.5f, 0), wallCheckDir);
+    }
+    
 }

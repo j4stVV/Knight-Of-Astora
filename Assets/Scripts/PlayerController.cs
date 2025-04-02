@@ -307,7 +307,8 @@ public class PlayerController : MonoBehaviour
     }
     void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && timeSinceAttack > 0.5f && !playerState.isRolling && !playerState.isHealing)
+        if (Input.GetMouseButtonDown(0) && timeSinceAttack > 0.5f 
+            && !playerState.isRolling && !playerState.isHealing)
         {
             currentAttack++;
             SoundFXManager.instance.PlaySoundFX(attackAudioClip, transform, 1f);
@@ -321,7 +322,8 @@ public class PlayerController : MonoBehaviour
             timeSinceAttack = 0f;
 
             int recoilLeftOrRight = playerState.lookingRight ? 1 : -1;
-            Hit(SideAttackTransform, SideAttackArea, ref playerState.recoilingX, Vector2.right * recoilLeftOrRight, recoilXSpeed);
+            Hit(SideAttackTransform, SideAttackArea, ref playerState.recoilingX, 
+                Vector2.right * recoilLeftOrRight, recoilXSpeed);
         }
     }
     void Hit(Transform attackTransform, Vector2 attackArea, ref bool recoilBool, Vector2 recoilDir, float recoilStrength)
@@ -336,16 +338,6 @@ public class PlayerController : MonoBehaviour
         {
             if (objectsToHit[i].GetComponent<Enemy>() != null)
             {
-                //Enemy e = objectsToHit[i].GetComponent<Enemy>();
-                //if (e.CompareTag("Enemy") && !hitEnemies.Contains(e))
-                //{
-                //    e.EnemyHit(damage, recoilDir, recoilStrength);
-                //    Mana += manaGain;
-                //    manaController.SetMana(Mana);
-                //    e.EnemyHit(damage, (transform.position - objectsToHit[i].transform.position).normalized, recoilStrength);
-                //    hitEnemies.Add(e);
-                //}
-
                 objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, recoilDir, recoilStrength);
                 if (objectsToHit[i].CompareTag("Enemy"))
                 {
@@ -512,6 +504,8 @@ public class PlayerController : MonoBehaviour
             playerState.alive = true;
             Health = maxHealth;
             healController.SetMaxHealth(maxHealth);
+            mana = 1f;
+            manaController.SetMana(mana);
             playerAnimation.Play("Idle");
         }
     }

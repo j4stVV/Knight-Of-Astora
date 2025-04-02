@@ -8,6 +8,9 @@ public class Bornfire : MonoBehaviour
     public bool inRange;
     public bool interacted;
 
+    [SerializeField] private ParticleSystem bornfireFX;
+    private ParticleSystem bornfireFXInstance;
+
     private void Update()
     {
         if (inRange && Input.GetButtonDown("Interact"))
@@ -18,6 +21,7 @@ public class Bornfire : MonoBehaviour
             gameObject.scene.name,
             transform.position
             );
+            bornfireFXInstance = Instantiate(bornfireFX, transform.position, Quaternion.identity);
             Debug.Log($"Bornfire activated in scene: {gameObject.scene.name}, Position: {transform.position}");
         }
     }

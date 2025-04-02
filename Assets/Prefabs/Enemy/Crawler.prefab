@@ -180,7 +180,7 @@ MonoBehaviour:
   isFacingRight: 1
   recoilTimer: 0
   dmgSoundClip: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
-  speed: 2
+  speed: 5
   damage: 1
   ledgeCheckX: 1
   ledgeCheckY: 1

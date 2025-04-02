@@ -165,4 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15dd6eb4b19d74640b10a298cf8fa7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inRange: 0
   interacted: 0
+  bornfireFX: {fileID: 6587233377015799377, guid: e1ab791157f5b714ca130aed2277d853, type: 3}

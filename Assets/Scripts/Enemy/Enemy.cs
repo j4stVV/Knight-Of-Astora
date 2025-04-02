@@ -116,22 +116,13 @@ public class Enemy : MonoBehaviour
 
     protected void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
+        if (other.gameObject.CompareTag("Player") 
+            && !PlayerController.Instance.playerState.invincible)
         {
             Attack();
+            lastAttackUpdateTime = Time.time;
         }
     }
-    //protected void OnCollisionStay2D(Collision2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
-    //    {
-    //        if(Time.time > lastAttackUpdateTime + attackCooldown)
-    //        {
-    //            Attack();
-    //            lastAttackUpdateTime = Time.time;
-    //        }
-    //    }
-    //}
     protected virtual void UpdateEnemyState() { }
     protected virtual void ChangeCurrentAnimation() { }
     protected void ChangeState(EnemyStates newState)
