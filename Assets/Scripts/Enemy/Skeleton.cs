@@ -74,7 +74,7 @@ public class Skeleton : Enemy
     void Idle()
     {
         anim.SetBool("Idle", true); 
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
 
         float distanceToPlayer = Vector2.Distance(transform.position,
             player.transform.position);
@@ -213,7 +213,7 @@ public class Skeleton : Enemy
         if (Time.time >= lastAttackTime + attackCooldown)
         {
             anim.SetBool("Attack", true);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             lastAttackTime = Time.time;
             StartCoroutine(ResetAttackAnimation());
         }
@@ -238,7 +238,7 @@ public class Skeleton : Enemy
     IEnumerator PerformDeath()
     {
         isDeath = true;
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         anim.SetTrigger("Death");
         Destroy(gameObject, 1f);
         yield return null;
@@ -271,7 +271,7 @@ public class Skeleton : Enemy
             {
                 ChangeState(EnemyStates.Ske_Patrol);
             }
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             timer = 0;
         }
     }

@@ -201,7 +201,7 @@ public class Bat : Enemy
             {
                 ChangeState(EnemyStates.Bat_Idle);
             }
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             timer = 0;
         }
     }
