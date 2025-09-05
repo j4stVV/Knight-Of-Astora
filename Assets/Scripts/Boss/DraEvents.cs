@@ -6,7 +6,7 @@ public class DraEvents : Enemy
 {
     void BendDownCheck()
     {
-        if (BossScript.instance.fireballAttack || BossScript.instance.trippleAttack)
+        if (BossScript.instance.fireballAttack || BossScript.instance.tripleAttack)
             StartCoroutine(BarrageAttackTransition());
     }
     void BarrageOrOutBreak()
@@ -15,7 +15,7 @@ public class DraEvents : Enemy
         {
             BossScript.instance.StartCoroutine(BossScript.instance.Barrage());
         }
-        else if (BossScript.instance.trippleAttack)
+        else if (BossScript.instance.tripleAttack)
         {
             BossScript.instance.StartCoroutine(BossScript.instance.TripleBarrage());
         }

@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
             horizontalInput = Input.GetAxis("Horizontal");
         }
         // Set speed when player in the air
-        playerAnimation.SetFloat("AirSpeedY", playerRb.linearVelocity.y);
+        playerAnimation.SetFloat("AirSpeedY", playerRb.velocity.y);
 
         // Increase timer that controls attack combo
         timeSinceAttack += Time.deltaTime;
@@ -156,7 +156,6 @@ public class PlayerController : MonoBehaviour
             StartDash();
             Heal();
         }
-        CameraSetting();
 
         //replace localScale when compute in roll & dash 
         angleInRadian = transform.eulerAngles.y * Mathf.Deg2Rad;
@@ -224,12 +223,12 @@ public class PlayerController : MonoBehaviour
     void CameraSetting()
     {
         //if player is falling past a certain speed threshold
-        if(playerRb.linearVelocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+        if(playerRb.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
         {
             CameraManager.instance.LerpYDamping(true);
         }
         //if player is standing still or moving up
-        if(playerRb.linearVelocity.y >= 0 && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+        if(playerRb.velocity.y >= 0 && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
         {
             //reset so it can be called again
             CameraManager.instance.LerpedFromPlayerFalling = false;
@@ -272,7 +271,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!playerState.isRolling && !playerState.isDashing && !playerState.isHealing)
         {
-            playerRb.linearVelocity = new Vector2(horizontalInput * playerSpeed, playerRb.linearVelocity.y);    
+            playerRb.velocity = new Vector2(horizontalInput * playerSpeed, playerRb.velocity.y);    
         }
 
         if (horizontalInput != 0)
@@ -286,23 +285,23 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
-        if (Input.GetKeyUp(KeyCode.Space) && playerRb.linearVelocity.y > 0)
+        if (Input.GetKeyUp(KeyCode.Space) && playerRb.velocity.y > 0)
         {
             playerAnimation.SetTrigger("Jump");
-            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0);
+            playerRb.velocity = new Vector2(playerRb.velocity.x, 0);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround() && !playerState.isRolling && !playerState.isHealing)
         {
             playerState.isJumping = true;
             playerAnimation.SetTrigger("Jump");
-            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
+            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
         }
         else if (!IsOnGround() && airJumpCounter < maxAirJump && Input.GetKeyDown(KeyCode.Space))
         {
             airJumpCounter++;
             playerAnimation.SetTrigger("Jump");
-            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
+            playerRb.velocity = new Vector2(playerRb.velocity.x, jumpForce);
         }
     }
     void Attack()
@@ -361,9 +360,9 @@ public class PlayerController : MonoBehaviour
         {
             if (playerState.lookingRight)
             {
-                playerRb.linearVelocity = new Vector2(-recoilXSpeed, 0);
+                playerRb.velocity = new Vector2(-recoilXSpeed, 0);
             }
-            else playerRb.linearVelocity = new Vector2(recoilXSpeed, 0);
+            else playerRb.velocity = new Vector2(recoilXSpeed, 0);
         }
 
         //Stop Recoil
@@ -429,7 +428,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(1) && Health < maxHealth && !playerState.isRolling && Mana > 0 
             && !playerState.isDashing && !playerState.isJumping && IsOnGround())
         {
-            playerRb.linearVelocity = Vector3.zero;
+            playerRb.velocity = Vector3.zero;
             playerState.isHealing = true;
             healTimer += Time.deltaTime;
             playerAnimation.SetBool("Heal", true);
@@ -472,7 +471,7 @@ public class PlayerController : MonoBehaviour
             Mana -= 0.3f;
             manaController.SetMana(Mana);
             StartCoroutine(IFrame());
-            playerRb.linearVelocity = new Vector2(rollForce * alterLocalScale, 0);
+            playerRb.velocity = new Vector2(rollForce * alterLocalScale, 0);
         }
     }
     private void StartDash()
@@ -489,7 +488,7 @@ public class PlayerController : MonoBehaviour
         playerState.isDashing = true;
         playerAnimation.SetTrigger("Dash");
         playerRb.gravityScale = 0;
-        playerRb.linearVelocity = new Vector2(alterLocalScale * dashSpeed, 0);
+        playerRb.velocity = new Vector2(alterLocalScale * dashSpeed, 0);
         yield return new WaitForSeconds(dashTime);
         playerRb.gravityScale = gravity;
         playerState.isDashing = false;
@@ -499,7 +498,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Death()
     {
         playerState.alive = false;
-        playerRb.linearVelocity = Vector2.zero;
+        playerRb.velocity = Vector2.zero;
         playerAnimation.SetTrigger("Death");
 
         yield return new WaitForSeconds(0.5f);
@@ -518,7 +517,7 @@ public class PlayerController : MonoBehaviour
     public void RespawnAtDefault(Vector2 respawnPos)
     {
         transform.position = respawnPos;
-        playerRb.linearVelocity = Vector2.zero;
+        playerRb.velocity = Vector2.zero;
         Respawn();
     }
     public IEnumerator WalkIntoNewScene(Vector3 spawnPosition, Vector2 exitDir, float delay)
@@ -526,7 +525,7 @@ public class PlayerController : MonoBehaviour
         transform.position = spawnPosition;
         if (exitDir.y != 0)
         {
-            playerRb.linearVelocity = exitDir;
+            playerRb.velocity = exitDir;
         }
         if (exitDir.x != 0)
         {

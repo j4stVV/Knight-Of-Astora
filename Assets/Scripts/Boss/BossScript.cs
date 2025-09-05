@@ -139,10 +139,10 @@ public class BossScript : Enemy
         {
             if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
             {
-                TripplelAttack();
+                TripleAttack();
             }
         }
-        //TripplelAttack();
+        //TripleAttack();
         //Lunge();
     }
     public void ResetAllAttack()
@@ -154,7 +154,7 @@ public class BossScript : Enemy
         StopCoroutine(Lunge());
 
         fireballAttack = false;
-        trippleAttack = false;
+        tripleAttack = false;
     }
     #endregion
 
@@ -166,13 +166,13 @@ public class BossScript : Enemy
     void BarrageBendDown() 
     {
         attacking = true;
-        rb.linearVelocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
         fireballAttack = true;
         anim.SetTrigger("Fireball");
     }
     public IEnumerator Barrage()
     {
-        rb.linearVelocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
         float currentAngle = 0f;
         GameObject projectile = Instantiate(FireBall, abilitiesSpawn.position, Quaternion.identity);
         if (facingLeft)
@@ -192,15 +192,15 @@ public class BossScript : Enemy
     #endregion
 
     #region Stage_2
-    [HideInInspector] public bool trippleAttack;
+    [HideInInspector] public bool tripleAttack;
     [HideInInspector] public bool lungeAttack;
     [HideInInspector] public bool dmgPlayer = false;
-    void TripplelAttack()
+    void TripleAttack()
     {
         attacking = true;
-        rb.linearVelocity = Vector2.zero;
-        trippleAttack = true;
-        anim.SetTrigger("TrippleFireball");
+        rb.velocity = Vector2.zero;
+        tripleAttack = true;
+        anim.SetTrigger("TripleFireball");
     }
     IEnumerator Lunge()
     {
@@ -214,7 +214,7 @@ public class BossScript : Enemy
     public IEnumerator TripleBarrage()
     {
         //Set boss velocity to 0
-        rb.linearVelocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
         
         float currentAngle = 0f;
         for (int i = 0; i < 3; i++)
@@ -270,7 +270,7 @@ public class BossScript : Enemy
     {
         ResetAllAttack();
         alive = false;
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, -25);
+        rb.velocity = new Vector2(rb.velocity.x, -25);
         anim.SetTrigger("Die");
     }
     public void DestroyAfterDeath()
