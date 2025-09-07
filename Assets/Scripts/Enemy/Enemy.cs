@@ -67,14 +67,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void Awake()
     {
-        try
-        {
-            player = PlayerController.Instance;
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(ex.ToString());
-        }
+        
     }
     protected virtual void Start()
     {
@@ -84,6 +77,18 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (!player)
+        {
+            try
+            {
+                player = PlayerController.Instance;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.ToString());
+            }
+            return;
+        }
         if (isRecoiling)
         {
             if (recoilTimer < recoilLength)
@@ -112,6 +117,13 @@ public class Enemy : MonoBehaviour
             rb.AddForce(hitForce * recoilFactor * hitDirection);
             isRecoiling = true;
         }
+    }
+
+    public void Heal(float amount)
+    {
+        health += amount;
+        // if there is maximum hp can heal per time, add next line
+        // health = Mathf.Min(health, maxHealth);
     }
 
     protected void OnCollisionEnter2D(Collision2D other)
