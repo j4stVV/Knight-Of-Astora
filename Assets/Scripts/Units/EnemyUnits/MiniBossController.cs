@@ -1,4 +1,5 @@
 using UnityEngine;
+using BehaviorTree;
 
 public class MiniBossController : MonoBehaviour
 {
@@ -30,18 +31,18 @@ public class MiniBossController : MonoBehaviour
         Debug.Log("MiniBoss spawned.");
     }
 
-    public BTNode.State MoveForward()
+    public BehaviorState MoveForward()
     {
         Debug.Log("MiniBoss moving forward.");
         transform.Translate(Vector3.right * Time.deltaTime);
-        return BTNode.State.Running;
+        return BehaviorState.Running;
     }
 
-    public BTNode.State Attack(Transform target)
+    public BehaviorState Attack(Transform target)
     {
-        if (target == null) return BTNode.State.Failure;
+        if (target == null) return BehaviorState.Failure;
         Debug.Log($"MiniBoss attacking {target.name}");
-        return BTNode.State.Success;
+        return BehaviorState.Success;
     }
 
     public void BuffAllies()

@@ -335,16 +335,6 @@ public class PlayerController : MonoBehaviour
         {
             if (objectsToHit[i].GetComponent<Enemy>() != null)
             {
-                //Enemy e = objectsToHit[i].GetComponent<Enemy>();
-                //if (e.CompareTag("Enemy") && !hitEnemies.Contains(e))
-                //{
-                //    e.EnemyHit(damage, recoilDir, recoilStrength);
-                //    Mana += manaGain;
-                //    manaController.SetMana(Mana);
-                //    e.EnemyHit(damage, (transform.position - objectsToHit[i].transform.position).normalized, recoilStrength);
-                //    hitEnemies.Add(e);
-                //}
-
                 objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, recoilDir, recoilStrength);
                 if (objectsToHit[i].CompareTag("Enemy"))
                 {
