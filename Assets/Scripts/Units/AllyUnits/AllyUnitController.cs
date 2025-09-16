@@ -203,7 +203,6 @@ public class AllyUnitController : MonoBehaviour
                 {
                     rb.velocity = Vector2.zero;
                     animator.SetBool("IsMoving", false);
-                    // Only trigger attack if cooldown is ready
                     if (Time.time >= lastShootTime + shootCooldown)
                     {
                         animator.SetTrigger("Attack");
@@ -487,12 +486,12 @@ public class AllyUnitController : MonoBehaviour
         if (blackboard != null && blackboard.currentHP > 0)
         {
             blackboard.currentHP -= Mathf.RoundToInt(damage);
+            animator.SetTrigger("Hurt");
             if (blackboard.currentHP <= 0)
             {
                 animator.SetTrigger("Death");
                 return;
             }
-            animator.SetTrigger("Hurt");
         }
     }
     public void DestroySelf()
