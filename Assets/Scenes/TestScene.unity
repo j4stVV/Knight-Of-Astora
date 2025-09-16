@@ -2694,6 +2694,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1753124868656792631, guid: 4f100a6d7ea758242bcce4e9c4a31590, type: 3}
+      propertyPath: maxHP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753124868656792631, guid: 4f100a6d7ea758242bcce4e9c4a31590, type: 3}
+      propertyPath: currentHP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753124868656792631, guid: 4f100a6d7ea758242bcce4e9c4a31590, type: 3}
+      propertyPath: engageRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753124868656792631, guid: 4f100a6d7ea758242bcce4e9c4a31590, type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 809797703}
