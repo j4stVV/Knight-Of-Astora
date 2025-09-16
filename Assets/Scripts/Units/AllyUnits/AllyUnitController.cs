@@ -186,6 +186,7 @@ public class AllyUnitController : MonoBehaviour
                 {
                     rb.velocity = Vector2.zero;
                     animator.SetBool("IsMoving", false);
+                    animator.SetTrigger("Attack");
                     if (Random.value < 0.2f)
                         animator.SetTrigger("Block");
                 }
