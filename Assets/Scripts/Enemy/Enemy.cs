@@ -154,6 +154,22 @@ public class Enemy : MonoBehaviour
     {
         PlayerController.Instance.TakeDamage(damage , rb.transform.position);
     }
+    protected virtual void PerformAttackTarget(Transform target)
+    {
+        if (target == null) return;
+        if (target.CompareTag("Player"))
+        {
+            PlayerController.Instance.TakeDamage(damage, rb.transform.position);
+        }
+        else if (target.CompareTag("Ally"))
+        {
+            var ally = target.GetComponent<AllyUnitController>();
+            if (ally != null)
+            {
+                ally.TakeDamage(damage, rb.transform.position);
+            }
+        }
+    }
     protected virtual void DestroyObject()
     {
         Destroy(gameObject);

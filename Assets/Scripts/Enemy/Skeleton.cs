@@ -22,13 +22,16 @@ public class Skeleton : Enemy
     [SerializeField] private LayerMask whatIsGround;
 
     [Header("Attack Settings")]
-    [SerializeField] private float attackRange = 3f;
+    [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private float attackCooldown = 2f;
     private float lastAttackTime;
 
     [Header("Stun Settings")]
     [SerializeField] private float stunDuration;
     private float timer;
+
+    private Transform currentTarget;
+    private enum SkeletonExtraState { CounterAttack = 1000 }
 
     protected override void Awake()
     {
@@ -38,7 +41,7 @@ public class Skeleton : Enemy
         chasingSpeed = speed * 2f;
         currentEnemyState = EnemyStates.Ske_Patrol;
     }
-    
+
     protected override void Update()
     {
         base.Update();
@@ -69,11 +72,14 @@ public class Skeleton : Enemy
             case EnemyStates.Ske_Death:
                 Death();
                 break;
+            case (EnemyStates)SkeletonExtraState.CounterAttack:
+                CounterAttack();
+                break;
         }
     }
     void Idle()
     {
-        anim.SetBool("Idle", true); 
+        anim.SetBool("Walk", false);
         rb.velocity = Vector2.zero;
 
         float distanceToPlayer = Vector2.Distance(transform.position,
@@ -81,16 +87,14 @@ public class Skeleton : Enemy
 
         if (Time.time >= (lastAttackTime + attackCooldown) && distanceToPlayer <= attackRange)
         {
-            anim.SetBool("Idle", false);
             currentEnemyState = EnemyStates.Ske_Attack;
         }
         else if (distanceToPlayer > attackRange)
         {
-            anim.SetBool("Idle", false);
             currentEnemyState = EnemyStates.Ske_Chase;
         }
     }
-    void Patrol() // => done
+    void Patrol()
     {
         CheckPlayerDetection();
 
@@ -125,48 +129,72 @@ public class Skeleton : Enemy
         }
         
     }
-    void CheckPlayerDetection()     // => done
+    private Transform FindNearestEnemyTarget()
+{
+    Transform nearest = player.transform;
+    float minDist = Vector2.Distance(transform.position, player.transform.position);
+    GameObject[] allies = GameObject.FindGameObjectsWithTag("Ally");
+    foreach (var ally in allies)
+    {
+        float dist = Vector2.Distance(transform.position, ally.transform.position);
+        if (dist < minDist)
+        {
+            minDist = dist;
+            nearest = ally.transform;
+        }
+    }
+    return nearest;
+}
+    void CheckPlayerDetection()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-        
-        if (distanceToPlayer <= detectionRange)
+        Transform nearestAlly = null;
+        float distanceToAlly = float.MaxValue;
+        GameObject[] allies = GameObject.FindGameObjectsWithTag("Ally");
+        foreach (var ally in allies)
+        {
+            float dist = Vector2.Distance(transform.position, ally.transform.position);
+            if (dist < distanceToAlly)
+            {
+                distanceToAlly = dist;
+                nearestAlly = ally.transform;
+            }
+        }
+        if (distanceToPlayer <= detectionRange || distanceToAlly <= detectionRange)
         {
             anim.SetBool("Walk", false);
             currentEnemyState = EnemyStates.Ske_Chase;
+            if (distanceToAlly < distanceToPlayer)
+                currentTarget = nearestAlly;
+            else
+                currentTarget = player.transform;
         }
     }
-    void Chase()        // => done
+    void Chase()
     {
         anim.SetBool("Walk", true);
-
-        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+        if (currentTarget == null) currentTarget = player.transform;
+        float distanceToTarget = Vector2.Distance(transform.position, currentTarget.position);
         float distanceToStartPos = Vector2.Distance(transform.position, originalPos);
 
-        if (distanceToPlayer > maxChasingDistance || distanceToStartPos > maxDistanceFromStart)
+        if (distanceToTarget > maxChasingDistance || distanceToStartPos > maxDistanceFromStart)
         {
             ChangeState(EnemyStates.Ske_ReturnToStart);
             return;
         }
-        if(distanceToPlayer <= attackRange)
+        if (distanceToTarget <= attackRange)
         {
             anim.SetBool("Walk", false);
             currentEnemyState = EnemyStates.Ske_Attack;
             return;
         }
-        Vector2 direction = (player.transform.position - transform.position).normalized;
-
-        //chasing player until player gone too far from foes' initiate position
+        Vector2 direction = (currentTarget.position - transform.position).normalized;
         float attackDir = isFacingRight ? 1f : -1f;
-        transform.position = Vector2.MoveTowards
-                (transform.position,
-                new Vector2(player.transform.position.x + attackRange * attackDir, transform.position.y),
-                chasingSpeed * Time.deltaTime);
-        if (direction.x > 0 && !isFacingRight)
-            Flip();
-        else if (direction.x < 0 && isFacingRight)
-            Flip();
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x + attackRange * attackDir, transform.position.y), chasingSpeed * Time.deltaTime);
+        if (direction.x > 0 && !isFacingRight) Flip();
+        else if (direction.x < 0 && isFacingRight) Flip();
     }
-    void ReturnToStartPosition()    // => done
+    void ReturnToStartPosition()
     {
         float distanceToStart = Vector2.Distance(transform.position, originalPos);
         if (distanceToStart <= 0.1f)
@@ -183,28 +211,24 @@ public class Skeleton : Enemy
         else if (direction.x < 0 && isFacingRight)
             Flip();
     }
-    protected override void Attack()
+    void PerformAttack()    
     {
-        base.Attack();
-    }
-    void PerformAttack()    // => done
-    {       
-        float distanceToPlayer = Vector2.Distance(transform.position, 
-            player.transform.position);
+        if (currentTarget == null) currentTarget = player.transform;
+        float distanceToTarget = Vector2.Distance(transform.position, currentTarget.position);
 
-        //check if player is out of range
-        if (distanceToPlayer > attackRange)
+        // Check if target is out of range
+        if (distanceToTarget > attackRange)
         {
-            anim.SetBool("Attack", false);
+            Debug.Log("distance to target: " + distanceToTarget);
             currentEnemyState = EnemyStates.Ske_Chase;
             return;
         }
 
-        //Check the Ske's direction has the same ones with the player
-        Vector2 directionToPlayer = (player.transform.position - transform.position).normalized;
-        bool playerInFront = (isFacingRight && directionToPlayer.x > 0) || (!isFacingRight && directionToPlayer.x < 0);
+        // Check if the target is in front
+        Vector2 directionToTarget = (currentTarget.position - transform.position).normalized;
+        bool targetInFront = (isFacingRight && directionToTarget.x > 0) || (!isFacingRight && directionToTarget.x < 0);
 
-        if (!playerInFront)
+        if (!targetInFront)
         {
             Flip();
             return;
@@ -212,21 +236,15 @@ public class Skeleton : Enemy
 
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            anim.SetBool("Attack", true);
+            anim.SetTrigger("Attack");
             rb.velocity = Vector2.zero;
             lastAttackTime = Time.time;
-            StartCoroutine(ResetAttackAnimation());
-        }
-        else
-        {
-            // In cooldown time
-            currentEnemyState = EnemyStates.Ske_Idle;
         }
     }
-    private IEnumerator ResetAttackAnimation()
+    protected override void Attack()
     {
-        yield return new WaitForSeconds(0.5f);
-        anim.SetBool("Attack", false);
+        // Called by animation event at the correct frame
+        PerformAttackTarget(currentTarget);
     }
     void Death()
     {
@@ -245,37 +263,30 @@ public class Skeleton : Enemy
     }
     void Stunned()
     {
-        timer += Time.deltaTime;
-
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         float distanceToStart = Vector2.Distance(transform.position, originalPos);
-
-        if (timer > stunDuration)
+        if (distanceToPlayer <= detectionRange && distanceToStart <= maxDistanceFromStart)
         {
-            if (distanceToPlayer <= detectionRange && distanceToStart <= maxDistanceFromStart)
+            if (distanceToPlayer <= attackRange)
             {
-                if (distanceToPlayer <= attackRange)
-                {
-                    ChangeState(EnemyStates.Ske_Attack);
-                }
-                else
-                {
-                    ChangeState(EnemyStates.Ske_Chase);
-                }
-            }
-            else if (distanceToStart > maxChasingDistance)
-            {
-                ChangeState(EnemyStates.Ske_ReturnToStart);
+                ChangeState(EnemyStates.Ske_Attack);
             }
             else
             {
-                ChangeState(EnemyStates.Ske_Patrol);
+                ChangeState(EnemyStates.Ske_Chase);
             }
-            rb.velocity = Vector2.zero;
-            timer = 0;
         }
+        else if (distanceToStart > maxChasingDistance)
+        {
+            ChangeState(EnemyStates.Ske_ReturnToStart);
+        }
+        else
+        {
+            ChangeState(EnemyStates.Ske_Patrol);
+        }
+        rb.velocity = Vector2.zero;
     }
-    void Flip()     // => done
+    void Flip()
     {
         isFacingRight = !isFacingRight;
         Vector3 scale = transform.localScale;
@@ -284,10 +295,6 @@ public class Skeleton : Enemy
     }
     public override void EnemyHit(float damage, Vector2 hitDirection, float hitForce)
     {
-        anim.SetBool("Attack", false);
-        anim.SetBool("Walk", false);
-        anim.SetBool("Idle", false);
-
         anim.SetTrigger("Stunned");
         base.EnemyHit(damage, hitDirection, hitForce);
         if (health <= 0)
@@ -297,7 +304,34 @@ public class Skeleton : Enemy
         }
         else
         {
-            ChangeState(EnemyStates.Ske_Stunned);
+            // Switch to counter-attack state
+            currentTarget = FindNearestEnemyTarget();
+            ChangeState((EnemyStates)SkeletonExtraState.CounterAttack);
+        }
+    }
+    private void CounterAttack()
+    {
+        if (currentTarget == null || !currentTarget.gameObject.activeInHierarchy)
+            currentTarget = FindNearestEnemyTarget();
+        if (currentTarget == null) {
+            ChangeState(EnemyStates.Ske_Patrol);
+            return;
+        }
+        float distanceToTarget = Vector2.Distance(transform.position, currentTarget.position);
+        if (distanceToTarget > attackRange)
+        {
+            // Move towards target
+            Vector2 direction = (currentTarget.position - transform.position).normalized;
+            float attackDir = isFacingRight ? 1f : -1f;
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x + attackRange * attackDir, transform.position.y), chasingSpeed * Time.deltaTime);
+            anim.SetBool("Walk", true);
+            if (direction.x > 0 && !isFacingRight) Flip();
+            else if (direction.x < 0 && isFacingRight) Flip();
+        }
+        else
+        {
+            anim.SetBool("Walk", false);
+            PerformAttack();
         }
     }
     private void OnDrawGizmos()

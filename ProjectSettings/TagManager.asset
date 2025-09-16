@@ -22,8 +22,8 @@ TagManager:
   - Attackable
   - Wall
   - Ally
-  - 
-  - 
+  - Enemy
+  - Player
   - 
   - 
   - 

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1221601375665168728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3388475255328469281}
+  m_Layer: 8
+  m_Name: VisionOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3388475255328469281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221601375665168728}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3504006048312501705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3863728470993138926
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6533799319220015968}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpawnArrowPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 3863728470993138926}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.005, y: -0.045, z: 0}
+  m_LocalPosition: {x: 0.05, y: -0.045, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,8 +75,10 @@ GameObject:
   - component: {fileID: 6496242946873552618}
   - component: {fileID: 4948002446923109350}
   - component: {fileID: 7209958324959258416}
+  - component: {fileID: 4967091533466008946}
+  - component: {fileID: 1753124868656792631}
   - component: {fileID: 5290525633910612563}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: 'Blue_Archer '
   m_TagString: Ally
   m_Icon: {fileID: 0}
@@ -66,6 +99,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6533799319220015968}
+  - {fileID: 3388475255328469281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1562412501757719131
@@ -203,6 +237,71 @@ CapsuleCollider2D:
   m_Offset: {x: -0.08, y: -0.14}
   m_Size: {x: 0.2, y: 0.4}
   m_Direction: 0
+--- !u!114 &4967091533466008946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502536641591720966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cca9488ab50e6b43ae38c1ff8a47d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1753124868656792631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502536641591720966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cbfd7649bca6545a4a109418768842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 8
+  hearingRange: 10
+  fieldOfView: 90
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  patrolWaitTime: 2
+  walkSpeed: 3
+  idleAnimationInterval: 3
+  lastSoundHeardTime: 0
+  lastSoundPosition: {x: 0, y: 0}
+  isInvestigatingSoundSource: 0
+  currentPatrolIndex: 0
+  lastIdleAnimationTime: 0
+  isPatrolling: 0
+  detectedEnemies: []
+  hasHeardCombatSound: 0
+  isWarning: 0
+  warnedEnemyPosition: {x: 0, y: 0}
+  receivedWarnSignal: 0
+  combatType: 1
+  morale: 1
+  moraleThreshold: 0.3
+  isEngaging: 0
+  currentTarget: {fileID: 0}
+  engageRange: 6
+  supportRange: 8
+  chaseRadius: 12
+  lastKnownEnemyPosition: {x: 0, y: 0}
+  isPursuing: 0
+  searchTimer: 0
+  maxSearchTime: 2.5
+  isSurrendering: 0
+  isLastStand: 0
+  surrenderType: 0
+  surrenderTargetBase: {fileID: 0}
+  surrenderChance: 0.85
+  lastStandChance: 0.15
+  hpLowThreshold: 0.2
+  currentHP: 5
+  maxHP: 5
 --- !u!114 &5290525633910612563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,12 +314,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86f2bb9c8085ed41b7eda50a01deb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionOrigin: {fileID: 0}
+  visionOrigin: {fileID: 3388475255328469281}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
+  rayCount: 8
+  viewDistance: 8
+  showVisionGizmos: 1
   arrowPrefab: {fileID: 7870563756640362041, guid: 29382b42eb562104fb9222bd79f653c7, type: 3}
   arrowSpawnPoint: {fileID: 6533799319220015968}
+  shootCooldown: 1.5

@@ -32,6 +32,34 @@ public class AllyUnitBT : MonoBehaviour
         // Construct behavior tree
         root = new SelectorNode(new BTNode[]
         {
+            // Surrender/Last Stand State
+            new SequenceNode(new BTNode[]
+            {
+                new ConditionNode(() =>
+                    (blackboard.surrenderType == SurrenderType.None &&
+                        ((blackboard.maxHP > 0 && (blackboard.currentHP / blackboard.maxHP) < blackboard.hpLowThreshold)
+                        || blackboard.morale < blackboard.moraleThreshold))
+                    || blackboard.isSurrendering || blackboard.isLastStand),
+                new ActionNode(() =>
+                {
+                    return controller.SurrenderAction() ? BehaviorState.Success : BehaviorState.Running;
+                })
+            }),
+
+            // Pursue State
+            new SequenceNode(new BTNode[]
+            {
+                new ConditionNode(() =>
+                    (blackboard.detectedEnemies.Count > 0 && blackboard.currentTarget != null &&
+                    Vector2.Distance(controller.transform.position, blackboard.currentTarget.position) > blackboard.engageRange &&
+                    Vector2.Distance(controller.transform.position, blackboard.currentTarget.position) <= blackboard.chaseRadius)
+                    || blackboard.isPursuing),
+                new ActionNode(() =>
+                {
+                    return controller.PursueAction() ? BehaviorState.Success : BehaviorState.Running;
+                })
+            }),
+
             // Engage State
             new SequenceNode(new BTNode[]
             {

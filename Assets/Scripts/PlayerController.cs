@@ -306,7 +306,8 @@ public class PlayerController : MonoBehaviour
     }
     void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && timeSinceAttack > 0.5f && !playerState.isRolling && !playerState.isHealing)
+        float attackInterval = 1f / playerState.attackSpeed;
+        if (Input.GetMouseButtonDown(0) && timeSinceAttack > attackInterval && !playerState.isRolling && !playerState.isHealing)
         {
             currentAttack++;
             SoundFXManager.instance.PlaySoundFX(attackAudioClip, transform, 1f);

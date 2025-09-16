@@ -8,6 +8,13 @@ public enum AllyCombatType
     Support
 }
 
+public enum SurrenderType
+{
+    None,
+    LastStand,
+    Surrender
+}
+
 public class AllyBlackboard : MonoBehaviour
 {
     [Header("Detection Settings")]
@@ -47,6 +54,26 @@ public class AllyBlackboard : MonoBehaviour
     public float engageRange = 6f; // For ranged, melee, etc.
     public float supportRange = 8f;
 
+    [Header("Pursue State")]
+    public float chaseRadius = 12f;
+    public Vector2 lastKnownEnemyPosition;
+    public bool isPursuing;
+    public float searchTimer;
+    public float maxSearchTime = 2.5f;
+
+    [Header("Surrender State")]
+    public bool isSurrendering;
+    public bool isLastStand;
+    public SurrenderType surrenderType = SurrenderType.None;
+    public Transform surrenderTargetBase;
+    public float surrenderChance = 0.85f; // 85% Surrender, 15% Last Stand
+    public float lastStandChance = 0.15f;
+    public float hpLowThreshold = 0.2f; // HP ratio threshold
+
+    [Header("HP State")]
+    public float currentHP = 5f;
+    public float maxHP = 5f;
+
     public void ResetAlertState()
     {
         isInvestigatingSoundSource = false;
@@ -80,5 +107,19 @@ public class AllyBlackboard : MonoBehaviour
     {
         isEngaging = false;
         currentTarget = null;
+    }
+
+    public void ResetPursueState()
+    {
+        isPursuing = false;
+        lastKnownEnemyPosition = Vector2.zero;
+        searchTimer = 0f;
+    }
+
+    public void ResetSurrenderState()
+    {
+        isSurrendering = false;
+        isLastStand = false;
+        surrenderType = SurrenderType.None;
     }
 }

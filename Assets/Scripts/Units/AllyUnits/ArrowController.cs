@@ -3,7 +3,7 @@ using UnityEngine;
 public class ArrowController : MonoBehaviour
 {
     public float speed = 10f;
-    public int damage = 10;
+    public int damage = 1;
     private Vector2 direction;
     private Transform target;
 
@@ -21,7 +21,7 @@ public class ArrowController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (target != null && other.transform == target)
+        if (target != null && other.transform == target && other.CompareTag("Enemy"))
         {
             var enemy = other.GetComponent<Enemy>();
             if (enemy != null)

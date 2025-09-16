@@ -213,7 +213,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  attackRange: 3
+  attackRange: 2.7
   attackCooldown: 2
   stunDuration: 0
 --- !u!82 &3423606818434971861
