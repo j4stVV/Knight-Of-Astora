@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using BehaviorTree;
+using UnityEngine;
 
-public class MiniBossBT
+public class MiniBossBT : MonoBehaviour
 {
     private BTNode _root;
     private EnemyBlackboard _bb;
@@ -15,49 +16,92 @@ public class MiniBossBT
     }
     public void BuildTree()
     {
-        var buffAllies = new SequenceNode(new BTNode[]
-        {
-            new ConditionNode(() => _bb.nearbyAllies.Count > 0),
-            new ActionNode(() =>
-            {
-                _controller.BuffAllies();
-                return BehaviorState.Success;
-            })
-        });
-        var attackPlayer = new SequenceNode(new BTNode[]
-        {
-            new ConditionNode (() => _bb.nearbyAllies.Count > 0),
-            new ActionNode(() =>
-            {
-                _controller.Attack(_bb.targetPlayer);
-                return BehaviorState.Success;
-            })
-        });
-        var attackStructure = new ActionNode(() => _controller.Attack(_bb.targetStructure));
-        var moveForward = new ActionNode(() => _controller.MoveForward());
-        var engage = new SequenceNode(new BTNode[]
-        {
-            new ConditionNode(() => _bb.hp < _bb.hpLowThreshold),
-            new ActionNode(() =>
-            {
-                _controller.Enrage();
-                return BehaviorState.Success;
-            })
-        });
+        // Retreat Sequence
         var retreat = new SequenceNode(new BTNode[]
         {
-            new ConditionNode(() => _bb.hp < _bb.hpLowThreshold),
-            new ActionNode(() =>
-            {
-                _controller.Retreat();
-                return BehaviorState.Success;
-            })
+            new ConditionNode(() => RetreatCondition()),
+            new ActionNode(() => _controller.MoveToBaseSpawn()),
+            new ActionNode(() => _controller.HealAtSpawn()),
+            new ActionNode(() => _controller.SummonUnitsUntilLimit(12))
         });
-        _root = buffAllies;
+
+        // Frenzy Sequence
+        var frenzy = new SequenceNode(new BTNode[]
+        {
+            new ConditionNode(() => FrenzyCondition()),
+            new ActionNode(() => _controller.ReduceCooldowns()),
+            new ActionNode(() => _controller.ForceAdvanceToNextArea())
+        });
+
+        // Engage Sequence (Selector for best available action)
+        var engageSelector = new SelectorNode(new BTNode[]
+        {
+            new ActionNode(() => _controller.CastDarkBoltAtTarget()),
+            new ActionNode(() => _controller.SummonSkeletonsUntilLimit(12)),
+            new ActionNode(() => _controller.BuffAlliesDamageBoost())
+        });
+        var engage = new SequenceNode(new BTNode[]
+        {
+            new ConditionNode(() => EnemyInRange()),
+            engageSelector
+        });
+
+        // Attack Sequence
+        var attack = new SequenceNode(new BTNode[]
+        {
+            new ConditionNode(() => ReadyToAdvance()),
+            new ActionNode(() => _controller.CommandArmyMoveToNextArea()),
+            new ActionNode(() => _controller.SetFlagEnemy())
+        });
+
+        // Command Sequence
+        var command = new SequenceNode(new BTNode[]
+        {
+            new ConditionNode(() => ArmySizeBelowLimit(12)),
+            new ActionNode(() => _controller.SummonSkeletons()),
+            new ActionNode(() => _controller.BuffAlliesHealNearby())
+        });
+
+        // Main Selector
+        _root = new SelectorNode(new BTNode[]
+        {
+            retreat,
+            frenzy,
+            engage,
+            attack,
+            command
+        });
     }
 
     public void Tick()
     {
         _root?.Evaluate();
+    }
+
+    // --- BT Condition Methods ---
+    private bool RetreatCondition()
+    {
+        // HP < 30% OR Allies == 0
+        return _bb.hp < _bb.hpMax * 0.3f || _bb.nearbyAllies.Count == 0;
+    }
+    private bool FrenzyCondition()
+    {
+        // GameTime > 10min OR ArmySize < 3
+        return (Time.time > 600f) || (_bb.nearbyAllies.Count < 3);
+    }
+    private bool EnemyInRange()
+    {
+        // Check if any enemy is in range
+        return _bb.detectedEnemies.Count > 0;
+    }
+    private bool ReadyToAdvance()
+    {
+        // TODO: Check if ready to advance
+        return false;
+    }
+    private bool ArmySizeBelowLimit(int limit)
+    {
+        // ArmySize < limit
+        return _bb.nearbyAllies.Count < limit;
     }
 }

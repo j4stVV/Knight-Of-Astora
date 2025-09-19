@@ -268,7 +268,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   patrolWaitTime: 2
-  walkSpeed: 3
+  walkSpeed: 2
   idleAnimationInterval: 3
   lastSoundHeardTime: 0
   lastSoundPosition: {x: 0, y: 0}
@@ -286,7 +286,7 @@ MonoBehaviour:
   moraleThreshold: 0.3
   isEngaging: 0
   currentTarget: {fileID: 0}
-  engageRange: 6
+  engageRange: 10
   supportRange: 8
   chaseRadius: 12
   lastKnownEnemyPosition: {x: 0, y: 0}
