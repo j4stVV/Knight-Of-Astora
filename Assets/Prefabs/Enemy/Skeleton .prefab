@@ -204,7 +204,7 @@ MonoBehaviour:
   speed: 3
   damage: 1
   detectionRange: 6
-  maxChasingDistance: 10
+  maxChasingDistance: 12
   maxDistanceFromStart: 20
   chasingSpeed: 0
   patrolRange: 5
@@ -213,7 +213,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  attackRange: 3
+  attackRange: 2.7
   attackCooldown: 2
   stunDuration: 0
 --- !u!82 &3423606818434971861

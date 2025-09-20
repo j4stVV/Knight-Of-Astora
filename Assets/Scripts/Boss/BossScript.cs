@@ -139,10 +139,10 @@ public class BossScript : Enemy
         {
             if (Vector2.Distance(PlayerController.Instance.transform.position, rb.position) <= attackRange)
             {
-                TripplelAttack();
+                TripleAttack();
             }
         }
-        //TripplelAttack();
+        //TripleAttack();
         //Lunge();
     }
     public void ResetAllAttack()
@@ -154,7 +154,7 @@ public class BossScript : Enemy
         StopCoroutine(Lunge());
 
         fireballAttack = false;
-        trippleAttack = false;
+        tripleAttack = false;
     }
     #endregion
 
@@ -192,15 +192,15 @@ public class BossScript : Enemy
     #endregion
 
     #region Stage_2
-    [HideInInspector] public bool trippleAttack;
+    [HideInInspector] public bool tripleAttack;
     [HideInInspector] public bool lungeAttack;
     [HideInInspector] public bool dmgPlayer = false;
-    void TripplelAttack()
+    void TripleAttack()
     {
         attacking = true;
         rb.velocity = Vector2.zero;
-        trippleAttack = true;
-        anim.SetTrigger("TrippleFireball");
+        tripleAttack = true;
+        anim.SetTrigger("TripleFireball");
     }
     IEnumerator Lunge()
     {

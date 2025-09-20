@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 970128306319859662}
   - component: {fileID: 5125890170233402065}
   - component: {fileID: 56074413742692360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -276,6 +276,7 @@ MonoBehaviour:
   isHealing: 0
   alive: 1
   invincible: 0
+  attackSpeed: 1.3
 --- !u!95 &56074413742692360
 Animator:
   serializedVersion: 5

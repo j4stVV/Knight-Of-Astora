@@ -88,6 +88,9 @@ public class PlayerController : MonoBehaviour
     private CameraFollowObject _cameraFollowObject;
     private float _fallSpeedYDampingChangeThreshold;
 
+    private bool isCommandingAllies = false;
+    private List<AllyUnitController> commandedAllies = new List<AllyUnitController>();
+
     private void Awake()
     {
         if (Instance != null)
@@ -156,11 +159,42 @@ public class PlayerController : MonoBehaviour
             StartDash();
             Heal();
         }
-        CameraSetting();
 
         //replace localScale when compute in roll & dash 
         angleInRadian = transform.eulerAngles.y * Mathf.Deg2Rad;
         alterLocalScale = Mathf.Cos(angleInRadian);
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!isCommandingAllies)
+            {
+                // Find all AllyUnit in area (use OverlapCircle or custom zone logic)
+                float commandRadius = 12f; // You can adjust this value
+                Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, commandRadius, LayerMask.GetMask("Ally"));
+                commandedAllies.Clear();
+                foreach (var hit in hits)
+                {
+                    AllyUnitController ally = hit.GetComponent<AllyUnitController>();
+                    if (ally != null)
+                    {
+                        ally.FollowPlayer(this.transform);
+                        commandedAllies.Add(ally);
+                    }
+                }
+                isCommandingAllies = true;
+            }
+            else
+            {
+                // Cancel follow for all commanded allies
+                foreach (var ally in commandedAllies)
+                {
+                    if (ally != null)
+                        ally.CancelFollowPlayer();
+                }
+                commandedAllies.Clear();
+                isCommandingAllies = false;
+            }
+        }
     }
     private void FixedUpdate()
     {
@@ -307,7 +341,8 @@ public class PlayerController : MonoBehaviour
     }
     void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && timeSinceAttack > 0.5f && !playerState.isRolling && !playerState.isHealing)
+        float attackInterval = 1f / playerState.attackSpeed;
+        if (Input.GetMouseButtonDown(0) && timeSinceAttack > attackInterval && !playerState.isRolling && !playerState.isHealing)
         {
             currentAttack++;
             SoundFXManager.instance.PlaySoundFX(attackAudioClip, transform, 1f);
@@ -336,16 +371,6 @@ public class PlayerController : MonoBehaviour
         {
             if (objectsToHit[i].GetComponent<Enemy>() != null)
             {
-                //Enemy e = objectsToHit[i].GetComponent<Enemy>();
-                //if (e.CompareTag("Enemy") && !hitEnemies.Contains(e))
-                //{
-                //    e.EnemyHit(damage, recoilDir, recoilStrength);
-                //    Mana += manaGain;
-                //    manaController.SetMana(Mana);
-                //    e.EnemyHit(damage, (transform.position - objectsToHit[i].transform.position).normalized, recoilStrength);
-                //    hitEnemies.Add(e);
-                //}
-
                 objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, recoilDir, recoilStrength);
                 if (objectsToHit[i].CompareTag("Enemy"))
                 {

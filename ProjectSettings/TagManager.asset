@@ -11,6 +11,7 @@ TagManager:
   - Water
   - CamBoundary
   - HiddenRoom
+  - Ally
   layers:
   - Default
   - TransparentFX
@@ -20,9 +21,9 @@ TagManager:
   - UI
   - Attackable
   - Wall
-  - 
-  - 
-  - 
+  - Ally
+  - Enemy
+  - Player
   - 
   - 
   - 

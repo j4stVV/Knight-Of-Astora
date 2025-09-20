@@ -26,18 +26,18 @@ public class Enemy : MonoBehaviour
 
     protected enum EnemyStates
     {
-        //Skeleton
-        Ske_Idle,
-        Ske_Patrol,
-        Ske_Chase,
-        Ske_ReturnToStart,
-        Ske_Attack,
-        Ske_Stunned,
-        Ske_Death,
-
         //Crawler
         Crawler_Idle,
         Crawler_Stunned,
+
+        //Common
+        IDLE,
+        PATROL,
+        CHASE,
+        STUNNED,
+        ATTACK,
+        DEATH,
+        RETURN_TO_START,
 
         //Bat
         Bat_Idle, 
@@ -67,14 +67,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void Awake()
     {
-        try
-        {
-            player = PlayerController.Instance;
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError(ex.ToString());
-        }
+        
     }
     protected virtual void Start()
     {
@@ -114,33 +107,40 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void Heal(float amount)
+    {
+        health += amount;
+    }
+
     protected void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
+        if (other.gameObject.CompareTag("Player"))
         {
             Attack();
         }
     }
-    //protected void OnCollisionStay2D(Collision2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player") && !PlayerController.Instance.playerState.invincible)
-    //    {
-    //        if(Time.time > lastAttackUpdateTime + attackCooldown)
-    //        {
-    //            Attack();
-    //            lastAttackUpdateTime = Time.time;
-    //        }
-    //    }
-    //}
     protected virtual void UpdateEnemyState() { }
     protected virtual void ChangeCurrentAnimation() { }
     protected void ChangeState(EnemyStates newState)
     {
         GetCurrentEnemyState = newState;
     }
-    protected virtual void Attack()
+    protected virtual void Attack(){}
+    protected virtual void PerformAttackTarget(Transform target)
     {
-        PlayerController.Instance.TakeDamage(damage , rb.transform.position);
+        if (target == null) return;
+        if (target.CompareTag("Player"))
+        {
+            PlayerController.Instance.TakeDamage(damage, rb.transform.position);
+        }
+        else if (target.CompareTag("Ally"))
+        {
+            var ally = target.GetComponent<AllyUnitController>();
+            if (ally != null)
+            {
+                ally.TakeDamage(damage, rb.transform.position);
+            }
+        }
     }
     protected virtual void DestroyObject()
     {
