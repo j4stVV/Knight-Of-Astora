@@ -229,8 +229,8 @@ public class AllyUnitController : MonoBehaviour
             rb.velocity = Vector2.zero;
             return true;
         }
-        // Clean up destroyed or missing enemies
-        blackboard.detectedEnemies.RemoveAll(enemy => enemy == null || enemy.Equals(null));
+        // Clean up destroyed or missing enemies or out of vision range
+        blackboard.detectedEnemies.RemoveAll(enemy => enemy == null || enemy.Equals(null) || Mathf.Abs(transform.position.x - blackboard.currentTarget.position.x) > viewDistance);
         // If no enemies detected, reset to patrol
         if (blackboard.detectedEnemies.Count == 0)
         {
