@@ -223,7 +223,7 @@ public class Skeleton : Enemy
         float distanceToTarget = Vector2.Distance(transform.position, currentTarget.position);
 
         // Check if target is out of range
-        if (distanceToTarget > attackRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("ATTACK"))
+        if (distanceToTarget > attackRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("Ske_Attack"))
         {
             currentEnemyState = EnemyStates.CHASE;
             return;

@@ -34,6 +34,10 @@ public class AllyUnitController : MonoBehaviour
     private bool isFollowingPlayer = false;
     private Transform followTargetPlayer = null;
 
+    private bool waitingAtPatrolPoint = false;
+    private float patrolWaitTimer = 0f;
+    private float patrolWaitDuration = 0f;
+
     void Start()
     {
         blackboard = GetComponent<AllyBlackboard>();
@@ -50,10 +54,10 @@ public class AllyUnitController : MonoBehaviour
             float dist = Vector2.Distance(transform.position, followTargetPlayer.position);
             if (dist > 2.5f)
             {
-                Vector2 dir = (followTargetPlayer.position - transform.position).normalized;
-                rb.velocity = dir * blackboard.walkSpeed;
+                float dirX = Mathf.Sign(followTargetPlayer.position.x - transform.position.x);
+                rb.velocity = new Vector2(dirX * blackboard.walkSpeed, 0);
                 animator.SetBool("IsMoving", true);
-                if (dir.x > 0 && !facingRight || dir.x < 0 && facingRight)
+                if (dirX > 0 && !facingRight || dirX < 0 && facingRight)
                 {
                     Flip();
                 }
@@ -62,6 +66,19 @@ public class AllyUnitController : MonoBehaviour
             {
                 rb.velocity = Vector2.zero;
                 animator.SetBool("IsMoving", false);
+            }
+        }
+
+        // Patrol wait logic
+        if (waitingAtPatrolPoint)
+        {
+            patrolWaitTimer += Time.deltaTime;
+            rb.velocity = Vector2.zero;
+            animator.SetBool("IsMoving", false);
+            if (patrolWaitTimer >= patrolWaitDuration)
+            {
+                waitingAtPatrolPoint = false;
+                patrolWaitTimer = 0f;
             }
         }
     }
@@ -86,29 +103,39 @@ public class AllyUnitController : MonoBehaviour
 
     public bool Patrol()
     {
+        if (waitingAtPatrolPoint)
+        {
+            return false;
+        }
+
         // Patrol between points
         if (blackboard.patrolPoints == null || blackboard.patrolPoints.Length == 0)
             return true;
 
         Transform targetPoint = blackboard.patrolPoints[blackboard.currentPatrolIndex];
         Vector2 directionToTarget = (targetPoint.position - transform.position).normalized;
-        
+
         // Check if we need to flip the sprite
         if (directionToTarget.x > 0 && !facingRight || directionToTarget.x < 0 && facingRight)
         {
             Flip();
         }
-        // Move towards patrol point
-        rb.velocity = directionToTarget * blackboard.walkSpeed;
+        // Move towards patrol point with fixed speed (avoid slowing down near target)
+        float moveSpeed = blackboard.walkSpeed;
+        rb.velocity = new Vector2(Mathf.Sign(targetPoint.position.x - transform.position.x) * moveSpeed, 0);
         animator.SetBool("IsMoving", true);
 
         // Check if we've reached the current patrol point
+        Debug.Log(Vector2.Distance(transform.position, targetPoint.position));
         if (Vector2.Distance(transform.position, targetPoint.position) <= 2.2f)
         {
             rb.velocity = Vector2.zero;
             animator.SetBool("IsMoving", false);
             blackboard.currentPatrolIndex = (blackboard.currentPatrolIndex + 1) % blackboard.patrolPoints.Length;
-            return true;
+            waitingAtPatrolPoint = true;
+            patrolWaitDuration = Random.Range(1f, 3f);
+            patrolWaitTimer = 0f;
+            return false;
         }
         CheckVision();
         return false;
@@ -125,7 +152,7 @@ public class AllyUnitController : MonoBehaviour
         if (!blackboard.isInvestigatingSoundSource)
             return true;
         Vector2 directionToSound = (blackboard.lastSoundPosition - (Vector2)transform.position).normalized;
-        
+
         // Turn towards the sound
         if (directionToSound.x > 0 && !facingRight || directionToSound.x < 0 && facingRight)
         {
@@ -135,11 +162,12 @@ public class AllyUnitController : MonoBehaviour
         // Move towards the sound source
         if (Vector2.Distance(transform.position, blackboard.lastSoundPosition) > 0.5f)
         {
-            rb.velocity = directionToSound * blackboard.walkSpeed;
+            float dirX = Mathf.Sign(blackboard.lastSoundPosition.x - transform.position.x);
+            rb.velocity = new Vector2(dirX * blackboard.walkSpeed, 0);
             animator.SetBool("IsMoving", true);
             return false;
         }
-        
+
         // Reached the sound source
         rb.velocity = Vector2.zero;
         animator.SetBool("IsMoving", false);
@@ -149,10 +177,7 @@ public class AllyUnitController : MonoBehaviour
 
     public bool WarnAction()
     {
-        // Warning animation
-        animator.SetTrigger("Warn"); // Requires a trigger for warning animation
-
-        // Send warning signal to allies (send the position of the first detected enemy)
+        // Move to warn position if not already there, move slow as half of normal speed, stop at warn position 2 distance long
         if (blackboard.detectedEnemies.Count > 0)
         {
             Vector2 enemyPos = blackboard.detectedEnemies[0].position;
@@ -160,23 +185,36 @@ public class AllyUnitController : MonoBehaviour
             blackboard.isWarning = true;
             blackboard.warnedEnemyPosition = enemyPos;
         }
-        // Move to strategic position near enemy
         if (blackboard.isWarning && blackboard.warnedEnemyPosition != Vector2.zero)
         {
             Vector2 dir = (blackboard.warnedEnemyPosition - (Vector2)transform.position).normalized;
             float dist = Vector2.Distance(transform.position, blackboard.warnedEnemyPosition);
-            float stopDist = 7.5f;
+            float stopDist = 2f;
             if (dist > stopDist)
             {
-                rb.velocity = dir * blackboard.walkSpeed;
+                float dirX = Mathf.Sign(blackboard.warnedEnemyPosition.x - transform.position.x);
+                rb.velocity = new Vector2(dirX * (blackboard.walkSpeed * 0.5f), 0);
                 animator.SetBool("IsMoving", true);
+                // Flip sprite to face warn position
+                if (dirX > 0 && !facingRight || dirX < 0 && facingRight)
+                {
+                    Flip();
+                }
                 return false;
             }
             else
             {
                 rb.velocity = Vector2.zero;
                 animator.SetBool("IsMoving", false);
-                return true;
+                // If no enemy detected anymore, back to patrol
+                if (blackboard.detectedEnemies.Count == 0)
+                {
+                    blackboard.isWarning = false;
+                    blackboard.warnedEnemyPosition = Vector2.zero;
+                    return true; // Back to patrol
+                }
+                // Else, do next move in code (engage, etc.)
+                return false;
             }
         }
         return false;
@@ -249,7 +287,7 @@ public class AllyUnitController : MonoBehaviour
                 // Move to enemy and attack if close
                 if (distToTargetX > 1.2f)
                 {
-                    rb.velocity = dirToTarget * blackboard.walkSpeed;
+                    rb.velocity = new Vector2(Mathf.Sign(target.position.x - transform.position.x) * blackboard.walkSpeed, 0);
                     animator.SetBool("IsMoving", true);
                 }
                 else
@@ -323,6 +361,9 @@ public class AllyUnitController : MonoBehaviour
         if (blackboard.currentTarget == null)
         {
             blackboard.searchTimer += Time.deltaTime;
+            float dirX = Mathf.Sign(blackboard.lastKnownEnemyPosition.x - transform.position.x);
+            rb.velocity = new Vector2(dirX * blackboard.walkSpeed, 0);
+            animator.SetBool("IsMoving", true);
             Vector2 dir = (blackboard.lastKnownEnemyPosition - (Vector2)transform.position).normalized;
             float dist = Vector2.Distance(transform.position, blackboard.lastKnownEnemyPosition);
             if (dist > 0.5f)
@@ -348,6 +389,9 @@ public class AllyUnitController : MonoBehaviour
             blackboard.ResetPursueState();
             return true;
         }
+        float dirX2 = Mathf.Sign(blackboard.currentTarget.position.x - transform.position.x);
+        rb.velocity = new Vector2(dirX2 * blackboard.walkSpeed, 0);
+        animator.SetBool("IsMoving", true);
         Vector2 dirToTarget = (blackboard.currentTarget.position - transform.position).normalized;
         float distToTarget = Vector2.Distance(transform.position, blackboard.currentTarget.position);
         if (dirToTarget.x > 0 && !facingRight || dirToTarget.x < 0 && facingRight)
@@ -366,65 +410,55 @@ public class AllyUnitController : MonoBehaviour
 
     public bool SurrenderAction()
     {
-        // Surrender or last stand logic
-        float hpRatio = 1.0f;
-        if (blackboard != null && blackboard.maxHP > 0)
+        // Only run away to a safe zone, do not perform last stand or other surrender actions
+        if (blackboard.surrenderTargetBase != null)
         {
-            hpRatio = blackboard.currentHP / blackboard.maxHP;
-        }
-        if (!blackboard.isSurrendering && !blackboard.isLastStand)
-        {
-            float roll = Random.value;
-            if (roll < blackboard.lastStandChance)
+            float dirX = Mathf.Sign(blackboard.surrenderTargetBase.position.x - transform.position.x);
+            rb.velocity = new Vector2(dirX * blackboard.walkSpeed * 1.2f, 0);
+            animator.SetBool("IsMoving", true);
+            float dist = Vector2.Distance(transform.position, blackboard.surrenderTargetBase.position);
+            if (dirX > 0 && !facingRight || dirX < 0 && facingRight)
             {
-                blackboard.isLastStand = true;
-                blackboard.surrenderType = SurrenderType.LastStand;
+                Flip();
             }
-            else
+            if (dist > 0.5f)
             {
-                blackboard.isSurrendering = true;
-                blackboard.surrenderType = SurrenderType.Surrender;
-            }
-        }
-        // Last Stand: perform special attack, special animation, then fight until death
-        if (blackboard.isLastStand)
-        {
-            animator.SetTrigger("LastStand"); // Animation: shout, power up, etc.
-            // TODO: Trigger special AoE attack here
-            // After this, keep fighting until death (EngageAction only)
-            // No transition out
-            return false;
-        }
-        if (blackboard.isSurrendering)
-        {
-            animator.SetTrigger("SurrenderPanic");
-            if (blackboard.surrenderTargetBase != null)
-            {
-                Vector2 dir = (blackboard.surrenderTargetBase.position - transform.position).normalized;
-                float dist = Vector2.Distance(transform.position, blackboard.surrenderTargetBase.position);
-                if (dir.x > 0 && !facingRight || dir.x < 0 && facingRight)
-                {
-                    Flip();
-                }
-                if (dist > 0.5f)
-                {
-                    rb.velocity = dir * blackboard.walkSpeed * 1.2f;
-                    animator.SetBool("IsMoving", true);
-                }
-                else
-                {
-                    rb.velocity = Vector2.zero;
-                    animator.SetBool("IsMoving", false);
-                }
+                rb.velocity = new Vector2(dirX, 0) * blackboard.walkSpeed * 1.2f;
+                animator.SetBool("IsMoving", true);
             }
             else
             {
                 rb.velocity = Vector2.zero;
                 animator.SetBool("IsMoving", false);
             }
-            return false;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetBool("IsMoving", false);
         }
         return false;
+        // Commented out: last stand and other surrender logic
+        // float hpRatio = 1.0f;
+        // if (blackboard != null && blackboard.maxHP > 0)
+        // {
+        //     hpRatio = blackboard.currentHP / blackboard.maxHP;
+        // }
+        // if (!blackboard.isSurrendering && !blackboard.isLastStand)
+        // {
+        //     float roll = Random.value;
+        //     if (roll < blackboard.lastStandChance)
+        //     {
+        //         blackboard.isLastStand = true;
+        //         blackboard.surrenderType = SurrenderType.LastStand;
+        //     }
+        //     else
+        //     {
+        //         blackboard.isSurrendering = true;
+        //         blackboard.surrenderType = SurrenderType.Surrender;
+        //     }
+        // }
+        // if (blackboard.isLastStand) { ... }
     }
 
     private void OnEnable()
@@ -447,8 +481,9 @@ public class AllyUnitController : MonoBehaviour
     {
         // Vision cone raycast for enemy detection
         if (visionOrigin == null) return;
-        blackboard.detectedEnemies.RemoveAll(enemy => 
+        blackboard.detectedEnemies.RemoveAll(enemy =>
             enemy == null || Vector2.Distance(transform.position, enemy.position) > viewDistance);
+        Debug.Log(blackboard.detectedEnemies.Count);
         float startAngle = facingRight ? -blackboard.fieldOfView / 2 : 180 - blackboard.fieldOfView / 2;
         float endAngle = facingRight ? blackboard.fieldOfView / 2 : 180 + blackboard.fieldOfView / 2;
         for (int i = 0; i < rayCount; i++)
